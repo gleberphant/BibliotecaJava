@@ -1,13 +1,10 @@
-package Usecases;
-
+package Repositories;
 import Models.Livro;
-import Repositories.IRepositorio;
+
+public interface IRepositorio{
 
 
-public interface IServico{
-
-    public void Config(IRepositorio repositorio);
-
+    public void Config();
     public Boolean AdicionarLivro(Livro novo);
 
     public Livro VisualizarLivro(int id);

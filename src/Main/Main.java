@@ -1,32 +1,29 @@
-public class Main{
+package Main;
 
+import Handlers.*;
 
-    public static void Main(){
+import Repositories.*;
+import Usecases.*;
 
+public class Main {
 
-        // carregar aplicação
+    public static void main(String[] args) {
 
-        ViewLivro app = new ViewLivro(
-            new ServicoLivro( 
-                new RepositorioLivro));
+    
 
+        // configura aplicação
+        HandlerCLI app = new HandlerCLI(new ServicoLivro(new RepositorioLivro()));
 
+        // mocar dados
+        // Livro[] livrosMocados = {
+        // new Livro("Livro 1", "Autor 1", 1),
+        // new Livro("Livro 2", "Autor 2", 2),
+        // new Livro("Livro 3", "Autor 3", 3),
+        // };
 
+        // roda aplicação
+        app.Run();
 
-        // looop principal da aplicação e roteamento
-        while(true){
-            int opt = app.Home();
-
-            switch (opt){
-                case 1:
-                    app.AdicionarLivro();
-                case 2:
-                    app.VisualizarLivro();
-                case 3:
-                    app.ListarLivros();
-                default:
-                    return;
-            }
-        }
     }
+
 }
