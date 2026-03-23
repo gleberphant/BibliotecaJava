@@ -1,25 +1,24 @@
 package Repositories;
 
-import java.util.LinkedList;
-
+import EstruturasDados.Listas.Lista;
 import Models.Livro;
 
 public class RepositorioLivro implements IRepositorio {
 
-    LinkedList<Livro> ListaLivros;
+    Lista<Livro> ListaLivros;
 
     public RepositorioLivro() {
         this.Config();
     }
 
     public void Config() {
-        ListaLivros = new LinkedList<Livro>();
+        ListaLivros = new Lista<Livro>();
     }
 
     public Boolean AdicionarLivro(Livro novo) {
         
-        novo.id = ListaLivros.size() == 0 ? 0 : ListaLivros.getLast().id + 1 ;
-        ListaLivros.add(novo);
+        novo.id = ListaLivros.Tamanho() == 0 ? 0 : ListaLivros.GetUltimo().id + 1 ;
+        ListaLivros.Inserir(novo);
         return true;
     }
 
@@ -27,8 +26,8 @@ public class RepositorioLivro implements IRepositorio {
 
         Livro livro;
 
-        for (int i = 0; i < ListaLivros.size(); i++) {
-            livro = ListaLivros.get(i);
+        for (int i = 0; i < ListaLivros.Tamanho(); i++) {
+            livro = ListaLivros.Get(i);
             if (livro.id == id) {
                 return livro;
             }
@@ -39,10 +38,10 @@ public class RepositorioLivro implements IRepositorio {
 
     public Livro[] ListarLivros() {
 
-        Livro[] livros = new Livro[ListaLivros.size()];
+        Livro[] livros = new Livro[ListaLivros.Tamanho()];
 
-        for (int i = 0; i < ListaLivros.size(); i++) {
-            livros[i] = ListaLivros.get(i);
+        for (int i = 0; i < ListaLivros.Tamanho(); i++) {
+            livros[i] = ListaLivros.Get(i);
         }
 
         return livros;
@@ -51,12 +50,12 @@ public class RepositorioLivro implements IRepositorio {
     public Boolean EditarLivro(Livro novo) {
         Livro livro;
 
-        for (int i = 0; i < ListaLivros.size(); i++) {
+        for (int i = 0; i < ListaLivros.Tamanho(); i++) {
 
-            livro = ListaLivros.get(i);
+            livro = ListaLivros.Get(i);
 
             if (livro.id == novo.id) {
-                ListaLivros.set(i, livro);
+                ListaLivros.Set(i, livro);
                 return true;
             }
         }
@@ -68,12 +67,12 @@ public class RepositorioLivro implements IRepositorio {
     public Boolean RemoverLivro(int id) {
         Livro livro;
 
-        for (int i = 0; i < ListaLivros.size(); i++) {
+        for (int i = 0; i < ListaLivros.Tamanho(); i++) {
 
-            livro = ListaLivros.get(i);
+            livro = ListaLivros.Get(i);
 
             if (livro.id == id) {
-                ListaLivros.remove(i);
+                ListaLivros.Remover(i);
                 return true;
             }
 

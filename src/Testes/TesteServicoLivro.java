@@ -17,9 +17,10 @@ public class TesteServicoLivro {
 
         // mocar dados em massa
         System.out.println("\nMockar Dados");
-        for (int i = 0; i < numItens; i++)
+        for (int i = 0; i < numItens; i++) {
+            System.out.println("Livro " + i + "Autor " + i);
             app.servico.AdicionarLivro(new Livro("Livro " + i, "Autor " + i, i));
-
+        }
         // visualizar
         System.out.println("\nVisualizar Dados");
         for (int i = 0; i < numItens; i++) {

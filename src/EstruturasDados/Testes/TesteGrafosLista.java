@@ -8,7 +8,7 @@ public class TesteGrafosLista {
 
         int itens[] = { 1, 2, 3, 4, 5, 6, 7 };
 
-        InterfaceGrafo g = new GrafoLista();
+        IGrafo g = new GrafoLista();
 
         System.out.println("\n Grafo do tipo: " + g.getClass());
 

@@ -8,7 +8,7 @@ public class TesteGrafosHash {
 
         int itens[] = { 1, 2, 3, 4, 5, 6, 7 };
 
-        InterfaceGrafo g = new GrafoHash();
+        IGrafo g = new GrafoHash();
 
         System.out.println("\n Grafo do tipo: " + g.getClass());
 

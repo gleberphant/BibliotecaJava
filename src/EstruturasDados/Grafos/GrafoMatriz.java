@@ -1,4 +1,4 @@
-package EstruturasNaoLineares;
+package EstruturasDados.Grafos;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -7,7 +7,7 @@ import Nos.NoGrafo;
 import Nos.Aresta;
 import MinhasInterfaces.InterfaceGrafo;
 
-public class GrafoMatriz implements InterfaceGrafo {
+public class GrafoMatriz implements IGrafo {
     // matriz de adjacencias
 
     // lista de nos

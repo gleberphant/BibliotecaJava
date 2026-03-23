@@ -47,7 +47,7 @@ public class HandlerCLI implements IHandler {
         System.out.println(".......... MENU ..........");
         System.out.println(". -> Adicionar um livro   ");
         System.out.println(". -> Visualizar um  livro ");
-        System.out.println(". -> Lista todos livros   ");
+        System.out.println(". -> Listar todos livros   ");
         System.out.println("..........................");
 
         int select = 0;
