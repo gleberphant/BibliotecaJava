@@ -17,7 +17,7 @@ public class RepositorioLivro implements IRepositorio {
 
     public Boolean AdicionarLivro(Livro novo) {
         
-        novo.id = ListaLivros.Tamanho() == 0 ? 0 : ListaLivros.GetUltimo().id + 1 ;
+        novo.id = ListaLivros.Tamanho() == 0 ? 0 : ListaLivros.GetUltimoItem().id + 1 ;
         ListaLivros.Inserir(novo);
         return true;
     }

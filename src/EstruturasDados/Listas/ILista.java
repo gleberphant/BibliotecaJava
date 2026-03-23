@@ -29,7 +29,7 @@ public interface ILista<T> {
 
      public void Remover(int i);
 
-    public T GetUltimo();
+    public T GetUltimoItem();
 
     public int Tamanho();
 

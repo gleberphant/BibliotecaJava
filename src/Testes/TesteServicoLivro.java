@@ -30,6 +30,7 @@ public class TesteServicoLivro {
         // remover
         System.out.println("\nRemover Dados");
         for (int i = 0; i < numItens - 2; i++) {
+            
             app.servico.RemoverLivro(i);
         }
 

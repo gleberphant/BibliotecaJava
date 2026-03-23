@@ -12,7 +12,7 @@ public class Lista<T> implements ILista<T> {
     }
 
     public boolean Inserir(T dado) {
-        this.InserirInicio(dado);
+        this.InserirFim(dado);
         tamanho++;
         return true;
 
@@ -25,7 +25,7 @@ public class Lista<T> implements ILista<T> {
             this.head = novo;
             return true;
         }
-        
+
         novo.next = this.head;
         this.head = novo;
 
@@ -53,12 +53,17 @@ public class Lista<T> implements ILista<T> {
     // inserir no final da lista
     public boolean InserirFim(T dado) {
         NoLista<T> novo = new NoLista<>(dado);
-        NoLista<T> ultimo = UltimoNo();
 
-        if (ultimo == null)
-            ultimo = novo;
-        else
-            ultimo.next = novo;
+        if (this.head == null) {
+            this.head = novo;
+            return true;
+        }
+
+        System.out.println("Inserindo item " + dado.toString());
+        this.current = UltimoNo();
+
+        if (this.current != null)
+            this.current.next = novo;
 
         return true;
     }
@@ -86,15 +91,15 @@ public class Lista<T> implements ILista<T> {
             return null;
         }
 
-        this.current = this.head;
+        NoLista<T> ponteiro = this.head;
         int count = 0;
 
-        while (count < i && this.current != null) {
-            this.current = this.current.next;
+        while (count < i && ponteiro != null) {
+            ponteiro = ponteiro.next;
             count++;
         }
 
-        return this.current;
+        return ponteiro;
 
     }
 
@@ -112,6 +117,12 @@ public class Lista<T> implements ILista<T> {
 
         return ponteiro;
 
+    }
+
+    public T GetUltimoItem() {
+        NoLista<T> ultimo = UltimoNo();
+
+        return ultimo.data;
     }
 
     public boolean ReiniciarPonteiro() {
@@ -152,22 +163,16 @@ public class Lista<T> implements ILista<T> {
             return busca.data;
     }
 
-    public T GetUltimo() {
-        NoLista<T> ultimo = UltimoNo();
-
-        if (ultimo == null)
-            return null;
-        else
-            return ultimo.data;
-    }
-
     public int Tamanho() {
         return tamanho;
     }
 
     public void Remover(int i) {
+        tamanho--;
         if (i == 0) {
-            i = 1;
+            this.head = this.head.next;
+
+            return;
         }
 
         NoLista<T> anterior = BuscaNo(i - 1);
