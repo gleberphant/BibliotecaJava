@@ -6,8 +6,6 @@ Tarefa: Criar uma lista encadeada para gerenciar os livros na biblioteca. Cada n
 
 Aplicação prática: Usar a lista para armazenar e acessar a lista de livros. 
 
-
-
 ## Atividade formativa da semana 3: Implementar filas e pilhas 
 
 Tarefa: Implementar uma fila para gerenciar uma lista de espera de livros (quando um livro está emprestado) e uma pilha para armazenar o histórico de navegação do usuário (último livro visualizado no topo). 

@@ -12,7 +12,7 @@ public class Main {
     
 
         // configura aplicação
-        HandlerCLI app = new HandlerCLI(new ServicoLivro(new RepositorioLivro()));
+        HandlerCLI app = new HandlerCLI(new BibliotecaLivros(new ListaLivros()));
 
         // mocar dados
         // Livro[] livrosMocados = {
