@@ -13,7 +13,6 @@ Tarefa: Implementar uma fila para gerenciar uma lista de espera de livros (quand
 Aplicação prática: Usar a fila para gerenciar a espera de livros e a pilha para o histórico de navegação dos usuários. 
 
 
-
 ## Atividade somativa da semana 4: Implementar grafos 
 
 Tarefa: Criar um grafo em que cada nó representa um livro e as arestas representam relações, como livros recomendados. 
