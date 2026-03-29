@@ -5,12 +5,12 @@ import Adaptadores.ControladoresConsole.ControladorHistorico;
 import Adaptadores.ControladoresConsole.ControladorLivro;
 import Adaptadores.ControladoresConsole.ControladorRecomendacoes;
 import Adaptadores.ControladoresConsole.ControladorUsuario;
-import Aplicacao.CasosDeUso.ServicoBiblioteca;
+import Aplicacao.CasosDeUso.ServicoLivro;
 import Aplicacao.Interfaces.IComando;
 import Infraestrutura.Roteadores.RoteadorConsole;
 
 public class ConfigConsoleMenu {
-        public static IComando configurar(ServicoBiblioteca servico) {
+        public static IComando configurar(ServicoLivro servico) {
 
                 var controleLivros = new ControladorLivro(servico);
                 var controleUsuarios = new ControladorUsuario(servico);

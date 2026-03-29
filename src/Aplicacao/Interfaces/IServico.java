@@ -2,10 +2,7 @@ package Aplicacao.Interfaces;
 
 import Dominio.Modelos.Livro;
 
-
-public interface IServico{
-
-    public void Config(IRepositorio repositorio);
+public interface IServico {
 
     public Boolean AdicionarLivro(Livro novo);
 

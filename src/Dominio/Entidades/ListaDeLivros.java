@@ -1,35 +1,28 @@
 package Dominio.Entidades;
 
+import Dominio.EstruturasDeDados.Listas.ListaEncadeada;
 import Dominio.Modelos.Livro;
-import Infraestrutura.EstruturasDeDados.Listas.ListaEncadeada;
 
 public class ListaDeLivros {
 
-    ListaEncadeada<Livro> ListaLivros;
+    ListaEncadeada<Livro> listaLivros;
 
     public ListaDeLivros() {
-        ListaLivros = new ListaEncadeada<Livro>();
-        this.Config();
-    }
-
-    public void Config() {
+        listaLivros = new ListaEncadeada<Livro>();
 
     }
 
     public Boolean AdicionarLivro(Livro novo) {
 
-        novo.id = ListaLivros.Tamanho() == 0 ? 0 : ListaLivros.GetUltimoDado().id + 1;
-        ListaLivros.Inserir(novo);
+        novo.ID = listaLivros.Tamanho() == 0 ? 0 : listaLivros.GetUltimo().ID + 1;
+        listaLivros.Inserir(novo);
         return true;
     }
 
-    public Livro VisualizarLivro(int id) {
+    public Livro VisualizarLivro(int ID) {
 
-        Livro livro;
-
-        for (int i = 0; i < ListaLivros.Tamanho(); i++) {
-            livro = ListaLivros.Get(i);
-            if (livro.id == id) {
+        for (var livro : listaLivros) {
+            if (livro.ID == ID) {
                 return livro;
             }
         }
@@ -38,48 +31,48 @@ public class ListaDeLivros {
     }
 
     public Livro[] ListarLivros() {
+        int indice = 0;
+        Livro[] livros = new Livro[listaLivros.Tamanho()];
 
-        Livro[] livros = new Livro[ListaLivros.Tamanho()];
-
-        for (int i = 0; i < ListaLivros.Tamanho(); i++) {
-            livros[i] = ListaLivros.Get(i);
+        for (var livro : listaLivros) {
+            livros[indice] = livro;
+            indice++;
         }
 
         return livros;
     }
 
     public Boolean EditarLivro(Livro novo) {
-        Livro livro;
 
-        for (int i = 0; i < ListaLivros.Tamanho(); i++) {
+        int indice = 0;
 
-            livro = ListaLivros.Get(i);
+        for (var livro : listaLivros) {
 
-            if (livro.id == novo.id) {
-                ListaLivros.Set(i, livro);
+            if (livro.ID == novo.ID) {
+                listaLivros.Set(indice, novo);
                 return true;
             }
+            indice++;
         }
 
         return false;
 
     }
 
-    public Boolean RemoverLivro(int id) {
-        Livro livro;
+    public Boolean RemoverLivro(int ID) {
+        int indice = 0;
 
-        for (int i = 0; i < ListaLivros.Tamanho(); i++) {
+        for (var livro : listaLivros) {
 
-            livro = ListaLivros.Get(i);
-
-            if (livro.id == id) {
-                ListaLivros.RemoverNo(i);
+            if (livro.ID == ID) {
+                listaLivros.RemoverNo(indice);
                 return true;
             }
-
+            indice++;
         }
 
         return false;
+
     }
 
 }

@@ -1,13 +1,17 @@
 package Adaptadores.ControladoresConsole;
 
+import java.util.Scanner;
+
 import Aplicacao.Interfaces.IControlador;
 import Aplicacao.Interfaces.IServico;
 import Dominio.Modelos.Livro;
 
 public class ControladorLivro implements IControlador {
     public IServico servico;
+    private final Scanner scanner;
 
     public ControladorLivro(IServico servico) {
+        this.scanner = new Scanner(System.in);
         this.servico = servico;
     }
 
@@ -15,8 +19,11 @@ public class ControladorLivro implements IControlador {
 
         System.out.println("Informe os dados do livro");
 
-        String titulo = "Livro ";// ler titulo
-        String autor = "Autor ";// ler autor
+        System.out.print("Digite nome do livro: ");
+        String titulo = scanner.nextLine();// ler titulo
+        System.out.print("Digite autor do livro: ");
+        String autor = scanner.nextLine();;// ler autor
+        
         int ano = 2026;// ler ano
 
         servico.AdicionarLivro(new Livro(titulo, autor, ano));
