@@ -1,4 +1,4 @@
-package Infraestrutura.Testes;
+package Testes;
 
 import EstruturasNaoLineares.*;
 import MinhasInterfaces.InterfaceGrafo;

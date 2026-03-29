@@ -1,7 +1,7 @@
 // DEMONSTRAÇÃO DE PILHAS/STACK 
 // LIFO = LAST IN FIRST OUT
 
-package Infraestrutura.Testes;
+package Testes;
 
 import EstruturasLineares.*;
 

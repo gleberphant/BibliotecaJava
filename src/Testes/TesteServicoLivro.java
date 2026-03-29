@@ -1,6 +1,6 @@
-package Infraestrutura.Testes;
+package Testes;
 
-import Adaptadores.Controladores.*;
+import Adaptadores.ControladoresConsole.*;
 import Adaptadores.Repositorios.*;
 import Aplicacao.CasosDeUso.*;
 import Dominio.Modelos.Livro;
@@ -11,7 +11,7 @@ public class TesteServicoLivro {
 
         System.out.println("REALIZANDO TESTES DAS FUNCIONALDIADES DA APLICAÇÃO");
         // configura aplicação
-        ControladorConsole app = new ControladorConsole(new ServicoLivro(new RepositorioLivro()));
+        ControladorLivro app = new ControladorLivro(new ServicoLivro(new RepositorioLivro()));
 
         int numItens = 5;
 

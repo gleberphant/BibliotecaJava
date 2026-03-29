@@ -4,7 +4,7 @@ import Aplicacao.Interfaces.*;
 import Dominio.Modelos.Livro;
 import Dominio.Entidades.*;
 
-public class ServicoBiblioteca implements ICasodeUso {
+public class ServicoBiblioteca implements IServico {
 
     IRepositorio repositorio;
     ListaDeLivros listaLivros;

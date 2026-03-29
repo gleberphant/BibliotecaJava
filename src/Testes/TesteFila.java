@@ -2,7 +2,7 @@
 // FIFO = FIRST IN FIRST OUT
 
 
-package Infraestrutura.Testes;
+package Testes;
 
 
 import EstruturasLineares.*;

@@ -1,7 +1,7 @@
 // DEMONSTRAÇÃO DE LISTA ENCADEADA
 // 
 
-package Infraestrutura.Testes;
+package Testes;
 
 import Infraestrutura.EstruturasDeDados.Listas.ListaEncadeada;
 

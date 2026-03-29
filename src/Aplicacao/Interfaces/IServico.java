@@ -1,10 +1,9 @@
 package Aplicacao.Interfaces;
 
-import Adaptadores.Repositorios.IRepositorio;
 import Dominio.Modelos.Livro;
 
 
-public interface ICasodeUso{
+public interface IServico{
 
     public void Config(IRepositorio repositorio);
 

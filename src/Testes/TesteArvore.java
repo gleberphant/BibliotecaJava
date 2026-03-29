@@ -1,4 +1,4 @@
-package Infraestrutura.Testes;
+package Testes;
 import EstruturasNaoLineares.*;
 import Nos.NoArvore;
 public class TesteArvore {

@@ -1,14 +1,14 @@
-package Infraestrutura.Testes;
+package Testes;
 
 import EstruturasNaoLineares.*;
 import MinhasInterfaces.InterfaceGrafo;
 
-public class TesteGrafosLista {
+public class TesteGrafosHash {
     public static void main(String[] args) {
 
         int itens[] = { 1, 2, 3, 4, 5, 6, 7 };
 
-        IGrafo g = new GrafoLista();
+        IGrafo g = new GrafoHash();
 
         System.out.println("\n Grafo do tipo: " + g.getClass());
 
