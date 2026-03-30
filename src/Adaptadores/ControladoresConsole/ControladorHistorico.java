@@ -1,12 +1,18 @@
 package Adaptadores.ControladoresConsole;
 
+import java.util.Scanner;
+
 import Aplicacao.Interfaces.IControlador;
 import Aplicacao.Interfaces.IServico;
 
-public class ControladorHistorico implements IControlador {
-    public IServico servico;
+import Dominio.Modelos.Usuario;
 
-    public ControladorHistorico(IServico servico) {
+public class ControladorHistorico implements IControlador {
+    public IServico<Usuario> servico;
+    private final Scanner scanner;
+
+    public ControladorHistorico(IServico<Usuario> servico, Scanner scanner) {
+        this.scanner = scanner;
         this.servico = servico;
     }
 

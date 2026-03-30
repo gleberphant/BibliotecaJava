@@ -1,6 +1,7 @@
 package Aplicacao.Interfaces;
 
 import java.util.Map;
+import java.util.Scanner;
 
 public interface IComando {
 
@@ -11,6 +12,10 @@ public interface IComando {
     public IComando Roteamento(int select);
 
     public Map<Integer, String> GetMenu();
+
+    public IComando SetScanner(Scanner in);
+
+    public Scanner GetScanner();
 
     public String GetTitulo();
 

@@ -7,6 +7,7 @@ public class Fila<T> extends Lista<T> {
     }
 
     // FIFO - inserir no fim pq a retirada é sempre do topo
+    @Override
     public boolean Inserir(T dado) {
         lista.InserirFim(dado);
         return true;

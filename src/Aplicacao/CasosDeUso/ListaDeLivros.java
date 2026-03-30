@@ -1,25 +1,30 @@
-package Dominio.Entidades;
+package Aplicacao.CasosDeUso;
 
 import Dominio.EstruturasDeDados.Listas.ListaEncadeada;
 import Dominio.Modelos.Livro;
+import Aplicacao.Interfaces.*;
 
-public class ListaDeLivros {
+public class ListaDeLivros implements IServico<Livro> {
 
+    IRepositorio repositorio;
     ListaEncadeada<Livro> listaLivros;
 
-    public ListaDeLivros() {
+    public ListaDeLivros(IRepositorio repositorio) {
         listaLivros = new ListaEncadeada<Livro>();
+        this.repositorio = repositorio;
 
     }
 
-    public Boolean AdicionarLivro(Livro novo) {
+    @Override
+    public Boolean Adicionar(Livro novo) {
 
         novo.ID = listaLivros.Tamanho() == 0 ? 0 : listaLivros.GetUltimo().ID + 1;
         listaLivros.Inserir(novo);
         return true;
     }
 
-    public Livro VisualizarLivro(int ID) {
+    @Override
+    public Livro Visualizar(int ID) {
 
         for (var livro : listaLivros) {
             if (livro.ID == ID) {
@@ -30,7 +35,8 @@ public class ListaDeLivros {
         return null;
     }
 
-    public Livro[] ListarLivros() {
+    @Override
+    public Livro[] Listar() {
         int indice = 0;
         Livro[] livros = new Livro[listaLivros.Tamanho()];
 
@@ -42,7 +48,8 @@ public class ListaDeLivros {
         return livros;
     }
 
-    public Boolean EditarLivro(Livro novo) {
+    @Override
+    public Boolean Editar(Livro novo) {
 
         int indice = 0;
 
@@ -59,7 +66,8 @@ public class ListaDeLivros {
 
     }
 
-    public Boolean RemoverLivro(int ID) {
+    @Override
+    public Boolean Remover(int ID) {
         int indice = 0;
 
         for (var livro : listaLivros) {

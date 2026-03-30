@@ -10,7 +10,7 @@ public class ConsoleUI {
     private final Stack<IComando> historico;
 
     public ConsoleUI(IComando menuRaiz) {
-        this.scanner = new Scanner(System.in);
+        this.scanner = menuRaiz.GetScanner();
         this.historico = new Stack<>();
         this.historico.push(menuRaiz);
     }

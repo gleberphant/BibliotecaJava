@@ -7,11 +7,11 @@ import Aplicacao.Interfaces.IServico;
 import Dominio.Modelos.Livro;
 
 public class ControladorLivro implements IControlador {
-    public IServico servico;
+    public IServico<Livro> servico;
     private final Scanner scanner;
 
-    public ControladorLivro(IServico servico) {
-        this.scanner = new Scanner(System.in);
+    public ControladorLivro(IServico<Livro> servico, Scanner scanner) {
+        this.scanner = scanner;
         this.servico = servico;
     }
 
@@ -22,11 +22,12 @@ public class ControladorLivro implements IControlador {
         System.out.print("Digite nome do livro: ");
         String titulo = scanner.nextLine();// ler titulo
         System.out.print("Digite autor do livro: ");
-        String autor = scanner.nextLine();;// ler autor
-        
+        String autor = scanner.nextLine();
+        ;// ler autor
+
         int ano = 2026;// ler ano
 
-        servico.AdicionarLivro(new Livro(titulo, autor, ano));
+        servico.Adicionar(new Livro(titulo, autor, ano));
 
     }
 
@@ -34,9 +35,9 @@ public class ControladorLivro implements IControlador {
 
         System.out.println("Informe o ID do livro para editar");
 
-        int id = 0; // ler dados
+        int id = Integer.parseInt(scanner.nextLine()); // ler dados
 
-        Livro livroEditado = servico.VisualizarLivro(id);
+        Livro livroEditado = servico.Visualizar(id);
 
         System.out.println("Informe os novos dados do livro");
 
@@ -44,7 +45,7 @@ public class ControladorLivro implements IControlador {
         livroEditado.Autor = "Novo Autor ";// ler autor
         livroEditado.Ano = 0;// ler ano
 
-        servico.EditarLivro(livroEditado);
+        servico.Editar(livroEditado);
 
     }
 
@@ -52,9 +53,9 @@ public class ControladorLivro implements IControlador {
 
         System.out.println("Informe o ID do livro para pesquisar");
 
-        int id = 0; // ler dados
+        int id = Integer.parseInt(scanner.nextLine()); // ler dados
 
-        Livro livro = servico.VisualizarLivro(id);
+        Livro livro = servico.Visualizar(id);
 
         System.out.println("Visualizando o livro > " + id);
         System.out.println(livro);
@@ -63,7 +64,7 @@ public class ControladorLivro implements IControlador {
     public void Listar() {
 
         System.out.println("Listando todos os livros");
-        Livro[] livros = servico.ListarLivros();
+        Livro[] livros = servico.Listar();
 
         for (Livro livro : livros) {
             System.out.println(" ** " + livro.toString() + " ");
@@ -75,9 +76,9 @@ public class ControladorLivro implements IControlador {
 
         System.out.println("Informe o ID do livro para remover");
 
-        int id = 0; // ler dados
+        int id = Integer.parseInt(scanner.nextLine()); // ler dados
 
-        servico.RemoverLivro(id);
+        servico.Remover(id);
 
         System.out.println("Removendo o livro > " + id);
 

@@ -1,16 +1,14 @@
 package Aplicacao.Interfaces;
 
-import Dominio.Modelos.Livro;
+public interface IServico<T> {
 
-public interface IServico {
+    public Boolean Adicionar(T novo);
 
-    public Boolean AdicionarLivro(Livro novo);
+    public T Visualizar(int id);
 
-    public Livro VisualizarLivro(int id);
+    public T[] Listar();
 
-    public Livro[] ListarLivros();
+    public Boolean Editar(T novo);
 
-    public Boolean EditarLivro(Livro novo);
-
-    public Boolean RemoverLivro(int id);
+    public Boolean Remover(int id);
 }

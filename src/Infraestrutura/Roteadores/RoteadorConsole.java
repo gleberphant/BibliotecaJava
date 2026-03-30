@@ -3,6 +3,7 @@ package Infraestrutura.Roteadores;
 import Aplicacao.Interfaces.IComando;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 public class RoteadorConsole implements IComando {
 
@@ -10,12 +11,14 @@ public class RoteadorConsole implements IComando {
     private final Map<Integer, String> descricoes;
     private final Map<Integer, Runnable> acoes;
     private final Map<Integer, IComando> subRoteadores;
+    private Scanner scanner;
 
     public RoteadorConsole(String titulo) {
         this.titulo = titulo;
         this.descricoes = new LinkedHashMap<>();
         this.acoes = new LinkedHashMap<>();
         this.subRoteadores = new LinkedHashMap<>();
+        this.scanner = new Scanner(System.in);
     }
 
     // Injeta Acao de Controlador e segue um padrão Builder
@@ -35,6 +38,11 @@ public class RoteadorConsole implements IComando {
     public IComando adicionarSubMenu(int chave, String texto, IComando proximoRoteador) {
         descricoes.put(chave, texto);
         subRoteadores.put(chave, proximoRoteador);
+        return this;
+    }
+
+    public IComando SetScanner(Scanner in) {
+        this.scanner = in;
         return this;
     }
 
@@ -62,6 +70,10 @@ public class RoteadorConsole implements IComando {
 
     public Map<Integer, String> GetMenu() {
         return descricoes;
+    }
+
+    public Scanner GetScanner() {
+        return scanner;
     }
 
     public String GetTitulo() {

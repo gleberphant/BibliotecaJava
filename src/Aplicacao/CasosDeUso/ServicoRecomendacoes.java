@@ -17,24 +17,24 @@ public class ServicoRecomendacoes implements IServico {
         this.repositorio = repositorio;
     }
 
-    public Boolean AdicionarLivro(Livro novo) {
-        listaLivros.AdicionarLivro(novo);
+    public Boolean Adicionar(Livro novo) {
+        listaLivros.Adicionar(novo);
         return true;
     }
 
-    public Livro VisualizarLivro(int id) {
-        return listaLivros.VisualizarLivro(id);
+    public Livro Visualizar(int id) {
+        return listaLivros.Visualizar(id);
     }
 
-    public Livro[] ListarLivros() {
-        return listaLivros.ListarLivros();
+    public Livro[] Listar() {
+        return listaLivros.Listar();
     }
 
-    public Boolean EditarLivro(Livro novo) {
-        return listaLivros.EditarLivro(novo);
+    public Boolean Editar(Livro novo) {
+        return listaLivros.Editar(novo);
     }
 
-    public Boolean RemoverLivro(int id) {
-        return listaLivros.RemoverLivro(id);
+    public Boolean Remover(int id) {
+        return listaLivros.Remover(id);
     }
 }
