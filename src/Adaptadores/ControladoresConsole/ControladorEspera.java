@@ -2,8 +2,7 @@ package Adaptadores.ControladoresConsole;
 
 import java.util.Scanner;
 
-import Aplicacao.Interfaces.IControlador;
-import Aplicacao.Interfaces.IServico;
+import Aplicacao.CasosDeUso.IServico;
 import Dominio.Modelos.Livro;
 import Dominio.Modelos.Usuario;
 

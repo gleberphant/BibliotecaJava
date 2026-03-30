@@ -10,7 +10,7 @@ import Adaptadores.ControladoresConsole.ControladorUsuario;
 import Adaptadores.Repositorios.PersistenciaEmMemoria;
 import Aplicacao.CasosDeUso.ListaDeLivros;
 import Aplicacao.CasosDeUso.ListaDeUsuarios;
-import Aplicacao.Interfaces.IComando;
+import Infraestrutura.Roteadores.IComando;
 import Infraestrutura.Roteadores.RoteadorConsole;
 
 public class ConfigConsoleMenu {

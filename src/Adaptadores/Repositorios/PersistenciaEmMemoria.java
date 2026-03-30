@@ -1,6 +1,5 @@
 package Adaptadores.Repositorios;
 
-import Aplicacao.Interfaces.IRepositorio;
 import Dominio.Modelos.Livro;
 
 public class PersistenciaEmMemoria implements IRepositorio {

@@ -1,4 +1,4 @@
-package Aplicacao.Interfaces;
+package Aplicacao.CasosDeUso;
 
 public interface IServico<T> {
 

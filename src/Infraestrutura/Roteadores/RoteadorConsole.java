@@ -1,6 +1,5 @@
 package Infraestrutura.Roteadores;
 
-import Aplicacao.Interfaces.IComando;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Scanner;

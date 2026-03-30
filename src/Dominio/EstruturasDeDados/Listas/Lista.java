@@ -30,7 +30,7 @@ public class Lista<T> implements Iterable<T> {
 
     // remove proximo item
     public void Remover() {
-        lista.Remover(0);
+        lista.RemoverNo(0);
     }
 
     public int Tamanho() {

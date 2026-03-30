@@ -2,8 +2,7 @@ package Aplicacao.CasosDeUso;
 
 import java.util.ArrayList;
 
-import Aplicacao.Interfaces.IRepositorio;
-import Aplicacao.Interfaces.IServico;
+import Adaptadores.Repositorios.IRepositorio;
 import Dominio.Modelos.Usuario;
 
 public class ListaDeUsuarios implements IServico<Usuario> {

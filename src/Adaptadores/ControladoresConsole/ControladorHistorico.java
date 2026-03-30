@@ -2,9 +2,7 @@ package Adaptadores.ControladoresConsole;
 
 import java.util.Scanner;
 
-import Aplicacao.Interfaces.IControlador;
-import Aplicacao.Interfaces.IServico;
-
+import Aplicacao.CasosDeUso.IServico;
 import Dominio.Modelos.Usuario;
 
 public class ControladorHistorico implements IControlador {

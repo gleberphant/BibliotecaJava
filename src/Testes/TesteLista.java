@@ -17,11 +17,10 @@ public class TesteLista {
         myList.InserirInicio(4);
 
         // percorre toda a lista
-        while (true) {
+
+        for (var item : myList) {
+            System.out.println(">>>" + item);
             
-            System.out.println("::" + myList.GetDadoAtual());
-            if (!myList.MoverPonteiro())
-                break;
         }
 
     }

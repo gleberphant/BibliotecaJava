@@ -1,4 +1,4 @@
-package Aplicacao.Interfaces;
+package Adaptadores.ControladoresConsole;
 
 
 public interface IControlador {

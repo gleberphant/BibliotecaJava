@@ -1,7 +1,7 @@
 package Main;
 
-import Aplicacao.Interfaces.IComando;
 import Infraestrutura.Config.ConfigConsoleMenu;
+import Infraestrutura.Roteadores.IComando;
 import Infraestrutura.UI.ConsoleUI;
 
 public class Main {

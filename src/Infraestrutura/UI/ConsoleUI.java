@@ -1,9 +1,10 @@
 package Infraestrutura.UI;
 
-import Aplicacao.Interfaces.IComando;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Stack;
+
+import Infraestrutura.Roteadores.IComando;
 
 public class ConsoleUI {
     private final Scanner scanner;

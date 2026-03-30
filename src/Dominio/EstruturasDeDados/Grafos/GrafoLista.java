@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class GrafoLista<T> {
 
-    public record Aresta<T>(T origem, T destino, double peso) {
+    public record Aresta<T>(T origem, T destino, int peso) {
     }
 
     ArrayList<T> ListaNos;
@@ -51,11 +51,12 @@ public class GrafoLista<T> {
         // procura se a aresta existe ,
         for (int i = 0; i < ListaArestas.size(); i++) {
 
-            ArestaGrafo temp = ListaArestas.get(i);
+            Aresta<T> temp = ListaArestas.get(i);
 
             // se encontrar a areas entao aumenta o peso e retorna
-            if (temp.No1 == no1 && temp.No2 == no2) {
-                temp.Peso++;
+            if (temp.origem == no1 && temp.destino == no2) {
+
+                ListaArestas.set(i, new Aresta<T>(no1, no2, temp.peso + 1));
                 return;
             }
         }
@@ -82,8 +83,8 @@ public class GrafoLista<T> {
         mensagem.append("Vértices \n");
 
         for (int i = 0; i < ListaArestas.size(); i++) {
-            ArestaGrafo temp = ListaArestas.get(i);
-            mensagem.append("   (" + temp.No1.data + " -- " + temp.No2.data + ")" + " Peso:" + temp.Peso + "\n");
+            Aresta<T> temp = ListaArestas.get(i);
+            mensagem.append("   (" + temp.origem + " -- " + temp.destino + ")" + " Peso:" + temp.peso + "\n");
 
         }
 

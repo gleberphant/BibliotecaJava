@@ -2,7 +2,8 @@ package Aplicacao.CasosDeUso;
 
 import Dominio.EstruturasDeDados.Listas.ListaEncadeada;
 import Dominio.Modelos.Livro;
-import Aplicacao.Interfaces.*;
+import Adaptadores.Repositorios.IRepositorio;
+
 
 public class ListaDeLivros implements IServico<Livro> {
 

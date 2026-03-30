@@ -1,4 +1,4 @@
-package Aplicacao.Interfaces;
+package Adaptadores.Repositorios;
 import Dominio.Modelos.Livro;
 
 public interface IRepositorio{
