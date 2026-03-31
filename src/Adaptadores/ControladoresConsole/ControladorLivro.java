@@ -2,17 +2,17 @@ package Adaptadores.ControladoresConsole;
 
 import java.util.Scanner;
 
-import Aplicacao.CasosDeUso.ListaDeLivros;
-import Aplicacao.CasosDeUso.ListaDeUsuarios;
+import Aplicacao.CasosDeUso.ServicoLivros;
+import Aplicacao.CasosDeUso.ServicoUsuarios;
 import Dominio.Modelos.Livro;
 import Dominio.Modelos.Usuario;
 
 public class ControladorLivro implements IControlador {
-    public ListaDeLivros servicoLivros;
-    public ListaDeUsuarios servicoUsuarios;
+    public ServicoLivros servicoLivros;
+    public ServicoUsuarios servicoUsuarios;
     private final Scanner scanner;
 
-    public ControladorLivro(ListaDeLivros servicoLivros, ListaDeUsuarios servicoUsuarios, Scanner scanner) {
+    public ControladorLivro(ServicoLivros servicoLivros, ServicoUsuarios servicoUsuarios, Scanner scanner) {
         this.scanner = scanner;
         this.servicoLivros = servicoLivros;
     }
@@ -41,7 +41,7 @@ public class ControladorLivro implements IControlador {
         if (livro == null)
             return;
 
-        System.out.println(livro);
+        System.out.println(livro.toString());
 
     }
 
@@ -66,7 +66,6 @@ public class ControladorLivro implements IControlador {
 
     }
 
-    /// controle de emprestimos
     // Adcionar um empréstimo
     public void Emprestar() {
         // Try Catch para capturar o erro de conversão para inteiro
@@ -83,17 +82,16 @@ public class ControladorLivro implements IControlador {
 
             // procurar o usuario
             System.out.println("Informe o ID do USUARIO que deseja pegar o livro");
-            int idUsuario = Integer.parseInt(scanner.nextLine());
-            Usuario usuario = servicoUsuarios.Visualizar(idUsuario);
+            Usuario usuario = servicoUsuarios.Visualizar(Integer.parseInt(scanner.nextLine()));
 
             if (usuario == null) {
                 System.out.println("O usuario procurado não existe");
                 return;
-            } else
-                System.out.println(usuario.toString());
+            }
+            System.out.println(usuario.toString());
 
             // Realizar o empréstimo
-            if (servicoLivrosLivros.Emprestar(livro, usuario)) {
+            if (servicoLivros.Emprestar(livro, usuario)) {
                 System.out.println("livro emprestado");
             } else {
                 System.out.println("usuario inserido na lista de espera");
@@ -103,7 +101,7 @@ public class ControladorLivro implements IControlador {
             System.out.println("Digite uma numeração válida para o ID: " + e.getMessage());
             return;
         } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
+            System.out.println("Algo não deu certo: " + e.getMessage());
             return;
         }
 
@@ -111,13 +109,15 @@ public class ControladorLivro implements IControlador {
 
     // Devolver empréstimo
     public void Devolver() {
-        // procurar o livro para devolver
-        System.out.println("Informe o ID do LIVRO para devolver");
-        int idLivro = Integer.parseInt(scanner.nextLine()); // ler dados
-        Livro livro = servicoLivrosLivros.Visualizar(idLivro);
+
+        Livro livro = getLivro();
+
+        if (livro == null) {
+            return;
+        }
         System.out.println(livro.toString());
 
-        servicoLivrosLivros.Devolver(livro);
+        servicoLivros.Devolver(livro);
         System.out.println("Livro devolvido");
 
     }
@@ -140,7 +140,7 @@ public class ControladorLivro implements IControlador {
 
     public void ListarEmprestimos() {
 
-        for (var livro : servicoLivrosLivros.Listar()) {
+        for (var livro : servicoLivros.Listar()) {
 
             System.out.print("\n Livro " + livro.toString() + " FILA > ");
 
@@ -181,32 +181,6 @@ public class ControladorLivro implements IControlador {
             return null;
         }
 
-    }
-
-    private Usuario getUsuario() {
-        System.out.println("Informe o ID do usuario para pesquisar");
-
-        try {
-            Usuario usuario = servicoUsuarios.Visualizar(scanner.nextLine());
-            System.out.println("Usuario Encontrado");
-            return usuario;
-
-        } catch (Exception e) {
-            System.out.println("Algo não deu certo: " + e.getMessage());
-            return null;
-        }
-
-    }
-
-    private void setUsuario(int ID) {
-        System.out.println("Informe os dados do usuario");
-        String id = String.valueOf(ID);
-        System.out.print("Digite nome : ");
-        String nome = scanner.nextLine();// ler titulo
-        System.out.print("Digite CPF : ");
-        String cpf = scanner.nextLine();
-
-        servicoLivros.Editar(id, nome, cpf);
     }
 
 }

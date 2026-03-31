@@ -2,60 +2,50 @@ package Adaptadores.ControladoresConsole;
 
 import java.util.Scanner;
 
-import Aplicacao.CasosDeUso.IServico;
+import Aplicacao.CasosDeUso.ServicoUsuarios;
+import Dominio.Modelos.Livro;
 import Dominio.Modelos.Usuario;
 
 public class ControladorUsuario implements IControlador {
-    public IServico<Usuario> servico;
+    public ServicoUsuarios servicoUsuarios;
     private final Scanner scanner;
 
-    public ControladorUsuario(IServico<Usuario> servico, Scanner scanner) {
+    public ControladorUsuario(ServicoUsuarios servicoUsuarios, Scanner scanner) {
         this.scanner = scanner;
-        this.servico = servico;
+        this.servicoUsuarios = servicoUsuarios;
     }
 
     public void Adicionar() {
 
-        System.out.println("Informe os dados do USUÁRIO");
-
-        System.out.print("Digite nome do Usuario ");
-        String nome = scanner.nextLine();
-        servico.Adicionar(new Usuario(nome));
+        setUsuario(servicoUsuarios.Adicionar(new Usuario()));
 
     }
 
     public void Editar() {
 
-        System.out.println("Informe o ID do USUARIO para editar");
+        Usuario usuario = getUsuario();
 
-        int id = Integer.parseInt(scanner.nextLine()); // ler dados
+        if (usuario == null)
+            return;
 
-        Usuario usuarioEditado = servico.Visualizar(id);
-
-        System.out.println("Informe os novos dados do USUÁRIO");
-
-        usuarioEditado.Nome = scanner.nextLine();
-
-        servico.Editar(usuarioEditado);
+        setUsuario(usuario.ID);
 
     }
 
     public void Visualizar() {
 
-        System.out.println("Informe o ID do USUÁRIO para pesquisar");
+        Usuario usuario = getUsuario();
 
-        int id = Integer.parseInt(scanner.nextLine()); // ler dados
+        if (usuario == null)
+            return;
 
-        Usuario usuario = servico.Visualizar(id);
-
-        System.out.println("Visualizando o USUÁRIO > " + id);
-        System.out.println(usuario);
+        System.out.println(usuario.toString());
     }
 
     public void Listar() {
 
         System.out.println("Listando todos os usuarios");
-        Usuario[] listUsuarios = servico.Listar();
+        Usuario[] listUsuarios = servicoUsuarios.Listar();
 
         for (Usuario usuario : listUsuarios) {
             System.out.println(usuario.toString());
@@ -67,12 +57,37 @@ public class ControladorUsuario implements IControlador {
 
         System.out.println("Informe o ID do usuario para remover");
 
-        int id = Integer.parseInt(scanner.nextLine()); // ler dados
+        servicoUsuarios.Remover(scanner.nextLine());
 
-        servico.Remover(id);
+        System.out.println("Removendo o usuario ");
 
-        System.out.println("Removendo o usuario > " + id);
+    }
 
+    private Usuario getUsuario() {
+        System.out.println("Informe o ID do usuario para pesquisar");
+
+        try {
+            Usuario usuario = servicoUsuarios.Visualizar(scanner.nextLine());
+            System.out.println("Usuario Encontrado");
+            return usuario;
+
+        } catch (Exception e) {
+            System.out.println("Algo não deu certo: " + e.getMessage());
+            return null;
+        }
+
+    }
+
+    private void setUsuario(int ID) {
+
+        System.out.println("Informe os dados do usuario");
+        String id = String.valueOf(ID);
+        System.out.print("Digite nome : ");
+        String nome = scanner.nextLine();// ler titulo
+        System.out.print("Digite CPF : ");
+        String cpf = scanner.nextLine();
+
+        servicoUsuarios.Editar(id, nome, cpf);
     }
 
 }

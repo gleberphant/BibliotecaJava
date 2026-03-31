@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 import Adaptadores.ControladoresConsole.*;
 import Adaptadores.Repositorios.PersistenciaEmMemoria;
-import Aplicacao.CasosDeUso.ListaDeUsuarios;
+import Aplicacao.CasosDeUso.ServicoUsuarios;
 
 import Dominio.Modelos.Usuario;
 
@@ -15,7 +15,7 @@ public class TesteServicoUsuario {
         System.out.println("REALIZANDO TESTES DAS FUNCIONALDIADES DA APLICAÇÃO");
         // configura aplicação
         ControladorUsuario app = new ControladorUsuario(
-                new ListaDeUsuarios(new PersistenciaEmMemoria()),
+                new ServicoUsuarios(new PersistenciaEmMemoria()),
                 new Scanner(System.in));
 
         int numItens = 5;

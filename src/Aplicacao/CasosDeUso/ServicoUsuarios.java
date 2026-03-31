@@ -3,24 +3,23 @@ package Aplicacao.CasosDeUso;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
-import Adaptadores.Repositorios.IRepositorio;
-
+import Adaptadores.Repositorios.EstruturasDeDados.Listas.ListaEncadeada;
+import Dominio.Modelos.Livro;
 import Dominio.Modelos.Usuario;
 
-public class ListaDeUsuarios {
-    ArrayList<Usuario> listaUsuarios;
-    IRepositorio repositorio;
-
-    public ListaDeUsuarios(IRepositorio repositorio) {
-        listaUsuarios = new ArrayList<Usuario>();
-        this.repositorio = repositorio;
+public class ServicoUsuarios {
+    ListaEncadeada<Usuario> repositorioUsuarios;
+    
+    public ServicoUsuarios() {
+        repositorioUsuarios = new ListaEncadeada<Usuario> ();
+       
 
     }
 
-    public Boolean Adicionar(Usuario novo) {
-        novo.ID = (listaUsuarios.size() == 0) ? 0 : listaUsuarios.getLast().ID + 1;
-        listaUsuarios.add(novo);
-        return true;
+    public int Adicionar(Usuario novo) {
+        novo.ID = (repositorioUsuarios.Tamanho() == 0) ? 0 : repositorioUsuarios.getLast().ID + 1;
+        repositorioUsuarios.Inserir(novo);
+        return novo.ID;
 
     }
 
@@ -34,7 +33,7 @@ public class ListaDeUsuarios {
     }
 
     public Usuario Visualizar(int ID) {
-        for (Usuario usuario : listaUsuarios) {
+        for (Usuario usuario : repositorioUsuarios) {
             if (usuario.ID == ID) {
                 return usuario;
             }
@@ -46,9 +45,9 @@ public class ListaDeUsuarios {
 
     public Usuario[] Listar() {
         int indice = 0;
-        Usuario[] lista = new Usuario[listaUsuarios.size()];
+        Usuario[] lista = new Usuario[repositorioUsuarios.Tamanho()];
 
-        for (var usuario : listaUsuarios) {
+        for (var usuario : repositorioUsuarios) {
             lista[indice] = usuario;
             indice++;
         }
@@ -60,7 +59,7 @@ public class ListaDeUsuarios {
     public Boolean Editar(String stringID, String nome, String cpf) {
 
         int ID = validaID(stringID);
-        for (var usuario : listaUsuarios) {
+        for (var usuario : repositorioUsuarios) {
 
             if (usuario.ID == ID) {
                 usuario.Nome = nome;
@@ -80,10 +79,10 @@ public class ListaDeUsuarios {
 
         int indice = 0;
 
-        for (var usuario : listaUsuarios) {
+        for (var usuario : repositorioUsuarios) {
 
             if (usuario.ID == ID) {
-                listaUsuarios.remove(indice);
+                repositorioUsuarios.RemoverNo(indice);
                 return;
             }
             indice++;

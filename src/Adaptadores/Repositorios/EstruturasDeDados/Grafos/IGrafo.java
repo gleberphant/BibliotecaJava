@@ -1,4 +1,4 @@
-package Dominio.EstruturasDeDados.Grafos;
+package Adaptadores.Repositorios.EstruturasDeDados.Grafos;
 
 public interface IGrafo<T>{
 

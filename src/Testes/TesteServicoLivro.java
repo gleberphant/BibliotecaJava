@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 import Adaptadores.ControladoresConsole.*;
 import Adaptadores.Repositorios.PersistenciaEmMemoria;
-import Aplicacao.CasosDeUso.ListaDeLivros;
+import Aplicacao.CasosDeUso.ServicoLivros;
 
 import Dominio.Modelos.Livro;
 
@@ -15,7 +15,7 @@ public class TesteServicoLivro {
         System.out.println("REALIZANDO TESTES DAS FUNCIONALDIADES DA APLICAÇÃO");
         // configura aplicação
         ControladorLivro app = new ControladorLivro(
-                new ListaDeLivros(new PersistenciaEmMemoria()),
+                new ServicoLivros(new PersistenciaEmMemoria()),
                 new Scanner(System.in));
 
         int numItens = 5;

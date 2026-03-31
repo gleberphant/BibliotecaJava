@@ -1,4 +1,4 @@
-package Dominio.EstruturasDeDados.Listas;
+package Adaptadores.Repositorios.EstruturasDeDados.Listas;
 
 import java.util.Iterator;
 

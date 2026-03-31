@@ -1,28 +1,27 @@
 package Aplicacao.CasosDeUso;
 
-import Dominio.EstruturasDeDados.Listas.ListaEncadeada;
 import Dominio.Modelos.Livro;
 import Dominio.Modelos.Usuario;
 
 import java.util.NoSuchElementException;
 
-import Adaptadores.Repositorios.IRepositorio;
 
-public class ListaDeLivros {
+import Adaptadores.Repositorios.EstruturasDeDados.Listas.ListaEncadeada;
 
-    IRepositorio repositorio;
-    ListaEncadeada<Livro> listaLivros;
+public class ServicoLivros {
 
-    public ListaDeLivros(IRepositorio repositorio) {
-        listaLivros = new ListaEncadeada<Livro>();
-        this.repositorio = repositorio;
+    ListaEncadeada<Livro> repositorioLivros;
+
+    public ServicoLivros() {
+        
+
     }
 
     // RETORNA O ID DO NOVO LIVRO
     public int Adicionar(Livro novo) {
 
-        novo.ID = listaLivros.Tamanho() == 0 ? 0 : listaLivros.GetUltimo().ID + 1;
-        listaLivros.Inserir(novo);
+        novo.ID = repositorioLivros.Tamanho() == 0 ? 0 : repositorioLivros.GetUltimo().ID + 1;
+        repositorioLivros.Inserir(novo);
         return novo.ID;
     }
 
@@ -38,7 +37,7 @@ public class ListaDeLivros {
 
     public Livro Visualizar(int ID) {
 
-        for (Livro livro : listaLivros) {
+        for (Livro livro : repositorioLivros) {
             if (livro.ID == ID) {
                 return livro;
             }
@@ -50,9 +49,9 @@ public class ListaDeLivros {
 
     public Livro[] Listar() {
         int indice = 0;
-        Livro[] livros = new Livro[listaLivros.Tamanho()];
+        Livro[] livros = new Livro[repositorioLivros.Tamanho()];
 
-        for (var livro : listaLivros) {
+        for (var livro : repositorioLivros) {
             livros[indice] = livro;
             indice++;
         }
@@ -63,7 +62,7 @@ public class ListaDeLivros {
     public Boolean Editar(String stringID, String titulo, String autor, String ano) {
 
         int ID = validaID(stringID);
-        for (var livro : listaLivros) {
+        for (var livro : repositorioLivros) {
 
             if (livro.ID == ID) {
                 livro.Titulo = titulo;
@@ -84,10 +83,10 @@ public class ListaDeLivros {
 
         int indice = 0;
 
-        for (var livro : listaLivros) {
+        for (var livro : repositorioLivros) {
 
             if (livro.ID == ID) {
-                listaLivros.RemoverNo(indice);
+                repositorioLivros.RemoverNo(indice);
                 return;
             }
             indice++;

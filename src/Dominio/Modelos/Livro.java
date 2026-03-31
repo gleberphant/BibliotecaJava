@@ -1,8 +1,8 @@
 package Dominio.Modelos;
 
-import Dominio.EstruturasDeDados.Listas.Fila;
-
 import java.lang.Comparable;
+
+import Adaptadores.Repositorios.EstruturasDeDados.Listas.Fila;
 
 public class Livro implements Comparable<Livro> {
 

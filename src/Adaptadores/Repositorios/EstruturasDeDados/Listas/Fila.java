@@ -1,4 +1,4 @@
-package Dominio.EstruturasDeDados.Listas;
+package Adaptadores.Repositorios.EstruturasDeDados.Listas;
 
 public class Fila<T> extends Lista<T> {
 

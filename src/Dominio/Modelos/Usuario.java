@@ -1,7 +1,7 @@
 package Dominio.Modelos;
 
-import Aplicacao.CasosDeUso.ListaDeLivros;
-import Dominio.EstruturasDeDados.Listas.Lista;
+import Adaptadores.Repositorios.EstruturasDeDados.Listas.Lista;
+import Aplicacao.CasosDeUso.ServicoLivros;
 
 public class Usuario implements Comparable<Usuario> {
 

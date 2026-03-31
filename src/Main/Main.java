@@ -2,14 +2,14 @@ package Main;
 
 import java.util.Scanner;
 
-import Adaptadores.ControladoresConsole.ControladorEmprestimos;
+
 import Adaptadores.ControladoresConsole.ControladorHistorico;
 import Adaptadores.ControladoresConsole.ControladorLivro;
 import Adaptadores.ControladoresConsole.ControladorRecomendacoes;
 import Adaptadores.ControladoresConsole.ControladorUsuario;
-import Adaptadores.Repositorios.PersistenciaEmMemoria;
-import Aplicacao.CasosDeUso.ListaDeLivros;
-import Aplicacao.CasosDeUso.ListaDeUsuarios;
+
+import Aplicacao.CasosDeUso.ServicoLivros;
+import Aplicacao.CasosDeUso.ServicoUsuarios;
 import Infraestrutura.Roteadores.RoteadorConsole;
 import Infraestrutura.UI.ConsoleUI;
 
@@ -27,8 +27,8 @@ public class Main {
         var entrada = new Scanner(System.in);
 
         // configurar servicos
-        var servicoLivros = new ListaDeLivros(new PersistenciaEmMemoria());
-        var servicoUsuarios = new ListaDeUsuarios(new PersistenciaEmMemoria());
+        var servicoLivros = new ServicoLivros();
+        var servicoUsuarios = new ServicoUsuarios();
 
         // configurar controladores
         var controleLivros = new ControladorLivro(servicoLivros,servicoUsuarios, entrada);
