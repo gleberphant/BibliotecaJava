@@ -37,6 +37,10 @@ public class Lista<T> implements Iterable<T> {
         return lista.Tamanho();
     }
 
+    public String toString(){
+        return lista.toString();
+    }
+
     // percorre a fila sem remover
     public Iterator<T> iterator() {
         // a iteração segue normal pq estou inserindo no fim da lista

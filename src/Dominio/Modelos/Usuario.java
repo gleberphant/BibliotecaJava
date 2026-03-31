@@ -1,19 +1,54 @@
 package Dominio.Modelos;
 
 import Aplicacao.CasosDeUso.ListaDeLivros;
+import Dominio.EstruturasDeDados.Listas.Lista;
 
 public class Usuario implements Comparable<Usuario> {
 
     public int ID;
     public String Nome;
-    public ListaDeLivros listaLeituras; // VAI RECEBER LIVROS
+    public String CPF;
+    public Lista<Livro> listaLeituras; // VAI RECEBER LIVROS
 
-    public Usuario(String nome) {
+    public Usuario() {
+        SetUsuario(0, "", "");
+        listaLeituras = new Lista<>();
+    }
+
+    public void SetUsuario(int id, String nome , String cpf) {
+        this.ID = id;
         this.Nome = nome;
+        this.CPF = cpf;
+        listaLeituras = new Lista<>();
     }
 
     public String toString() {
-        return this.ID + " [Nome]:" + this.Nome + " ";
+        int largura = 55;
+
+        String leituras = "Sem leituras";
+
+        if (this.listaLeituras.Tamanho() > 0) {
+            StringBuilder sb = new StringBuilder();
+            for (var livro : listaLeituras) {
+                sb.append(livro.Titulo);
+            }
+        }
+
+        return String.format(
+                """
+                         %s
+                        | ID         : %-40s |
+                        | Nome       : %-40s |
+                        | CPF        : %-40s |
+                        | Leituras   : %-40s |
+                         %s
+                        """,
+                "-".repeat(largura),
+                this.ID,
+                this.Nome,
+                this.CPF,
+                leituras,
+                "-".repeat(largura));
     }
 
     @Override

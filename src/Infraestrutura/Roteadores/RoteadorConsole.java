@@ -4,12 +4,12 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-public class RoteadorConsole implements IComando {
+public class RoteadorConsole {
 
     private final String titulo;
     private final Map<Integer, String> descricoes;
     private final Map<Integer, Runnable> acoes;
-    private final Map<Integer, IComando> subRoteadores;
+    private final Map<Integer, RoteadorConsole> subRoteadores;
     private Scanner scanner;
 
     public RoteadorConsole(String titulo) {
@@ -21,7 +21,7 @@ public class RoteadorConsole implements IComando {
     }
 
     // Injeta Acao de Controlador e segue um padrão Builder
-    public IComando adicionarOpcao(int chave, String texto, Runnable acao) {
+    public RoteadorConsole adicionarRota(int chave, String texto, Runnable acao) {
         // Verifica se é um sub-menu (navegação)
         if (subRoteadores.containsKey(chave)) {
             return this;
@@ -34,18 +34,18 @@ public class RoteadorConsole implements IComando {
     }
 
     // injeta subRoteador
-    public IComando adicionarSubMenu(int chave, String texto, IComando proximoRoteador) {
+    public RoteadorConsole adicionarSubRoteador(int chave, String texto, RoteadorConsole proximoRoteador) {
         descricoes.put(chave, texto);
         subRoteadores.put(chave, proximoRoteador);
         return this;
     }
 
-    public IComando SetScanner(Scanner in) {
+    public RoteadorConsole SetScanner(Scanner in) {
         this.scanner = in;
         return this;
     }
 
-    public IComando Roteamento(int opcao) {
+    public RoteadorConsole Roteamento(int opcao) {
         // if (opcao == 0) return null; // Padrão para voltar
 
         // Verifica se é um sub-menu (navegação)

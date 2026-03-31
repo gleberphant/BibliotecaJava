@@ -1,5 +1,6 @@
 package Dominio.EstruturasDeDados.Listas;
 
+import java.lang.reflect.Array;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -100,6 +101,20 @@ public class ListaEncadeada<T> implements Iterable<T> {
 
     public int Tamanho() {
         return tamanho;
+    }
+
+    public String toString(){
+
+        StringBuilder sb = new StringBuilder();
+
+
+        for(var item : this ){
+
+            sb.append(item.toString())
+        }
+
+        return sb.toString();
+        
     }
 
     @Override

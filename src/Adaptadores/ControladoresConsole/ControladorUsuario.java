@@ -58,7 +58,7 @@ public class ControladorUsuario implements IControlador {
         Usuario[] listUsuarios = servico.Listar();
 
         for (Usuario usuario : listUsuarios) {
-            System.out.println(" ** " + usuario.toString() + " ");
+            System.out.println(usuario.toString());
         }
 
     }

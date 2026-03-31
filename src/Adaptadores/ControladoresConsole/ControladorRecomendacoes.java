@@ -2,15 +2,15 @@ package Adaptadores.ControladoresConsole;
 
 import java.util.Scanner;
 
-import Aplicacao.CasosDeUso.IServico;
-import Dominio.Modelos.Livro;
-
+import Aplicacao.CasosDeUso.ListaDeLivros;
+import Aplicacao.CasosDeUso.ListaDeUsuarios;
 
 public class ControladorRecomendacoes implements IControlador {
-    public IServico<Livro> servico;
+        public ListaDeLivros servicoLivros;
+    public ListaDeUsuarios servicoUsuarios;
     private final Scanner scanner;
 
-    public ControladorRecomendacoes(IServico<Livro> servico, Scanner scanner) {
+    public ControladorRecomendacoes(ListaDeLivros servicoLivros, ListaDeUsuarios servicoUsuarios, Scanner scanner) {
         this.scanner = scanner;
         this.servico = servico;
     }

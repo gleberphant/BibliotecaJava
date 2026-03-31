@@ -4,27 +4,51 @@ import Dominio.EstruturasDeDados.Listas.Fila;
 
 import java.lang.Comparable;
 
-
 public class Livro implements Comparable<Livro> {
 
     public Integer ID;
     public String Titulo;
     public String Autor;
     public String Categoria;
-    public int Ano;
+    public String Ano;
 
-    public Fila<Usuario> FilaEspera; // FILA DE ESPERA VAI RECEBER  USUARIOS
+    public Usuario Locador;
+    public Fila<Usuario> FilaEspera; // FILA DE ESPERA VAI RECEBER USUARIOS
 
-    public Livro(String titulo, String autor, int ano) {
-        this.ID = 0;
-        this.Titulo = titulo;
-        this.Autor = autor;
-        this.Ano = ano;
+    public Livro() {
+        SetLivro(0, "titulo", "autor", "ano");
         FilaEspera = new Fila<>();
     }
 
+    public void SetLivro(int id, String titulo, String autor, String ano) {
+        this.ID = id;
+        this.Titulo = titulo;
+        this.Autor = autor;
+        this.Ano = ano;
+
+    }
+
     public String toString() {
-        return this.ID + " [Titulo]:" + this.Titulo + " [Autor]: " + this.Autor + " [Ano]:" + this.Ano + " ";
+        int largura = 55;
+        return String.format(
+                """
+                         %s
+                        | ID         : %-40s |
+                        | Titulo     : %-40s |
+                        | Autor      : %-40s |
+                        | Ano        : %-40s |
+                        | Locado Para: %-40s |
+                        | Fila Espera: %-40s |
+                         %s
+                        """,
+                "-".repeat(largura),
+                this.ID,
+                this.Titulo,
+                this.Autor,
+                this.Ano,
+                (this.Locador != null ? this.Locador.Nome : "Ninguém"),
+                (this.FilaEspera.Tamanho() > 0 ? FilaEspera.toString() : "Sem espera"),
+                "-".repeat(largura));
     }
 
     @Override
