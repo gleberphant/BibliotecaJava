@@ -2,7 +2,7 @@ package Dominio.Modelos;
 
 import java.lang.Comparable;
 
-import Adaptadores.Repositorios.EstruturasDeDados.Listas.Fila;
+import Dominio.EstruturasDeDados.Listas.Fila;
 
 public class Livro implements Comparable<Livro> {
 
@@ -17,7 +17,11 @@ public class Livro implements Comparable<Livro> {
 
     public Livro() {
         SetLivro(0, "titulo", "autor", "ano");
-        FilaEspera = new Fila<>();
+    }
+
+    public Livro(int id, String titulo, String autor, String ano) {
+        SetLivro(id, titulo, autor, ano);
+
     }
 
     public void SetLivro(int id, String titulo, String autor, String ano) {
@@ -25,11 +29,20 @@ public class Livro implements Comparable<Livro> {
         this.Titulo = titulo;
         this.Autor = autor;
         this.Ano = ano;
+        FilaEspera = new Fila<>();
 
     }
 
     public String toString() {
         int largura = 55;
+
+        StringBuilder sb = new StringBuilder();
+
+        for (var usuario : this.FilaEspera) s{
+
+            sb.append(usuario.Nome);
+        }
+
         return String.format(
                 """
                          %s
@@ -47,7 +60,7 @@ public class Livro implements Comparable<Livro> {
                 this.Autor,
                 this.Ano,
                 (this.Locador != null ? this.Locador.Nome : "Ninguém"),
-                (this.FilaEspera.Tamanho() > 0 ? FilaEspera.toString() : "Sem espera"),
+                (this.FilaEspera.Tamanho() > 0 ? sb.toString() : "Sem espera"),
                 "-".repeat(largura));
     }
 

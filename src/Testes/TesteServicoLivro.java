@@ -3,9 +3,10 @@ package Testes;
 import java.util.Scanner;
 
 import Adaptadores.ControladoresConsole.*;
-import Adaptadores.Repositorios.PersistenciaEmMemoria;
+import Adaptadores.Repositorios.EmMemoria.RepositorioLivros;
+import Adaptadores.Repositorios.EmMemoria.RepositorioUsuarios;
 import Aplicacao.CasosDeUso.ServicoLivros;
-
+import Aplicacao.CasosDeUso.ServicoUsuarios;
 import Dominio.Modelos.Livro;
 
 public class TesteServicoLivro {
@@ -14,9 +15,9 @@ public class TesteServicoLivro {
 
         System.out.println("REALIZANDO TESTES DAS FUNCIONALDIADES DA APLICAÇÃO");
         // configura aplicação
-        ControladorLivro app = new ControladorLivro(
-                new ServicoLivros(new PersistenciaEmMemoria()),
-                new Scanner(System.in));
+
+        var servicoLivros = new ServicoLivros(new RepositorioLivros());
+        var servicoUsuarios = new ServicoUsuarios(new RepositorioUsuarios());
 
         int numItens = 5;
 
@@ -24,23 +25,28 @@ public class TesteServicoLivro {
         System.out.println("\nMockando Dados");
         for (int i = 0; i < numItens; i++) {
             System.out.println("Livro " + i + "Autor " + i);
-            app.servico.Adicionar(new Livro("Livro " + i, "Autor " + i, i));
+            servicoLivros.Adicionar(new Livro(i, "Livro " + i, "Autor " + i, ""));
         }
 
         // visualizar
         System.out.println("\nVisualizando Dados");
         for (int i = 0; i < numItens; i++) {
-            System.out.println(app.servico.Visualizar(i));
+            System.out.println(servicoLivros.Visualizar(i));
         }
 
         // remover
         System.out.println("\nRemovendo Dados");
         for (int i = 0; i < numItens - 2; i++) {
 
-            app.servico.Remover(i);
+            servicoLivros.Remover(i);
         }
 
         // listar
+        ControleLivro app = new ControleLivro(
+                servicoLivros,
+                servicoUsuarios,
+                new Scanner(System.in));
+
         System.out.println("\nListar Dados");
         app.Listar();
 

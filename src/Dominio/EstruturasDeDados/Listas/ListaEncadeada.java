@@ -1,4 +1,4 @@
-package Adaptadores.Repositorios.EstruturasDeDados.Listas;
+package Dominio.EstruturasDeDados.Listas;
 
 import java.lang.reflect.Array;
 import java.util.Iterator;
@@ -77,7 +77,7 @@ public class ListaEncadeada<T> implements Iterable<T> {
         return atual;
     }
 
-    public void RemoverNo(int indice) {
+    public void Remover(int indice) {
         if (indice < 0 || indice >= tamanho)
             return;
 
@@ -110,7 +110,7 @@ public class ListaEncadeada<T> implements Iterable<T> {
 
         for(var item : this ){
 
-            sb.append(item.toString())
+            sb.append(item.toString());
         }
 
         return sb.toString();

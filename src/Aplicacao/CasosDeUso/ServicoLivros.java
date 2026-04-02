@@ -5,22 +5,21 @@ import Dominio.Modelos.Usuario;
 
 import java.util.NoSuchElementException;
 
-
-import Adaptadores.Repositorios.EstruturasDeDados.Listas.ListaEncadeada;
+import Aplicacao.Interfaces.IRepositorio;
 
 public class ServicoLivros {
 
-    ListaEncadeada<Livro> repositorioLivros;
+    IRepositorio<Livro> repositorioLivros;
 
-    public ServicoLivros() {
-        
+    public ServicoLivros(IRepositorio<Livro> repositorio) {
+        repositorioLivros = repositorio;
 
     }
 
     // RETORNA O ID DO NOVO LIVRO
     public int Adicionar(Livro novo) {
 
-        novo.ID = repositorioLivros.Tamanho() == 0 ? 0 : repositorioLivros.GetUltimo().ID + 1;
+        novo.ID = repositorioLivros.Tamanho() == 0 ? 0 : repositorioLivros.Ultimo().ID + 1;
         repositorioLivros.Inserir(novo);
         return novo.ID;
     }
@@ -86,7 +85,7 @@ public class ServicoLivros {
         for (var livro : repositorioLivros) {
 
             if (livro.ID == ID) {
-                repositorioLivros.RemoverNo(indice);
+                Remover(indice);
                 return;
             }
             indice++;
@@ -96,23 +95,38 @@ public class ServicoLivros {
 
     }
 
-    public boolean Emprestar(String livroID, Usuario locador) {
-
-        Livro livro = Visualizar(livroID);
-
-        return Emprestar(livro, locador);
-
+    public void Remover(int indice) {
+        repositorioLivros.Remover(indice);
     }
 
-    public boolean Emprestar(Livro livro, Usuario locador) {
+    public int Emprestar(Livro livro, Usuario locador) {
+        // se o livro não estiver com ninguem, empresa pra locador, se o locador for o
+        // proximo da fila então o livro é empresato para ele. senão adiciona o locador
+        // na fila de espera. se o locador ja estiver na fila de esperra não adiciona
 
+        int posicao = 0;
+        // se livro nao tem locador então adiciona
         if (livro.Locador == null) {
             livro.Locador = locador;
-            return true;
-        } else {
-            livro.FilaEspera.Inserir(locador);
-            return false;
+            return posicao;
         }
+        // se locador for proximo da fila, entao passa para ele
+        if (livro.FilaEspera.Topo() == locador) {
+            livro.Locador = livro.FilaEspera.Retirar();
+            return posicao;
+        }
+
+        // procura se locador ja existe na fila. se sim nao adiciona e retorna a posicao
+        // dele
+        for (var usuario : livro.FilaEspera) {
+            if (usuario == locador)
+                return posicao;
+            posicao++;
+        }
+
+        // adiciona usuario na lista de espera e retorna posicao
+        livro.FilaEspera.Inserir(locador);
+        return posicao;
 
     }
 

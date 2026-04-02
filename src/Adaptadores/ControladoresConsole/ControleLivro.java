@@ -4,22 +4,26 @@ import java.util.Scanner;
 
 import Aplicacao.CasosDeUso.ServicoLivros;
 import Aplicacao.CasosDeUso.ServicoUsuarios;
+
 import Dominio.Modelos.Livro;
 import Dominio.Modelos.Usuario;
 
-public class ControladorLivro implements IControlador {
-    public ServicoLivros servicoLivros;
-    public ServicoUsuarios servicoUsuarios;
+public class ControleLivro {
+    private final ServicoLivros servicoLivros;
+    private final ServicoUsuarios servicoUsuarios;
+
     private final Scanner scanner;
 
-    public ControladorLivro(ServicoLivros servicoLivros, ServicoUsuarios servicoUsuarios, Scanner scanner) {
+    public ControleLivro(ServicoLivros servicoLivros, ServicoUsuarios servicoUsuarios, Scanner scanner) {
         this.scanner = scanner;
         this.servicoLivros = servicoLivros;
+        this.servicoUsuarios = servicoUsuarios;
     }
 
     public void Adicionar() {
 
-        setLivro(servicoLivros.Adicionar(new Livro()));
+        int id = servicoLivros.Adicionar(new Livro());
+        setLivro(id);
 
     }
 
@@ -29,9 +33,21 @@ public class ControladorLivro implements IControlador {
 
         if (livro == null)
             return;
-
         setLivro(livro.ID);
 
+    }
+
+    public void setLivro(int id) {
+        System.out.println("Informe os dados do livro");
+
+        System.out.print("Digite nome do livro: ");
+        String titulo = scanner.nextLine();// ler titulo
+        System.out.print("Digite autor do livro: ");
+        String autor = scanner.nextLine();
+        System.out.print("Digite ano do livro: ");
+        String ano = scanner.nextLine();
+
+        servicoLivros.Editar(String.valueOf(id), titulo, autor, ano);
     }
 
     public void Visualizar() {
@@ -58,9 +74,9 @@ public class ControladorLivro implements IControlador {
 
     public void Remover() {
 
-        System.out.println("Informe o ID do livro para remover");
+        Livro livro = getLivro();
 
-        servicoLivros.Remover(scanner.nextLine());
+        servicoLivros.Remover(livro.ID);
 
         System.out.println("Removendo o livro ");
 
@@ -68,38 +84,37 @@ public class ControladorLivro implements IControlador {
 
     // Adcionar um empréstimo
     public void Emprestar() {
-        // Try Catch para capturar o erro de conversão para inteiro
-        try {
 
-            // procurar livro
-            Livro livro = getLivro();
+        // procurar o Livro
+        Livro livro = getLivro();
 
-            if (livro == null) {
-                return;
-            }
-
-            System.out.println(livro.toString());
-
-            // procurar o usuario
-            System.out.println("Informe o ID do USUARIO que deseja pegar o livro");
-            Usuario usuario = servicoUsuarios.Visualizar(Integer.parseInt(scanner.nextLine()));
-
-            if (usuario == null) {
-                System.out.println("O usuario procurado não existe");
-                return;
-            }
-            System.out.println(usuario.toString());
-
-            // Realizar o empréstimo
-            if (servicoLivros.Emprestar(livro, usuario)) {
-                System.out.println("livro emprestado");
-            } else {
-                System.out.println("usuario inserido na lista de espera");
-            }
-
-        } catch (NumberFormatException e) {
-            System.out.println("Digite uma numeração válida para o ID: " + e.getMessage());
+        if (livro == null) {
             return;
+        }
+        System.out.println(livro.toString());
+
+        // procurar o usuario
+        Usuario usuario = ControleUsuario.BuscarUsuario(servicoUsuarios, scanner);
+
+        if (usuario == null) {
+            return;
+        }
+        System.out.println(usuario.toString());
+
+        try {
+            // Realizar o empréstimo
+            int posicao = servicoLivros.Emprestar(livro, usuario);
+            if (posicao == 0) {
+                // se posicao for zero
+                System.out.println("Livro emprestado para " + usuario.Nome);
+
+                // se retorno da posicao for maior que zero
+            } else {
+                System.out.printf("\n O livro encontra-se emprestado para %s ", livro.FilaEspera.Topo().Nome);
+                System.out.printf("\n O usuario %s foi inserido na lista de espera , na posição %d",
+                        livro.FilaEspera.Topo().Nome, posicao);
+            }
+
         } catch (Exception e) {
             System.out.println("Algo não deu certo: " + e.getMessage());
             return;
@@ -115,13 +130,16 @@ public class ControladorLivro implements IControlador {
         if (livro == null) {
             return;
         }
+
         System.out.println(livro.toString());
 
         servicoLivros.Devolver(livro);
-        System.out.println("Livro devolvido");
+        System.out.printf("\nLivro devolvido para biblioteca");
+        System.out.printf("\n Próximo Usuário na fila de espera do livro", livro.FilaEspera.Topo());
 
     }
 
+    //
     public void VisualizarEmprestimos() {
         System.out.println("Informe o ID do LIVRO para procurar");
 
@@ -153,22 +171,14 @@ public class ControladorLivro implements IControlador {
         System.out.print("\n");
     }
 
-    // metodos privados
-
-    private void setLivro(int ID) {
-        System.out.println("Informe os dados do livro");
-        String id = String.valueOf(ID);
-        System.out.print("Digite nome do livro: ");
-        String titulo = scanner.nextLine();// ler titulo
-        System.out.print("Digite autor do livro: ");
-        String autor = scanner.nextLine();
-        System.out.print("Digite ano do livro: ");
-        String ano = scanner.nextLine();
-
-        servicoLivros.Editar(id, titulo, autor, ano);
-    }
+    // metodos staticos
 
     private Livro getLivro() {
+        return BuscarLivro(this.servicoLivros, this.scanner);
+    }
+
+    // metodos staticos
+    public static Livro BuscarLivro(ServicoLivros servicoLivros, Scanner scanner) {
         System.out.println("Informe o ID do livro para pesquisar");
 
         try {

@@ -1,16 +1,14 @@
-package Infraestrutura.UI;
+package Infraestrutura.Console;
 
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Stack;
 
-import Infraestrutura.Roteadores.RoteadorConsole;
-
 public class ConsoleUI {
     private final Scanner scanner;
-    private final Stack<RoteadorConsole> historico;
+    private final Stack<ConsoleRoteador> historico;
 
-    public ConsoleUI(RoteadorConsole menuRaiz) {
+    public ConsoleUI(ConsoleRoteador menuRaiz) {
         this.scanner = menuRaiz.GetScanner();
         this.historico = new Stack<>();
         this.historico.push(menuRaiz);
@@ -18,7 +16,7 @@ public class ConsoleUI {
 
     public void executar() {
         while (!historico.isEmpty()) {
-            RoteadorConsole atual = historico.peek();
+            ConsoleRoteador atual = historico.peek();
             exibirMenu(atual);
             processarEntrada(atual);
         }
@@ -26,7 +24,7 @@ public class ConsoleUI {
         scanner.close();
     }
 
-    private void exibirMenu(RoteadorConsole menu) {
+    private void exibirMenu(ConsoleRoteador menu) {
         String titulo = menu.GetTitulo();
         Map<Integer, String> descricao = menu.GetMenu();
         String linha = "-".repeat(50);
@@ -43,10 +41,10 @@ public class ConsoleUI {
         System.out.print("Escolha uma opção: ");
     }
 
-    private void processarEntrada(RoteadorConsole atual) {
+    private void processarEntrada(ConsoleRoteador atual) {
         try {
             int opcao = Integer.parseInt(scanner.nextLine());
-            RoteadorConsole proximo = atual.Roteamento(opcao);
+            ConsoleRoteador proximo = atual.Roteamento(opcao);
 
             if (proximo == null) {
                 historico.pop();

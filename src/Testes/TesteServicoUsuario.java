@@ -3,9 +3,8 @@ package Testes;
 import java.util.Scanner;
 
 import Adaptadores.ControladoresConsole.*;
-import Adaptadores.Repositorios.PersistenciaEmMemoria;
+import Adaptadores.Repositorios.EmMemoria.RepositorioUsuarios;
 import Aplicacao.CasosDeUso.ServicoUsuarios;
-
 import Dominio.Modelos.Usuario;
 
 public class TesteServicoUsuario {
@@ -14,8 +13,8 @@ public class TesteServicoUsuario {
 
         System.out.println("REALIZANDO TESTES DAS FUNCIONALDIADES DA APLICAÇÃO");
         // configura aplicação
-        ControladorUsuario app = new ControladorUsuario(
-                new ServicoUsuarios(new PersistenciaEmMemoria()),
+        ControleUsuario app = new ControleUsuario(
+                new ServicoUsuarios(new RepositorioUsuarios()),
                 new Scanner(System.in));
 
         int numItens = 5;
@@ -24,20 +23,20 @@ public class TesteServicoUsuario {
         System.out.println("\nMockando Dados");
         for (int i = 0; i < numItens; i++) {
             System.out.println("ID" + i + "Nome " + i);
-            app.servico.Adicionar(new Usuario("Nome " + i));
+            app.servicoUsuarios.Adicionar(new Usuario(i, "Nome ", "cpf"));
         }
 
         // visualizar
         System.out.println("\nVisualizando Dados");
         for (int i = 0; i < numItens; i++) {
-            System.out.println(app.servico.Visualizar(i));
+            System.out.println(app.servicoUsuarios.Visualizar(i));
         }
 
         // remover
         System.out.println("\nRemovendo Dados");
         for (int i = 0; i < numItens - 2; i++) {
             System.out.println("\nRemovendo item " + i);
-            app.servico.Remover(i);
+            app.servicoUsuarios.Remover(i);
         }
 
         // listar

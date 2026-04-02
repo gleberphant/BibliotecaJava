@@ -1,4 +1,4 @@
-package Adaptadores.Repositorios.EstruturasDeDados.Grafos;
+package Dominio.EstruturasDeDados.Grafos;
 
 import java.util.ArrayList;
 

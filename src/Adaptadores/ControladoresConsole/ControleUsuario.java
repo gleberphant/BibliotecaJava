@@ -3,14 +3,13 @@ package Adaptadores.ControladoresConsole;
 import java.util.Scanner;
 
 import Aplicacao.CasosDeUso.ServicoUsuarios;
-import Dominio.Modelos.Livro;
 import Dominio.Modelos.Usuario;
 
-public class ControladorUsuario implements IControlador {
-    public ServicoUsuarios servicoUsuarios;
+public class ControleUsuario {
+    private final ServicoUsuarios servicoUsuarios;
     private final Scanner scanner;
 
-    public ControladorUsuario(ServicoUsuarios servicoUsuarios, Scanner scanner) {
+    public ControleUsuario(ServicoUsuarios servicoUsuarios, Scanner scanner) {
         this.scanner = scanner;
         this.servicoUsuarios = servicoUsuarios;
     }
@@ -64,10 +63,15 @@ public class ControladorUsuario implements IControlador {
     }
 
     private Usuario getUsuario() {
+        return BuscarUsuario(this.servicoUsuarios, this.scanner);
+    }
+
+    // metodo static para outros controladores
+    public static Usuario BuscarUsuario(ServicoUsuarios usuarios, Scanner scanner) {
         System.out.println("Informe o ID do usuario para pesquisar");
 
         try {
-            Usuario usuario = servicoUsuarios.Visualizar(scanner.nextLine());
+            Usuario usuario = usuarios.Visualizar(scanner.nextLine());
             System.out.println("Usuario Encontrado");
             return usuario;
 

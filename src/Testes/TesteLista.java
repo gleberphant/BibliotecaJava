@@ -3,7 +3,7 @@
 
 package Testes;
 
-import Adaptadores.Repositorios.EstruturasDeDados.Listas.ListaEncadeada;
+import Dominio.EstruturasDeDados.Listas.ListaEncadeada;
 
 public class TesteLista {
 

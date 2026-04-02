@@ -1,7 +1,6 @@
 package Dominio.Modelos;
 
-import Adaptadores.Repositorios.EstruturasDeDados.Listas.Lista;
-import Aplicacao.CasosDeUso.ServicoLivros;
+import Dominio.EstruturasDeDados.Listas.Lista;
 
 public class Usuario implements Comparable<Usuario> {
 
@@ -12,10 +11,15 @@ public class Usuario implements Comparable<Usuario> {
 
     public Usuario() {
         SetUsuario(0, "", "");
-        listaLeituras = new Lista<>();
+
     }
 
-    public void SetUsuario(int id, String nome , String cpf) {
+    public Usuario(int id, String nome, String cpf) {
+        SetUsuario(id, nome, cpf);
+
+    }
+
+    public void SetUsuario(int id, String nome, String cpf) {
         this.ID = id;
         this.Nome = nome;
         this.CPF = cpf;

@@ -3,21 +3,21 @@ package Aplicacao.CasosDeUso;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
-import Adaptadores.Repositorios.EstruturasDeDados.Listas.ListaEncadeada;
+import Adaptadores.Repositorios.EmMemoria.*;
+import Aplicacao.Interfaces.IRepositorio;
 import Dominio.Modelos.Livro;
 import Dominio.Modelos.Usuario;
 
 public class ServicoUsuarios {
-    ListaEncadeada<Usuario> repositorioUsuarios;
-    
-    public ServicoUsuarios() {
-        repositorioUsuarios = new ListaEncadeada<Usuario> ();
-       
+    IRepositorio<Usuario> repositorioUsuarios;
+
+    public ServicoUsuarios(IRepositorio<Usuario> repositorio) {
+        repositorioUsuarios = repositorio;
 
     }
 
     public int Adicionar(Usuario novo) {
-        novo.ID = (repositorioUsuarios.Tamanho() == 0) ? 0 : repositorioUsuarios.getLast().ID + 1;
+        novo.ID = (repositorioUsuarios.Tamanho() == 0) ? 0 : repositorioUsuarios.Ultimo().ID + 1;
         repositorioUsuarios.Inserir(novo);
         return novo.ID;
 
@@ -76,13 +76,12 @@ public class ServicoUsuarios {
     public void Remover(String stringID) {
 
         int ID = validaID(stringID);
-
         int indice = 0;
 
         for (var usuario : repositorioUsuarios) {
 
             if (usuario.ID == ID) {
-                repositorioUsuarios.RemoverNo(indice);
+                Remover(indice);
                 return;
             }
             indice++;
@@ -90,6 +89,10 @@ public class ServicoUsuarios {
 
         throw new NoSuchElementException("Livro não encontrado");
 
+    }
+
+    public void Remover(int indice) {
+        repositorioUsuarios.Remover(indice);
     }
 
     private int validaID(String stringID) {

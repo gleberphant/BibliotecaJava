@@ -5,14 +5,14 @@ import java.util.Scanner;
 import Aplicacao.CasosDeUso.ServicoLivros;
 import Aplicacao.CasosDeUso.ServicoUsuarios;
 
-public class ControladorRecomendacoes implements IControlador {
+public class ControleRecomendacoes {
         public ServicoLivros servicoLivros;
     public ServicoUsuarios servicoUsuarios;
     private final Scanner scanner;
 
-    public ControladorRecomendacoes(ServicoLivros servicoLivros, ServicoUsuarios servicoUsuarios, Scanner scanner) {
+    public ControleRecomendacoes(ServicoLivros servicoLivros, ServicoUsuarios servicoUsuarios, Scanner scanner) {
         this.scanner = scanner;
-        this.servico = servico;
+        //this.servico = servico;
     }
 
     public void Adicionar() {

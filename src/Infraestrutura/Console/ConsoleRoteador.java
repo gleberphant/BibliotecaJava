@@ -1,18 +1,20 @@
-package Infraestrutura.Roteadores;
+package Infraestrutura.Console;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-public class RoteadorConsole {
+ // Mapeia os controladores e as acoes no menu do console
+public class ConsoleRoteador {
 
+   
     private final String titulo;
     private final Map<Integer, String> descricoes;
     private final Map<Integer, Runnable> acoes;
-    private final Map<Integer, RoteadorConsole> subRoteadores;
+    private final Map<Integer, ConsoleRoteador> subRoteadores;
     private Scanner scanner;
 
-    public RoteadorConsole(String titulo) {
+    public ConsoleRoteador(String titulo) {
         this.titulo = titulo;
         this.descricoes = new LinkedHashMap<>();
         this.acoes = new LinkedHashMap<>();
@@ -21,7 +23,7 @@ public class RoteadorConsole {
     }
 
     // Injeta Acao de Controlador e segue um padrão Builder
-    public RoteadorConsole adicionarRota(int chave, String texto, Runnable acao) {
+    public ConsoleRoteador adicionarRota(int chave, String texto, Runnable acao) {
         // Verifica se é um sub-menu (navegação)
         if (subRoteadores.containsKey(chave)) {
             return this;
@@ -34,18 +36,18 @@ public class RoteadorConsole {
     }
 
     // injeta subRoteador
-    public RoteadorConsole adicionarSubRoteador(int chave, String texto, RoteadorConsole proximoRoteador) {
+    public ConsoleRoteador adicionarSubRoteador(int chave, String texto, ConsoleRoteador proximoRoteador) {
         descricoes.put(chave, texto);
         subRoteadores.put(chave, proximoRoteador);
         return this;
     }
 
-    public RoteadorConsole SetScanner(Scanner in) {
+    public ConsoleRoteador SetScanner(Scanner in) {
         this.scanner = in;
         return this;
     }
 
-    public RoteadorConsole Roteamento(int opcao) {
+    public ConsoleRoteador Roteamento(int opcao) {
         // if (opcao == 0) return null; // Padrão para voltar
 
         // Verifica se é um sub-menu (navegação)

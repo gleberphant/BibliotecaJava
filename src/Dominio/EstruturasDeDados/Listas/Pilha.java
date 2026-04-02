@@ -1,4 +1,4 @@
-package Adaptadores.Repositorios.EstruturasDeDados.Listas;
+package Dominio.EstruturasDeDados.Listas;
 
 public class Pilha<T> extends Lista<T> {
 

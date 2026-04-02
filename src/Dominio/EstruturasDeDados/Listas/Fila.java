@@ -1,4 +1,4 @@
-package Adaptadores.Repositorios.EstruturasDeDados.Listas;
+package Dominio.EstruturasDeDados.Listas;
 
 public class Fila<T> extends Lista<T> {
 
@@ -6,7 +6,7 @@ public class Fila<T> extends Lista<T> {
         super();
     }
 
-    // FIFO - inserir no fim pq a retirada é sempre do topo
+    // LIFO - inserir no inicio da lista, para sempre retirar o ultimo que entrou
     @Override
     public boolean Inserir(T dado) {
         lista.InserirFim(dado);

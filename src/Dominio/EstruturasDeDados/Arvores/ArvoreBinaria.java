@@ -1,4 +1,4 @@
-package Adaptadores.Repositorios.EstruturasDeDados.Arvores;
+package Dominio.EstruturasDeDados.Arvores;
 class NoArvore {
 
     int data;
