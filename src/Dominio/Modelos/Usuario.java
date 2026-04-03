@@ -1,58 +1,48 @@
 package Dominio.Modelos;
 
-import Dominio.EstruturasDeDados.Listas.Lista;
+import Dominio.EstruturasDeDados.Listas.*;
 
 public class Usuario implements Comparable<Usuario> {
 
     public int ID;
     public String Nome;
-    public String CPF;
-    public Lista<Livro> listaLeituras; // VAI RECEBER LIVROS
+    public String Senha;
+    public Pilha<Livro> historicoNavegacao;
+    // public Lista<Livro> listaLeituras;
 
     public Usuario() {
         SetUsuario(0, "", "");
 
     }
 
-    public Usuario(int id, String nome, String cpf) {
-        SetUsuario(id, nome, cpf);
+    public Usuario(int id, String nome, String senha) {
+        SetUsuario(id, nome, senha);
 
     }
 
-    public void SetUsuario(int id, String nome, String cpf) {
+    public void SetUsuario(int id, String nome, String senha) {
         this.ID = id;
         this.Nome = nome;
-        this.CPF = cpf;
-        listaLeituras = new Lista<>();
+        this.Senha = senha;
+        historicoNavegacao = new Pilha<>();
     }
 
+    // mostrar string em formato json
     public String toString() {
-        int largura = 55;
 
-        String leituras = "Sem leituras";
+        StringBuilder historicoNavegacao = new StringBuilder();
 
-        if (this.listaLeituras.Tamanho() > 0) {
-            StringBuilder sb = new StringBuilder();
-            for (var livro : listaLeituras) {
-                sb.append(livro.Titulo);
-            }
+        for (var livro : this.historicoNavegacao) {
+            historicoNavegacao.append(String.format("Livro:'%s', ", livro.Titulo));
         }
 
-        return String.format(
-                """
-                         %s
-                        | ID         : %-40s |
-                        | Nome       : %-40s |
-                        | CPF        : %-40s |
-                        | Leituras   : %-40s |
-                         %s
-                        """,
-                "-".repeat(largura),
+        return String.format("""
+                {ID: '%d', Nome: '%s', Senha: '%s', Leituras: [%s]}
+                """,
                 this.ID,
                 this.Nome,
-                this.CPF,
-                leituras,
-                "-".repeat(largura));
+                this.Senha,
+                historicoNavegacao.toString());
     }
 
     @Override

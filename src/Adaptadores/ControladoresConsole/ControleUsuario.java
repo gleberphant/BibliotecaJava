@@ -3,7 +3,7 @@ package Adaptadores.ControladoresConsole;
 import java.util.Scanner;
 
 import Aplicacao.CasosDeUso.ServicoUsuarios;
-import Dominio.Modelos.Usuario;
+import Dominio.Modelos.*;
 
 public class ControleUsuario {
     private final ServicoUsuarios servicoUsuarios;
@@ -20,9 +20,23 @@ public class ControleUsuario {
 
     }
 
+    public void FazerLogin() {
+
+        System.out.printf("\nInforme o login");
+        String login = scanner.nextLine();
+
+        System.out.printf("\nInforme a senha");
+        String senha = scanner.nextLine();
+
+        servicoUsuarios.Login(login, senha);
+
+        System.out.printf("\nUsuario Logado: %s", servicoUsuarios.GetUsuarioLogado());
+
+    }
+
     public void Editar() {
 
-        Usuario usuario = getUsuario();
+        Usuario usuario = BuscarUsuarioID();
 
         if (usuario == null)
             return;
@@ -33,12 +47,29 @@ public class ControleUsuario {
 
     public void Visualizar() {
 
-        Usuario usuario = getUsuario();
+        Usuario usuario = BuscarUsuarioID();
 
         if (usuario == null)
             return;
 
-        System.out.println(usuario.toString());
+        System.out.println(ExibirUsuario(usuario));
+    }
+
+    public void VisualizarHistorico() {
+        Usuario usuario = BuscarUsuarioID();
+
+        if (usuario == null)
+            return;
+
+        System.out.println(ExibirUsuario(usuario));
+
+        Livro[] historico = servicoUsuarios.ListarHistoricoNavegacao(usuario);
+
+        for (var livro : historico) {
+            System.out.println(String.format("| %-55s |", livro.Titulo));
+        }
+
+        return;
     }
 
     public void Listar() {
@@ -47,7 +78,7 @@ public class ControleUsuario {
         Usuario[] listUsuarios = servicoUsuarios.Listar();
 
         for (Usuario usuario : listUsuarios) {
-            System.out.println(usuario.toString());
+            System.out.println(ExibirUsuario(usuario));
         }
 
     }
@@ -62,12 +93,12 @@ public class ControleUsuario {
 
     }
 
-    private Usuario getUsuario() {
-        return BuscarUsuario(this.servicoUsuarios, this.scanner);
+    private Usuario BuscarUsuarioID() {
+        return BuscarUsuarioID(this.servicoUsuarios, this.scanner);
     }
 
     // metodo static para outros controladores
-    public static Usuario BuscarUsuario(ServicoUsuarios usuarios, Scanner scanner) {
+    public static Usuario BuscarUsuarioID(ServicoUsuarios usuarios, Scanner scanner) {
         System.out.println("Informe o ID do usuario para pesquisar");
 
         try {
@@ -94,4 +125,36 @@ public class ControleUsuario {
         servicoUsuarios.Editar(id, nome, cpf);
     }
 
+    public String ExibirUsuario(Usuario usuario) {
+
+        int largura = 55;
+
+        StringBuilder leituras = new StringBuilder();
+        ;
+
+        if (usuario.historicoNavegacao.Tamanho() > 0) {
+
+            for (var livro : usuario.historicoNavegacao) {
+                leituras.append(
+                        String.format("|            > %-40s |\n", livro.Titulo));
+            }
+        }
+
+        return String.format(
+                """
+                         %s
+                        | ID         : %-40s |
+                        | Nome       : %-40s |
+                        | Senha      : %-40s |
+                        | Historico Visualizacoes  %-28s |
+                        %s %s
+                        """,
+                "-".repeat(largura),
+                usuario.ID,
+                usuario.Nome,
+                usuario.Senha,
+                "",
+                leituras.toString(),
+                "-".repeat(largura));
+    }
 }

@@ -57,7 +57,8 @@ public class ControleLivro {
         if (livro == null)
             return;
 
-        System.out.println(livro.toString());
+        servicoUsuarios.RegistrarHistórico(livro);
+        System.out.println(ExibeLivro(livro));
 
     }
 
@@ -67,9 +68,11 @@ public class ControleLivro {
         Livro[] livros = servicoLivros.Listar();
 
         for (Livro livro : livros) {
-            System.out.println(livro.toString());
+            System.out.println(ExibeLivro(livro));
         }
 
+        System.out.println("Pressione Qualquer Tecla para continuar ....");
+        scanner.nextLine();
     }
 
     public void Remover() {
@@ -94,7 +97,7 @@ public class ControleLivro {
         System.out.println(livro.toString());
 
         // procurar o usuario
-        Usuario usuario = ControleUsuario.BuscarUsuario(servicoUsuarios, scanner);
+        Usuario usuario = ControleUsuario.BuscarUsuarioID(servicoUsuarios, scanner);
 
         if (usuario == null) {
             return;
@@ -131,7 +134,7 @@ public class ControleLivro {
             return;
         }
 
-        System.out.println(livro.toString());
+        System.out.println(ExibeLivro(livro));
 
         servicoLivros.Devolver(livro);
         System.out.printf("\nLivro devolvido para biblioteca");
@@ -153,7 +156,8 @@ public class ControleLivro {
             System.out.print(" [" + usuario.toString() + "] ");
         }
 
-        System.out.print("\n");
+        System.out.println("Pressione Qualquer Tecla para continuar ....");
+        scanner.nextLine();
     }
 
     public void ListarEmprestimos() {
@@ -168,7 +172,42 @@ public class ControleLivro {
 
         }
 
-        System.out.print("\n");
+        System.out.println("Pressione Qualquer Tecla para continuar ....");
+        scanner.nextLine();
+    }
+
+    //
+    public String ExibeLivro(Livro livro) {
+
+        int largura = 55;
+
+        StringBuilder sb = new StringBuilder();
+
+        for (var usuario : livro.FilaEspera) {
+
+            sb.append(usuario.Nome);
+        }
+
+        return String.format(
+                """
+                         %s
+                        | ID         : %-40s |
+                        | Titulo     : %-40s |
+                        | Autor      : %-40s |
+                        | Ano        : %-40s |
+                        | Locado Para: %-40s |
+                        | Fila Espera: %-40s |
+                         %s
+                        """,
+                "-".repeat(largura),
+                livro.ID,
+                livro.Titulo,
+                livro.Autor,
+                livro.Ano,
+                (livro.Locador != null ? livro.Locador.Nome : "Ninguém"),
+                (livro.FilaEspera.Tamanho() > 0 ? sb.toString() : "Sem espera"),
+                "-".repeat(largura));
+
     }
 
     // metodos staticos

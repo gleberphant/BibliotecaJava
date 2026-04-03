@@ -3,16 +3,20 @@ package Infraestrutura.Console;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.function.Supplier;
 
- // Mapeia os controladores e as acoes no menu do console
+import Dominio.Modelos.Usuario;
+
+// Mapeia os controladores e as acoes no menu do console
 public class ConsoleRoteador {
 
-   
-    private final String titulo;
+    private String titulo;
+
     private final Map<Integer, String> descricoes;
     private final Map<Integer, Runnable> acoes;
     private final Map<Integer, ConsoleRoteador> subRoteadores;
     private Scanner scanner;
+    private Supplier<Usuario> login;
 
     public ConsoleRoteador(String titulo) {
         this.titulo = titulo;
@@ -20,6 +24,15 @@ public class ConsoleRoteador {
         this.acoes = new LinkedHashMap<>();
         this.subRoteadores = new LinkedHashMap<>();
         this.scanner = new Scanner(System.in);
+    }
+
+    public void SetLogin(Supplier<Usuario> supplier) {
+        this.login = supplier;
+    }
+
+    public Usuario GetLogin() {
+        
+        return login != null? login.get(): null;
     }
 
     // Injeta Acao de Controlador e segue um padrão Builder
@@ -79,6 +92,10 @@ public class ConsoleRoteador {
 
     public String GetTitulo() {
         return titulo;
+    }
+
+    public void SetTitulo(String titulo) {
+        this.titulo = titulo;
     }
 
     public void Voltar() {

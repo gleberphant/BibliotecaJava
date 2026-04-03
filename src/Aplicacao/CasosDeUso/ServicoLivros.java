@@ -11,17 +11,18 @@ public class ServicoLivros {
 
     IRepositorio<Livro> repositorioLivros;
 
+
     public ServicoLivros(IRepositorio<Livro> repositorio) {
         repositorioLivros = repositorio;
 
     }
 
     // RETORNA O ID DO NOVO LIVRO
-    public int Adicionar(Livro novo) {
+    public int Adicionar(Livro livro) {
 
-        novo.ID = repositorioLivros.Tamanho() == 0 ? 0 : repositorioLivros.Ultimo().ID + 1;
-        repositorioLivros.Inserir(novo);
-        return novo.ID;
+        livro.ID = repositorioLivros.Tamanho() == 0 ? 0 : repositorioLivros.Ultimo().ID + 1;
+        repositorioLivros.Inserir(livro);
+        return livro.ID;
     }
 
     public Livro Visualizar(String stringID) {
@@ -36,11 +37,13 @@ public class ServicoLivros {
 
     public Livro Visualizar(int ID) {
 
+    
         for (Livro livro : repositorioLivros) {
             if (livro.ID == ID) {
                 return livro;
             }
         }
+
 
         throw new NoSuchElementException("Livro não encontrado");
         // return null;

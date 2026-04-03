@@ -8,7 +8,7 @@ public class Main {
     public static void main(String[] args) {
 
         // Inicia a UI (Infraestrutura de Saída)
-        ConsoleUI uiConsole = new ConsoleUI(ConsoleConfig.configurarRoteadorConsole());
+        ConsoleUI uiConsole = new ConsoleUI( ConsoleConfig.configurarRoteadorConsole());
         uiConsole.executar();
     }
 }

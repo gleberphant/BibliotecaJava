@@ -4,6 +4,8 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.Stack;
 
+import Dominio.Modelos.Usuario;
+
 public class ConsoleUI {
     private final Scanner scanner;
     private final Stack<ConsoleRoteador> historico;
@@ -12,6 +14,7 @@ public class ConsoleUI {
         this.scanner = menuRaiz.GetScanner();
         this.historico = new Stack<>();
         this.historico.push(menuRaiz);
+
     }
 
     public void executar() {
@@ -31,6 +34,9 @@ public class ConsoleUI {
 
         System.out.printf("\n%s\n", linha);
         System.out.printf("| %-46s |\n", titulo);
+
+        Usuario usuario = menu.GetLogin();
+        System.out.printf("| Usuario: %-37s |\n", (usuario != null ? usuario.Nome : ""));
         System.out.printf("%s\n", linha);
 
         descricao.forEach((key, value) -> {

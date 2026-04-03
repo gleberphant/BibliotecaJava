@@ -33,35 +33,23 @@ public class Livro implements Comparable<Livro> {
 
     }
 
+    // mostrar string em formato json
     public String toString() {
-        int largura = 55;
-
         StringBuilder sb = new StringBuilder();
 
-        for (var usuario : this.FilaEspera) s{
-
-            sb.append(usuario.Nome);
+        for (var usuario : this.FilaEspera) {
+            sb.append(String.format("Usuario: '%s', ", usuario.Nome));
         }
 
-        return String.format(
-                """
-                         %s
-                        | ID         : %-40s |
-                        | Titulo     : %-40s |
-                        | Autor      : %-40s |
-                        | Ano        : %-40s |
-                        | Locado Para: %-40s |
-                        | Fila Espera: %-40s |
-                         %s
-                        """,
-                "-".repeat(largura),
+        return String.format("""
+                { ID:'%s', Titulo:'%s', Autor:'%s', Ano:'%s', Locado Para:'%s', Fila Espera:[%s] }
+                """,
                 this.ID,
                 this.Titulo,
                 this.Autor,
                 this.Ano,
-                (this.Locador != null ? this.Locador.Nome : "Ninguém"),
-                (this.FilaEspera.Tamanho() > 0 ? sb.toString() : "Sem espera"),
-                "-".repeat(largura));
+                (this.Locador != null ? this.Locador.Nome : "'Ninguém'"),
+                (this.FilaEspera.Tamanho() > 0 ? sb.toString() : "'Sem espera'"));
     }
 
     @Override
