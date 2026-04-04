@@ -107,14 +107,15 @@ public class ControleLivro {
         try {
             // Realizar o empréstimo
             int posicao = servicoLivros.Emprestar(livro, usuario);
+
             if (posicao == 0) {
                 // se posicao for zero
-                System.out.println("Livro emprestado para " + usuario.Nome);
+                System.out.println("Livro emprestado para: " + usuario.Nome);
 
                 // se retorno da posicao for maior que zero
             } else {
                 System.out.printf("\n O livro encontra-se emprestado para %s ", livro.FilaEspera.Topo().Nome);
-                System.out.printf("\n O usuario %s foi inserido na lista de espera , na posição %d",
+                System.out.printf("\n O usuario %s foi inserido na lista de espera na posição %d",
                         livro.FilaEspera.Topo().Nome, posicao);
             }
 
@@ -166,10 +167,14 @@ public class ControleLivro {
 
             System.out.print("\n Livro " + livro.toString() + " FILA > ");
 
+            StringBuilder sb = new StringBuilder();
+            sb.append("[");
             for (var usuario : livro.FilaEspera) {
-                System.out.print(" [" + usuario.toString() + "] ");
+                sb.append(String.format("%s, ", usuario.Nome));
             }
+            sb.append("]");
 
+            System.out.println(sb.toString());
         }
 
         System.out.println("Pressione Qualquer Tecla para continuar ....");

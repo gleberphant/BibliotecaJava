@@ -3,7 +3,7 @@ package Testes;
 import java.util.Scanner;
 
 import Adaptadores.ControladoresConsole.*;
-import Adaptadores.Repositorios.EmMemoria.RepositorioLivros;
+import Adaptadores.Repositorios.EmMemoria.RepositorioLivrosLista;
 import Adaptadores.Repositorios.EmMemoria.RepositorioUsuarios;
 import Aplicacao.CasosDeUso.ServicoLivros;
 import Aplicacao.CasosDeUso.ServicoUsuarios;

@@ -1,67 +1,106 @@
 package Dominio.EstruturasDeDados.Grafos;
 
+import java.util.Iterator;
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+
 import java.util.Set;
+import java.util.StringJoiner;
 
-
-public class GrafoHash<T>{
+public class GrafoHash<T> implements IGrafo<T>, Iterable<T> {
 
     // hash table do grafo
     // { no_origem :[ no_destino1, no_destino2 ..... ] }
 
-    HashMap<Integer, T> Repositorio;
-    HashMap<Integer, Set<Integer>> TabelaRelacoes;
+    private Map<Integer, T> lista;
+    private Map<Integer, Set<Integer>> conexoes;
+    private int proximoId;
 
     public GrafoHash() {
-        this.TabelaRelacoes = new HashMap<>();
-        this.Repositorio = new HashMap<>();
+        this.conexoes = new HashMap<>();
+        this.lista = new HashMap<>();
+        proximoId = 0;
     }
 
-    public void InserirNo(int id) {
+    // retorna a chave do no gerado
+    public Integer InserirNo(T valor) {
 
-        this.Repositorio.putIfAbsent(id, null);
-        this.TabelaRelacoes.putIfAbsent(id, new HashSet<>());
+        int chave = proximoId++;
+        this.lista.putIfAbsent(chave, valor);
+        this.conexoes.putIfAbsent(chave, new HashSet<>());
+
+        return chave;
     }
 
-    public void InserirConexao(int id1, int id2) {
+    public Integer InserirConexao(int chave1, int chave2) {
+        // impede relações recursivas.
+        if (chave1 == chave2)
+            return null;
 
-        if (id1 == id2)
-            return;
+        // checar se os dois objetos existem
+        if (!lista.containsKey(chave1) || !lista.containsKey(chave2)) {
+            // objetos inexistentes;
+            return null;
+        }
 
-        Set<Integer> conexoes = TabelaRelacoes.get(id1);
+        conexoes.get(chave1).add(chave2);
+        return chave1;
 
-        this.InserirNo(id2);
+    }
 
-        conexoes.add(id2);
+    public T Get(int chave){
+
+        return lista.get(chave);
+    }
+
+    public void Remover(int chave){
+
+        lista.remove(chave);
+        conexoes.remove(chave);
+    }
+
+    public int Tamanho(){
+        return lista.size();
+    }
+
+    public T GetUltimo() {
+
+        if (lista.isEmpty()) {
+            return null; // Ou throw exception
+        }
+
+        int chave = proximoId;
+
+        while (!lista.containsKey(chave) && chave > 0) {
+            chave--;
+        }
+
+        return lista.get(chave);
 
     }
 
     @Override
     public String toString() {
+        if (conexoes.isEmpty())
+            return "{}";
 
-        StringBuilder mensagem = new StringBuilder();
+        StringJoiner sj = new StringJoiner(", ", "{", "}");
 
-        mensagem.append("Lista de Nós {");
+        for (var item : conexoes.entrySet()) {
 
-        for (int id : this.Repositorio.keySet()) {
-            mensagem.append("("+id+")");
+            sj.add(String.format("%d: %s",
+                    item.getKey(),
+                    item.getValue().toString()));
         }
-        mensagem.append("}\n");
-        mensagem.append(" Tabela de Nós { \n");
-        
-        for (Map.Entry<Integer, Set<Integer>> entry : this.TabelaRelacoes.entrySet()) {
 
-            mensagem.append("No ("+entry.getKey()+") Conexoes->"+entry.getValue()+"\n");
-        }
-        mensagem.append("}");
-        return mensagem.toString();
+        return sj.toString();
     }
 
-    public void Imprimir() {
-        System.out.println(this.toString());
+    @Override
+    public Iterator<T> iterator() {
+        return lista.values().iterator();
     }
 
 }

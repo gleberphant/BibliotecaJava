@@ -1,9 +1,9 @@
 package Dominio.EstruturasDeDados.Grafos;
 
-public interface IGrafo<T>{
+public interface IGrafo<T> {
 
-    public void InserirNo(T valor);
-    public void InserirConexao(T valor1, T valor2);
-    public void Imprimir();
+    public Integer InserirNo(T valor);
+
+    public Integer InserirConexao(int chave1, int chave2);
 
 }

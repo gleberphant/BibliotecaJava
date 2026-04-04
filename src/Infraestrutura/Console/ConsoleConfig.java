@@ -5,7 +5,8 @@ import java.util.Scanner;
 import Adaptadores.ControladoresConsole.ControleLivro;
 import Adaptadores.ControladoresConsole.ControleRecomendacoes;
 import Adaptadores.ControladoresConsole.ControleUsuario;
-import Adaptadores.Repositorios.EmMemoria.RepositorioLivros;
+import Adaptadores.Repositorios.EmMemoria.RepositorioLivrosGrafo;
+import Adaptadores.Repositorios.EmMemoria.RepositorioLivrosLista;
 import Adaptadores.Repositorios.EmMemoria.RepositorioUsuarios;
 import Aplicacao.CasosDeUso.ServicoLivros;
 import Aplicacao.CasosDeUso.ServicoUsuarios;
@@ -38,7 +39,7 @@ public class ConsoleConfig {
                 var entrada = new Scanner(System.in);
 
                 // configurar servicos
-                var servicoLivros = new ServicoLivros(new RepositorioLivros());
+                var servicoLivros = new ServicoLivros(new RepositorioLivrosGrafo());
                 var servicoUsuarios = new ServicoUsuarios(new RepositorioUsuarios());
 
                 // inserir usuario ADM

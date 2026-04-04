@@ -11,7 +11,6 @@ public class ServicoLivros {
 
     IRepositorio<Livro> repositorioLivros;
 
-
     public ServicoLivros(IRepositorio<Livro> repositorio) {
         repositorioLivros = repositorio;
 
@@ -37,13 +36,11 @@ public class ServicoLivros {
 
     public Livro Visualizar(int ID) {
 
-    
         for (Livro livro : repositorioLivros) {
             if (livro.ID == ID) {
                 return livro;
             }
         }
-
 
         throw new NoSuchElementException("Livro não encontrado");
         // return null;
@@ -113,21 +110,30 @@ public class ServicoLivros {
             livro.Locador = locador;
             return posicao;
         }
-        // se locador for proximo da fila, entao passa para ele
-        if (livro.FilaEspera.Topo() == locador) {
+
+        // se livro emprestado e fila de espera vazia, insere na fila
+        if (livro.FilaEspera.Topo() == null) {
+            livro.FilaEspera.Inserir(locador);
+            return posicao;
+        }
+
+        // se livro emprestado e e fila não vazia
+        // locador é o proximo da fila?
+        if (livro.FilaEspera.Topo().ID == locador.ID) {
             livro.Locador = livro.FilaEspera.Retirar();
             return posicao;
         }
 
-        // procura se locador ja existe na fila. se sim nao adiciona e retorna a posicao
-        // dele
+        // procura se locador ja existe na fila.
+
         for (var usuario : livro.FilaEspera) {
-            if (usuario == locador)
+            // se locador ja esta na fila não modifica
+            if (usuario.ID == locador.ID)
                 return posicao;
             posicao++;
         }
 
-        // adiciona usuario na lista de espera e retorna posicao
+        // se locador não está na fila, então adiciona.
         livro.FilaEspera.Inserir(locador);
         return posicao;
 

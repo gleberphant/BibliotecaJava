@@ -9,8 +9,8 @@ public class Livro implements Comparable<Livro> {
     public Integer ID;
     public String Titulo;
     public String Autor;
-    public String Categoria;
     public String Ano;
+    public String Categoria;
 
     public Usuario Locador;
     public Fila<Usuario> FilaEspera; // FILA DE ESPERA VAI RECEBER USUARIOS
