@@ -3,7 +3,7 @@ package Aplicacao.Interfaces;
 public interface IRepositorio<T> extends Iterable<T> {
 
     // inserir um item
-    public boolean Inserir(T dado);
+    public int Inserir(T dado);
 
     // retira proximo item da fila
     public T Retirar();
@@ -19,6 +19,8 @@ public interface IRepositorio<T> extends Iterable<T> {
 
     // remove  item de indice
     public void Remover(int indice);
+
+    public void InserirConexao(T t1, T t2);
 
         // quantidade de itens no repositorio
     public int Tamanho();

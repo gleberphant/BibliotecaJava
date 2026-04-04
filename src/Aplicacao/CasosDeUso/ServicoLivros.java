@@ -38,12 +38,34 @@ public class ServicoLivros {
 
         for (Livro livro : repositorioLivros) {
             if (livro.ID == ID) {
+                
+                
                 return livro;
             }
         }
 
+
         throw new NoSuchElementException("Livro não encontrado");
         // return null;
+    }
+
+
+    public void InserirRecomendacoes(Livro livro1, Usuario usuario){
+
+
+        for(var livro2 : usuario.historicoNavegacao){
+
+            repositorioLivros.InserirConexao(livro1, livro2);
+
+        }
+
+    }
+
+    public Livro[] ListarRecomendacoes(Livro livro){
+
+        repositorioLivros.();
+        return livros;
+
     }
 
     public Livro[] Listar() {

@@ -58,6 +58,9 @@ public class ControleLivro {
             return;
 
         servicoUsuarios.RegistrarHistórico(livro);
+        //criar relação
+        servicoLivros.InserirRecomendacoes(livro, servicoUsuarios.GetUsuarioLogado());
+
         System.out.println(ExibeLivro(livro));
 
     }

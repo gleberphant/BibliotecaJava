@@ -1,18 +1,17 @@
 package Testes;
 
-import EstruturasNaoLineares.*;
-import MinhasInterfaces.InterfaceGrafo;
+import Dominio.EstruturasDeDados.Grafos.GrafoHash;
 
 public class TesteGrafosHash {
     public static void main(String[] args) {
 
         int itens[] = { 1, 2, 3, 4, 5, 6, 7 };
 
-        IGrafo g = new GrafoHash();
+        GrafoHash<Integer> g = new GrafoHash<Integer>();
 
         System.out.println("\n Grafo do tipo: " + g.getClass());
 
-        for (int item : itens)
+        for (Integer item : itens)
             g.InserirNo(item);
 
         g.InserirConexao(1, 3);
@@ -25,6 +24,7 @@ public class TesteGrafosHash {
         g.InserirConexao(7, 4);
         g.InserirConexao(7, 4);
         g.InserirConexao(7, 4);
-        g.Imprimir();
+
+        System.out.println(g.toString());
     }
 }

@@ -1,96 +1,101 @@
 package Dominio.EstruturasDeDados.Grafos;
 
 import java.util.Iterator;
-
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.HashSet;
 import java.util.Map;
 
 import java.util.Set;
 import java.util.StringJoiner;
 
-public class GrafoHash<T> implements IGrafo<T>, Iterable<T> {
+public class GrafoHash<T> implements Iterable<T> {
 
-    // hash table do grafo
+    // mapa de adjacências
     // { no_origem :[ no_destino1, no_destino2 ..... ] }
 
-    private Map<Integer, T> lista;
-    private Map<Integer, Set<Integer>> conexoes;
-    private int proximoId;
+    private Map<T, Set<T>> mapaAdjacencias;
+
+    private int proximaChave;
 
     public GrafoHash() {
-        this.conexoes = new HashMap<>();
-        this.lista = new HashMap<>();
-        proximoId = 0;
+        this.mapaAdjacencias = new LinkedHashMap<>();
+        proximaChave = 0;
     }
 
     // retorna a chave do no gerado
-    public Integer InserirNo(T valor) {
-
-        int chave = proximoId++;
-        this.lista.putIfAbsent(chave, valor);
-        this.conexoes.putIfAbsent(chave, new HashSet<>());
-
-        return chave;
+    public Integer ProximaChave() {
+        return proximaChave;
     }
 
-    public Integer InserirConexao(int chave1, int chave2) {
+    public Integer InserirNo(T valor) {
+
+        this.mapaAdjacencias.putIfAbsent(valor, new HashSet<>());
+
+        return proximaChave++;
+    }
+
+    public T InserirConexao(T chave1, T chave2) {
         // impede relações recursivas.
         if (chave1 == chave2)
             return null;
 
         // checar se os dois objetos existem
-        if (!lista.containsKey(chave1) || !lista.containsKey(chave2)) {
+        if (!mapaAdjacencias.containsKey(chave1) || !mapaAdjacencias.containsKey(chave2)) {
             // objetos inexistentes;
             return null;
         }
 
-        conexoes.get(chave1).add(chave2);
+        mapaAdjacencias.get(chave1).add(chave2);
         return chave1;
 
     }
 
-    public T Get(int chave){
+    public Set<T> VerConexoes(T chave) {
 
-        return lista.get(chave);
+        return mapaAdjacencias.get(chave);
+
     }
 
-    public void Remover(int chave){
+    // public T Get(int chave) {
 
-        lista.remove(chave);
-        conexoes.remove(chave);
+    // //return mapaAdjacencias.get(chave);
+    // }
+
+    public void Remover(T chave) {
+
+        mapaAdjacencias.remove(chave);
     }
 
-    public int Tamanho(){
-        return lista.size();
+    public int Tamanho() {
+        return mapaAdjacencias.size();
     }
 
     public T GetUltimo() {
 
-        if (lista.isEmpty()) {
+        if (mapaAdjacencias.isEmpty()) {
             return null; // Ou throw exception
         }
 
-        int chave = proximoId;
+        T ultimo = null;
 
-        while (!lista.containsKey(chave) && chave > 0) {
-            chave--;
+        for (var item : mapaAdjacencias.keySet()) {
+            ultimo = item;
         }
 
-        return lista.get(chave);
+        return ultimo;
 
     }
 
     @Override
     public String toString() {
-        if (conexoes.isEmpty())
+        if (mapaAdjacencias.isEmpty())
             return "{}";
 
         StringJoiner sj = new StringJoiner(", ", "{", "}");
 
-        for (var item : conexoes.entrySet()) {
+        for (var item : mapaAdjacencias.entrySet()) {
 
-            sj.add(String.format("%d: %s",
+            sj.add(String.format("'%d': %s",
                     item.getKey(),
                     item.getValue().toString()));
         }
@@ -100,7 +105,7 @@ public class GrafoHash<T> implements IGrafo<T>, Iterable<T> {
 
     @Override
     public Iterator<T> iterator() {
-        return lista.values().iterator();
+        return mapaAdjacencias.keySet().iterator();
     }
 
 }

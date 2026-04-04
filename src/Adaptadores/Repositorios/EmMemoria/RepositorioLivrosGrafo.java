@@ -3,9 +3,7 @@ package Adaptadores.Repositorios.EmMemoria;
 import java.util.Iterator;
 
 import Aplicacao.Interfaces.IRepositorio;
-
 import Dominio.EstruturasDeDados.Grafos.GrafoHash;
-import Dominio.EstruturasDeDados.Listas.ListaEncadeada;
 import Dominio.Modelos.Livro;
 
 public class RepositorioLivrosGrafo implements IRepositorio<Livro> {
@@ -16,11 +14,27 @@ public class RepositorioLivrosGrafo implements IRepositorio<Livro> {
         grafo = new GrafoHash<>();
     }
 
-    public boolean Inserir(Livro livro) {
+    public int Inserir(Livro livro) {
         if (livro == null)
-            return false;
-        grafo.InserirNo(livro);
-        return true;
+            return -1;
+
+        livro.ID = grafo.ProximaChave();
+
+        return grafo.InserirNo(livro);
+    }
+
+    public void InserirConexao(Livro livro1, Livro livro2){
+
+        grafo.InserirConexao(livro1.ID, livro2.ID);
+    }
+
+    public Livro[] ListarRecomendacoes(Livro livro){
+        Livro[] livros;
+
+
+        grafo.
+        return livros;
+
     }
 
     // retira o proximo item da fila - FIFO
