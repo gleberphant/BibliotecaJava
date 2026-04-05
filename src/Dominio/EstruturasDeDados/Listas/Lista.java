@@ -11,17 +11,17 @@ public class Lista<T> implements Iterable<T> {
         lista = new ListaEncadeada<>();
     }
 
-    public boolean Inserir(T dado) {
+    public int Inserir(T dado) {
         if (dado == null)
-            return false;
+            return -1;
         lista.InserirFim(dado);
-        return true;
+        return lista.Tamanho();
     }
 
     // retira proximo item da fila
     public T Retirar() {
         T dado = Topo();
-        Remover();
+        Remover(0);
         return dado;
     }
 
@@ -36,8 +36,16 @@ public class Lista<T> implements Iterable<T> {
     }
 
     // remove proximo item
-    public void Remover() {
-        lista.Remover(0);
+    public void Remover(T chave) {
+        int posicao = 0;
+        for (var item : lista) {
+            if (item.equals(chave)) {
+                lista.Remover(posicao);
+                break;
+            }
+            posicao++;
+        }
+        return;
     }
 
     // remove item por indice

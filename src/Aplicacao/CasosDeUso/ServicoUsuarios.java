@@ -2,16 +2,16 @@ package Aplicacao.CasosDeUso;
 
 import java.util.NoSuchElementException;
 
-import Aplicacao.Interfaces.IRepositorio;
+import Aplicacao.Interfaces.IRepositorioUsuario;
 import Dominio.Algoritmos.Criptografia.Encriptador;
 import Dominio.Modelos.Livro;
 import Dominio.Modelos.Usuario;
 
 public class ServicoUsuarios {
-    IRepositorio<Usuario> repositorioUsuarios;
+    IRepositorioUsuario<Usuario> repositorioUsuarios;
     Usuario usuarioLogado;
 
-    public ServicoUsuarios(IRepositorio<Usuario> repositorio) {
+    public ServicoUsuarios(IRepositorioUsuario<Usuario> repositorio) {
         repositorioUsuarios = repositorio;
 
     }

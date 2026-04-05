@@ -5,7 +5,7 @@ import java.util.Scanner;
 import Adaptadores.ControladoresConsole.*;
 import Adaptadores.Repositorios.EmMemoria.RepositorioLivrosGrafo;
 import Adaptadores.Repositorios.EmMemoria.RepositorioLivrosLista;
-import Adaptadores.Repositorios.EmMemoria.RepositorioUsuarios;
+import Adaptadores.Repositorios.EmMemoria.RepositorioUsuariosLista;
 import Aplicacao.CasosDeUso.ServicoLivros;
 import Aplicacao.CasosDeUso.ServicoUsuarios;
 import Dominio.Modelos.Livro;
@@ -18,7 +18,7 @@ public class TesteServicoLivro {
         // configura aplicação
 
         var servicoLivros = new ServicoLivros(new RepositorioLivrosGrafo());
-        var servicoUsuarios = new ServicoUsuarios(new RepositorioUsuarios());
+        var servicoUsuarios = new ServicoUsuarios(new RepositorioUsuariosLista());
 
         int numItens = 5;
 

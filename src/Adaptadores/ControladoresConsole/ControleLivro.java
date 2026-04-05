@@ -29,7 +29,7 @@ public class ControleLivro {
 
     public void Editar() {
 
-        Livro livro = getLivro();
+        Livro livro = buscarLivro();
 
         if (livro == null)
             return;
@@ -52,15 +52,17 @@ public class ControleLivro {
 
     public void Visualizar() {
 
-        Livro livro = getLivro();
+        Livro livro = buscarLivro();
 
         if (livro == null)
             return;
 
         servicoUsuarios.RegistrarHistórico(livro);
-        //criar relação
-        servicoLivros.InserirRecomendacoes(livro, servicoUsuarios.GetUsuarioLogado());
 
+        // criar relações com os livros que o usuario ja visualizacou
+        for (var livro2 : servicoUsuarios.GetUsuarioLogado().historicoNavegacao) {
+            servicoLivros.InserirRecomendacao(livro, livro2);
+        }
         System.out.println(ExibeLivro(livro));
 
     }
@@ -80,7 +82,7 @@ public class ControleLivro {
 
     public void Remover() {
 
-        Livro livro = getLivro();
+        Livro livro = buscarLivro();
 
         servicoLivros.Remover(livro.ID);
 
@@ -88,11 +90,42 @@ public class ControleLivro {
 
     }
 
+    // recomendacoes
+    public void ListarRecomendacoes() {
+
+        for (var livro : servicoLivros.Listar()) {
+
+            System.out.println(exibeRecomendacões(livro));
+        }
+
+        System.out.println("pressione qualquer tecla para prosseguir ...");
+        scanner.nextLine();
+    }
+
+    public void VisualizarRecomendacoes() {
+        Livro livro = BuscarLivro(servicoLivros, scanner);
+
+        System.out.println(exibeRecomendacões(livro));
+
+        System.out.println("pressione qualquer tecla para prosseguir ...");
+        scanner.nextLine();
+    }
+
+    private String exibeRecomendacões(Livro livro) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format("\n Recomendacoes para 4[%s]", livro.Titulo));
+        for (Livro recomendacao : servicoLivros.VisualizarRecomendacoes(livro)) {
+            sb.append(String.format("\n >> Livro %s Autor: %s", recomendacao.Titulo, recomendacao.Autor));
+        }
+
+        return sb.toString();
+    }
+
     // Adcionar um empréstimo
     public void Emprestar() {
 
         // procurar o Livro
-        Livro livro = getLivro();
+        Livro livro = buscarLivro();
 
         if (livro == null) {
             return;
@@ -132,7 +165,7 @@ public class ControleLivro {
     // Devolver empréstimo
     public void Devolver() {
 
-        Livro livro = getLivro();
+        Livro livro = buscarLivro();
 
         if (livro == null) {
             return;
@@ -150,7 +183,7 @@ public class ControleLivro {
     public void VisualizarEmprestimos() {
         System.out.println("Informe o ID do LIVRO para procurar");
 
-        Livro livro = getLivro();
+        Livro livro = buscarLivro();
 
         System.out.println(livro.toString());
 
@@ -220,7 +253,7 @@ public class ControleLivro {
 
     // metodos staticos
 
-    private Livro getLivro() {
+    private Livro buscarLivro() {
         return BuscarLivro(this.servicoLivros, this.scanner);
     }
 

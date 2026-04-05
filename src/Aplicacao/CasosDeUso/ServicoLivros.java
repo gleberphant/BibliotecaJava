@@ -5,13 +5,14 @@ import Dominio.Modelos.Usuario;
 
 import java.util.NoSuchElementException;
 
-import Aplicacao.Interfaces.IRepositorio;
+import java.util.List;
+import Aplicacao.Interfaces.*;
 
 public class ServicoLivros {
 
-    IRepositorio<Livro> repositorioLivros;
+    IRepositorioLivro repositorioLivros;
 
-    public ServicoLivros(IRepositorio<Livro> repositorio) {
+    public ServicoLivros(IRepositorioLivro repositorio) {
         repositorioLivros = repositorio;
 
     }
@@ -38,33 +39,25 @@ public class ServicoLivros {
 
         for (Livro livro : repositorioLivros) {
             if (livro.ID == ID) {
-                
-                
+
                 return livro;
             }
         }
-
 
         throw new NoSuchElementException("Livro não encontrado");
         // return null;
     }
 
+    public void InserirRecomendacao(Livro livro1, Livro livro2) {
 
-    public void InserirRecomendacoes(Livro livro1, Usuario usuario){
+        repositorioLivros.InserirConexao(livro1, livro2);
 
-
-        for(var livro2 : usuario.historicoNavegacao){
-
-            repositorioLivros.InserirConexao(livro1, livro2);
-
-        }
-
+        return;
     }
 
-    public Livro[] ListarRecomendacoes(Livro livro){
+    public List<Livro> VisualizarRecomendacoes(Livro livro) {
 
-        repositorioLivros.();
-        return livros;
+        return repositorioLivros.ListarConexoes(livro);
 
     }
 

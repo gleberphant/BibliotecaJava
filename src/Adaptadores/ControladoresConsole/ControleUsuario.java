@@ -62,14 +62,24 @@ public class ControleUsuario {
             return;
 
         System.out.println(ExibirUsuario(usuario));
+        System.out.println(exibeHistorico(null));
 
-        Livro[] historico = servicoUsuarios.ListarHistoricoNavegacao(usuario);
+    }
 
+    private String exibeHistorico(Livro[] historico) {
+
+        StringBuilder leituras = new StringBuilder();
+
+        if (historico.length < 1) {
+            return "";
+        }
+        leituras.append("\nHistórico de visualizações\n");
         for (var livro : historico) {
-            System.out.println(String.format("| %-55s |", livro.Titulo));
+            leituras.append(
+                    String.format("|            > %-40s |\n", livro.Titulo));
         }
 
-        return;
+        return leituras.toString();
     }
 
     public void Listar() {
@@ -129,24 +139,12 @@ public class ControleUsuario {
 
         int largura = 55;
 
-        StringBuilder leituras = new StringBuilder();
-        ;
-
-        if (usuario.historicoNavegacao.Tamanho() > 0) {
-
-            for (var livro : usuario.historicoNavegacao) {
-                leituras.append(
-                        String.format("|            > %-40s |\n", livro.Titulo));
-            }
-        }
-
         return String.format(
                 """
                          %s
                         | ID         : %-40s |
                         | Nome       : %-40s |
                         | Senha      : %-40s |
-                        | Historico Visualizacoes  %-28s |
                         %s %s
                         """,
                 "-".repeat(largura),
@@ -154,7 +152,6 @@ public class ControleUsuario {
                 usuario.Nome,
                 usuario.Senha,
                 "",
-                leituras.toString(),
                 "-".repeat(largura));
     }
 }

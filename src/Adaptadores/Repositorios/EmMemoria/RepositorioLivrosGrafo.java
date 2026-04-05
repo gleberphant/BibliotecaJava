@@ -1,12 +1,13 @@
 package Adaptadores.Repositorios.EmMemoria;
 
 import java.util.Iterator;
+import java.util.List;
 
-import Aplicacao.Interfaces.IRepositorio;
+import Aplicacao.Interfaces.IRepositorioLivro;
 import Dominio.EstruturasDeDados.Grafos.GrafoHash;
 import Dominio.Modelos.Livro;
 
-public class RepositorioLivrosGrafo implements IRepositorio<Livro> {
+public class RepositorioLivrosGrafo implements IRepositorioLivro {
 
     private GrafoHash<Livro> grafo;
 
@@ -23,16 +24,16 @@ public class RepositorioLivrosGrafo implements IRepositorio<Livro> {
         return grafo.InserirNo(livro);
     }
 
-    public void InserirConexao(Livro livro1, Livro livro2){
+    public void InserirConexao(Livro livro1, Livro livro2) {
 
-        grafo.InserirConexao(livro1.ID, livro2.ID);
+        grafo.InserirConexao(livro1, livro2);
     }
 
-    public Livro[] ListarRecomendacoes(Livro livro){
-        Livro[] livros;
+    public List<Livro> ListarConexoes(Livro livro) {
+        List<Livro> livros;
 
+        livros = grafo.VerConexoes(livro);
 
-        grafo.
         return livros;
 
     }
@@ -40,7 +41,7 @@ public class RepositorioLivrosGrafo implements IRepositorio<Livro> {
     // retira o proximo item da fila - FIFO
     public Livro Retirar() {
         Livro dado = Topo();
-        Remover();
+        Remover(0);
         return dado;
     }
 
@@ -55,11 +56,11 @@ public class RepositorioLivrosGrafo implements IRepositorio<Livro> {
     }
 
     // remove proximo item
-    public void Remover() {
-        grafo.Remover(0);
+    public void Remover(Livro chave) {
+        grafo.Remover(chave);
     }
 
-    // remove item por indice
+    // remove item por posicao
     public void Remover(int indice) {
         grafo.Remover(indice);
     }

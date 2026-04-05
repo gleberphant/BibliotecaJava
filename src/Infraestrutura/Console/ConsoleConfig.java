@@ -7,7 +7,7 @@ import Adaptadores.ControladoresConsole.ControleRecomendacoes;
 import Adaptadores.ControladoresConsole.ControleUsuario;
 import Adaptadores.Repositorios.EmMemoria.RepositorioLivrosGrafo;
 import Adaptadores.Repositorios.EmMemoria.RepositorioLivrosLista;
-import Adaptadores.Repositorios.EmMemoria.RepositorioUsuarios;
+import Adaptadores.Repositorios.EmMemoria.RepositorioUsuariosLista;
 import Aplicacao.CasosDeUso.ServicoLivros;
 import Aplicacao.CasosDeUso.ServicoUsuarios;
 import Dominio.Modelos.Livro;
@@ -40,7 +40,7 @@ public class ConsoleConfig {
 
                 // configurar servicos
                 var servicoLivros = new ServicoLivros(new RepositorioLivrosGrafo());
-                var servicoUsuarios = new ServicoUsuarios(new RepositorioUsuarios());
+                var servicoUsuarios = new ServicoUsuarios(new RepositorioUsuariosLista());
 
                 // inserir usuario ADM
                 servicoUsuarios.Adicionar(new Usuario(0, "root", "root"));
@@ -52,8 +52,7 @@ public class ConsoleConfig {
                 // configurar controladores
                 var controleUsuarios = new ControleUsuario(servicoUsuarios, entrada);
                 var controleLivros = new ControleLivro(servicoLivros, servicoUsuarios, entrada);
-                var controleRecomendacoes = new ControleRecomendacoes(servicoLivros, servicoUsuarios, entrada);
-
+                
                 // Configuração do Menus da UI
                 // Configuração do SubMenu Usuarios
                 ConsoleRoteador menuUsuario = new ConsoleRoteador("Gestão de Usuários")
@@ -83,8 +82,8 @@ public class ConsoleConfig {
 
                 // Configuração do SubMenu Recomendacao
                 ConsoleRoteador menuRecomendacao = new ConsoleRoteador("Gestão de Recomendacao")
-                                .adicionarRota(1, "Adicionar Recomendacao", controleRecomendacoes::Adicionar)
-                                .adicionarRota(2, "Listar Recomendacoes", controleRecomendacoes::Listar)
+                                .adicionarRota(1, "Visualizar Recomendacoes", controleLivros::VisualizarRecomendacoes)
+                                .adicionarRota(2, "Listar Todas Recomendacoes", controleLivros::ListarRecomendacoes)
                                 .adicionarRota(0, "Voltar", null);
 
                 // Configuração do Menu Principal

@@ -2,10 +2,11 @@ package Dominio.EstruturasDeDados.Grafos;
 
 import java.util.Iterator;
 import java.util.LinkedHashMap;
-import java.util.HashSet;
+import java.util.ArrayList;
+
 import java.util.Map;
 
-import java.util.Set;
+import java.util.List;
 import java.util.StringJoiner;
 
 public class GrafoHash<T> implements Iterable<T> {
@@ -13,7 +14,7 @@ public class GrafoHash<T> implements Iterable<T> {
     // mapa de adjacências
     // { no_origem :[ no_destino1, no_destino2 ..... ] }
 
-    private Map<T, Set<T>> mapaAdjacencias;
+    private Map<T, List<T>> mapaAdjacencias;
 
     private int proximaChave;
 
@@ -29,7 +30,7 @@ public class GrafoHash<T> implements Iterable<T> {
 
     public Integer InserirNo(T valor) {
 
-        this.mapaAdjacencias.putIfAbsent(valor, new HashSet<>());
+        this.mapaAdjacencias.putIfAbsent(valor, new ArrayList<>());
 
         return proximaChave++;
     }
@@ -50,16 +51,39 @@ public class GrafoHash<T> implements Iterable<T> {
 
     }
 
-    public Set<T> VerConexoes(T chave) {
+    public List<T> VerConexoes(T chave) {
 
         return mapaAdjacencias.get(chave);
 
     }
 
-    // public T Get(int chave) {
+    public T Get(int posicao) {
 
-    // //return mapaAdjacencias.get(chave);
-    // }
+        if (mapaAdjacencias.isEmpty() || posicao < 0)
+            return null;
+
+        int i = 0;
+
+        for (var item : mapaAdjacencias.keySet()) {
+
+            if (i >= posicao)
+                return item;
+            i++;
+
+        }
+        return null;
+
+    }
+
+    public void Remover(int posicao) {
+
+        var item = Get(posicao);
+
+        if (item == null)
+            return;
+
+        Remover(item);
+    }
 
     public void Remover(T chave) {
 
