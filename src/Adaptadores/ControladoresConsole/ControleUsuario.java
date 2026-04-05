@@ -52,7 +52,7 @@ public class ControleUsuario {
         if (usuario == null)
             return;
 
-        System.out.println(ExibirUsuario(usuario));
+        System.out.println(exibirUsuario(usuario));
     }
 
     public void VisualizarHistorico() {
@@ -61,25 +61,24 @@ public class ControleUsuario {
         if (usuario == null)
             return;
 
-        System.out.println(ExibirUsuario(usuario));
-        System.out.println(exibeHistorico(null));
+        System.out.println(exibirUsuario(usuario));
+        System.out.println(exibirHistorico(usuario));
 
     }
 
-    private String exibeHistorico(Livro[] historico) {
+    private String exibirHistorico(Usuario usuario) {
 
-        StringBuilder leituras = new StringBuilder();
+        var historico = usuario.historicoNavegacao;
 
-        if (historico.length < 1) {
-            return "";
-        }
-        leituras.append("\nHistórico de visualizações\n");
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("\nHistórico de visualizações\n");
         for (var livro : historico) {
-            leituras.append(
+            sb.append(
                     String.format("|            > %-40s |\n", livro.Titulo));
         }
 
-        return leituras.toString();
+        return sb.toString();
     }
 
     public void Listar() {
@@ -88,7 +87,7 @@ public class ControleUsuario {
         Usuario[] listUsuarios = servicoUsuarios.Listar();
 
         for (Usuario usuario : listUsuarios) {
-            System.out.println(ExibirUsuario(usuario));
+            System.out.println(exibirUsuario(usuario));
         }
 
     }
@@ -135,7 +134,7 @@ public class ControleUsuario {
         servicoUsuarios.Editar(id, nome, cpf);
     }
 
-    public String ExibirUsuario(Usuario usuario) {
+    public String exibirUsuario(Usuario usuario) {
 
         int largura = 55;
 
