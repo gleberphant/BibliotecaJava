@@ -1,5 +1,6 @@
 package Aplicacao.CasosDeUso;
 
+import Dominio.EstruturasDeDados.Listas.Lista;
 import Dominio.Modelos.Livro;
 import Dominio.Modelos.Usuario;
 
@@ -20,100 +21,56 @@ public class ServicoLivros {
     // RETORNA O ID DO NOVO LIVRO
     public int Adicionar(Livro livro) {
 
-        livro.ID = repositorioLivros.Tamanho() == 0 ? 0 : repositorioLivros.Ultimo().ID + 1;
-        repositorioLivros.Inserir(livro);
+        repositorioLivros.InserirLivro(livro);
+
         return livro.ID;
     }
 
-    public Livro Visualizar(String stringID) {
+    public Livro BuscarID(String stringID) {
 
         int ID = validaID(stringID);
 
         if (ID < 0)
             throw new IllegalArgumentException("ID inválido: deve ser um número positivo.");
 
-        return Visualizar(ID);
-    }
+        Livro livro = repositorioLivros.BuscarID(ID);
+        if (livro == null)
+            throw new NoSuchElementException("Livro não encontrado");
 
-    public Livro Visualizar(int ID) {
-
-        for (Livro livro : repositorioLivros) {
-            if (livro.ID == ID) {
-
-                return livro;
-            }
-        }
-
-        throw new NoSuchElementException("Livro não encontrado");
-        // return null;
-    }
-
-    public void InserirRecomendacao(Livro livro1, Livro livro2) {
-
-        repositorioLivros.InserirConexao(livro1, livro2);
-
-        return;
-    }
-
-    public List<Livro> VisualizarRecomendacoes(Livro livro) {
-
-        return repositorioLivros.ListarConexoes(livro);
+        return livro;
 
     }
 
-    public Livro[] Listar() {
-        int indice = 0;
-        Livro[] livros = new Livro[repositorioLivros.Tamanho()];
+    public Lista<Livro> Listar() {
 
-        for (var livro : repositorioLivros) {
-            livros[indice] = livro;
-            indice++;
-        }
+        Lista<Livro> lista = repositorioLivros.ListarLivros();
 
-        return livros;
+        return lista;
     }
 
-    public Boolean Editar(String stringID, String titulo, String autor, String ano) {
+    public Livro Editar(Livro novoLivro) {
 
-        int ID = validaID(stringID);
-        for (var livro : repositorioLivros) {
+        repositorioLivros.Editar(novoLivro);
 
-            if (livro.ID == ID) {
-                livro.Titulo = titulo;
-                livro.Autor = autor;
-                livro.Ano = ano;
-                return true;
-            }
-
-        }
-
-        return false;
+        return novoLivro;
 
     }
 
-    public void Remover(String stringID) {
+    public void Remover(Livro livro) {
 
-        int ID = validaID(stringID);
+        for (var item : repositorioLivros) {
 
-        int indice = 0;
-
-        for (var livro : repositorioLivros) {
-
-            if (livro.ID == ID) {
-                Remover(indice);
+            if (item.ID == livro.ID) {
+                repositorioLivros.Remover(item);
                 return;
             }
-            indice++;
         }
 
         throw new NoSuchElementException("Livro não encontrado");
 
     }
 
-    public void Remover(int indice) {
-        repositorioLivros.Remover(indice);
-    }
-
+    // emprestimos
     public int Emprestar(Livro livro, Usuario locador) {
         // se o livro não estiver com ninguem, empresa pra locador, se o locador for o
         // proximo da fila então o livro é empresato para ele. senão adiciona o locador
@@ -166,6 +123,20 @@ public class ServicoLivros {
         if (livro.FilaEspera.Tamanho() > 0) {
             livro.Locador = livro.FilaEspera.Retirar();
         }
+
+    }
+
+    // Recomendacoes
+    public void InserirRecomendacao(Livro livro1, Livro livro2) {
+
+        repositorioLivros.InserirConexao(livro1, livro2);
+
+        return;
+    }
+
+    public Lista<Livro> VisualizarRecomendacoes(Livro livro) {
+
+        return repositorioLivros.ListarConexoes(livro);
 
     }
 

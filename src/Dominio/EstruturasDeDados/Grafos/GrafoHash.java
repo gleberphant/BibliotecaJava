@@ -9,35 +9,28 @@ import java.util.Map;
 import java.util.List;
 import java.util.StringJoiner;
 
-public class GrafoHash<T> implements Iterable<T> {
+public class GrafoHash<T> implements IGrafo<T> {
 
     // mapa de adjacências
     // { no_origem :[ no_destino1, no_destino2 ..... ] }
 
     private Map<T, List<T>> mapaAdjacencias;
 
-    private int proximaChave;
-
     public GrafoHash() {
         this.mapaAdjacencias = new LinkedHashMap<>();
-        proximaChave = 0;
+
     }
 
-    // retorna a chave do no gerado
-    public Integer ProximaChave() {
-        return proximaChave;
+    public T InserirItem(T item) {
+        this.mapaAdjacencias.putIfAbsent(item, new ArrayList<>());
+
+        return mapaAdjacencias.containsKey(item) ? item : null;
+
     }
 
-    public Integer InserirNo(T valor) {
-
-        this.mapaAdjacencias.putIfAbsent(valor, new ArrayList<>());
-
-        return proximaChave++;
-    }
-
-    public T InserirConexao(T chave1, T chave2) {
+    public List<T> InserirConexao(T chave1, T chave2) {
         // impede relações recursivas.
-        if (chave1 == chave2)
+        if (chave1.equals(chave2))
             return null;
 
         // checar se os dois objetos existem
@@ -46,8 +39,11 @@ public class GrafoHash<T> implements Iterable<T> {
             return null;
         }
 
-        mapaAdjacencias.get(chave1).add(chave2);
-        return chave1;
+        List<T> item1 = mapaAdjacencias.get(chave1);
+
+        item1.add(chave2);
+
+        return item1;
 
     }
 
@@ -57,48 +53,23 @@ public class GrafoHash<T> implements Iterable<T> {
 
     }
 
-    public T Get(int posicao) {
-
-        if (mapaAdjacencias.isEmpty() || posicao < 0)
-            return null;
-
-        int i = 0;
-
-        for (var item : mapaAdjacencias.keySet()) {
-
-            if (i >= posicao)
-                return item;
-            i++;
-
-        }
-        return null;
-
-    }
-
-    public void Remover(int posicao) {
-
-        var item = Get(posicao);
-
-        if (item == null)
-            return;
-
-        Remover(item);
-    }
-
-    public void Remover(T chave) {
-
+    public void RemoverItem(T chave) {
         mapaAdjacencias.remove(chave);
     }
 
+    // retorna o tamanho atual do mapa
     public int Tamanho() {
         return mapaAdjacencias.size();
     }
 
-    public T GetUltimo() {
+    public T GetPrimeiro() {
+        if (mapaAdjacencias.isEmpty())
+            return null;
 
-        if (mapaAdjacencias.isEmpty()) {
-            return null; // Ou throw exception
-        }
+        return mapaAdjacencias.keySet().iterator().next();
+    }
+
+    public T GetUltimo() {
 
         T ultimo = null;
 

@@ -1,68 +1,91 @@
 package Adaptadores.Repositorios.EmMemoria;
 
 import java.util.Iterator;
-import java.util.List;
 
 import Aplicacao.Interfaces.IRepositorioLivro;
 import Dominio.EstruturasDeDados.Grafos.GrafoHash;
+import Dominio.EstruturasDeDados.Listas.Lista;
+
 import Dominio.Modelos.Livro;
 
 public class RepositorioLivrosGrafo implements IRepositorioLivro {
 
     private GrafoHash<Livro> grafo;
+    int contagem;
 
     public RepositorioLivrosGrafo() {
         grafo = new GrafoHash<>();
     }
 
-    public int Inserir(Livro livro) {
+    public Livro InserirLivro(Livro livro) {
         if (livro == null)
-            return -1;
+            return null;
 
-        livro.ID = grafo.ProximaChave();
+        livro.ID = contagem++;
 
-        return grafo.InserirNo(livro);
+        return grafo.InserirItem(livro);
+
     }
 
     public void InserirConexao(Livro livro1, Livro livro2) {
-
         grafo.InserirConexao(livro1, livro2);
     }
 
-    public List<Livro> ListarConexoes(Livro livro) {
-        List<Livro> livros;
+    public Lista<Livro> ListarConexoes(Livro livro) {
 
-        livros = grafo.VerConexoes(livro);
+        Lista<Livro> lista = new Lista<>();
 
-        return livros;
+        for (var conexao : grafo.VerConexoes(livro)) {
+            lista.Inserir(conexao);
+        }
+
+        return lista;
 
     }
 
-    // retira o proximo item da fila - FIFO
-    public Livro Retirar() {
-        Livro dado = Topo();
-        Remover(0);
-        return dado;
+    public Lista<Livro> ListarLivros() {
+
+        Lista<Livro> lista = new Lista<>();
+
+        for (var livro : grafo) {
+            lista.Inserir(livro);
+        }
+
+        return lista;
+
     }
 
-    // retira último item da fila sem remover
-    public Livro Ultimo() {
-        return grafo.GetUltimo();
+    public Livro Editar(Livro novoLivro) {
+
+        for (var livro : grafo) {
+            // se encontrar o livro modifica os dados
+            if (livro.ID == novoLivro.ID) {
+                livro.Titulo = novoLivro.Titulo;
+                livro.Autor = novoLivro.Autor;
+                livro.Ano = novoLivro.Ano;
+                return livro;
+            }
+        }
+        // se não encontrar o livro insere um novo
+
+        return grafo.InserirItem(novoLivro);
     }
 
-    // visualiza primeiro item da fila sem remover
-    public Livro Topo() {
-        return grafo.Get(0);
+    public Livro BuscarID(int ID) {
+
+        for (Livro livro : grafo) {
+            if (livro.ID == ID) {
+                return livro;
+            }
+        }
+
+        return null;
+
     }
 
     // remove proximo item
     public void Remover(Livro chave) {
-        grafo.Remover(chave);
-    }
-
-    // remove item por posicao
-    public void Remover(int indice) {
-        grafo.Remover(indice);
+        grafo.RemoverItem(chave);
     }
 
     public int Tamanho() {

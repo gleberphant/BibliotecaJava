@@ -25,11 +25,8 @@ public class ListaEncadeada<T> implements Iterable<T> {
         this.tamanho = 0;
     }
 
-    public boolean Inserir(T dado) {
-        return InserirFim(dado);
-    }
 
-    public boolean InserirInicio(T dado) {
+    protected boolean InserirInicio(T dado) {
         No<T> novo = new No<>(dado);
         if (primeiro == null) {
             primeiro = ultimo = novo;
@@ -41,7 +38,7 @@ public class ListaEncadeada<T> implements Iterable<T> {
         return true;
     }
 
-    public boolean InserirFim(T dado) {
+    protected boolean InserirFim(T dado) {
         No<T> novo = new No<>(dado);
         if (primeiro == null) {
             primeiro = ultimo = novo;
@@ -53,20 +50,20 @@ public class ListaEncadeada<T> implements Iterable<T> {
         return true;
     }
 
-    public T Get(int indice) {
+    protected T Get(int indice) {
         No<T> alvo = GetNo(indice);
         return (alvo == null) ? null : alvo.dado;
     }
 
-    public T GetPrimeiro() {
+    protected T GetPrimeiro() {
         return Get(0);
     }
 
-    public T GetUltimo() {
+    protected T GetUltimo() {
         return Get(tamanho - 1);
     }
 
-    public No<T> GetNo(int indice) {
+    protected No<T> GetNo(int indice) {
         if (indice < 0 || indice >= tamanho)
             return null;
         No<T> atual = primeiro;
@@ -76,7 +73,7 @@ public class ListaEncadeada<T> implements Iterable<T> {
         return atual;
     }
 
-    public void Remover(int indice) {
+    protected void Remover(int indice) {
         if (indice < 0 || indice >= tamanho)
             return;
 
@@ -93,12 +90,12 @@ public class ListaEncadeada<T> implements Iterable<T> {
         tamanho--;
     }
 
-    public void Set(int indice, T novo) {
+    protected void Set(int indice, T novo) {
         GetNo(indice).dado = novo;
 
     }
 
-    public int Tamanho() {
+    protected int Tamanho() {
         return tamanho;
     }
 

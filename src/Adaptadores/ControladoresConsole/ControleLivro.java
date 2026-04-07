@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 import Aplicacao.CasosDeUso.ServicoLivros;
 import Aplicacao.CasosDeUso.ServicoUsuarios;
-
+import Dominio.EstruturasDeDados.Listas.Lista;
 import Dominio.Modelos.Livro;
 import Dominio.Modelos.Usuario;
 
@@ -22,8 +22,7 @@ public class ControleLivro {
 
     public void Adicionar() {
 
-        int id = servicoLivros.Adicionar(new Livro());
-        setLivro(id);
+        servicoLivros.Adicionar(setLivro(0));
 
     }
 
@@ -33,21 +32,9 @@ public class ControleLivro {
 
         if (livro == null)
             return;
-        setLivro(livro.ID);
 
-    }
+        servicoLivros.Editar(setLivro(livro.ID));
 
-    public void setLivro(int id) {
-        System.out.println("Informe os dados do livro");
-
-        System.out.print("Digite nome do livro: ");
-        String titulo = scanner.nextLine();// ler titulo
-        System.out.print("Digite autor do livro: ");
-        String autor = scanner.nextLine();
-        System.out.print("Digite ano do livro: ");
-        String ano = scanner.nextLine();
-
-        servicoLivros.Editar(String.valueOf(id), titulo, autor, ano);
     }
 
     public void Visualizar() {
@@ -63,17 +50,16 @@ public class ControleLivro {
         for (var livro2 : servicoUsuarios.GetUsuarioLogado().historicoNavegacao) {
             servicoLivros.InserirRecomendacao(livro, livro2);
         }
-        System.out.println(ExibeLivro(livro));
+        System.out.println(exibeLivro(livro));
 
     }
 
     public void Listar() {
 
         System.out.println("Listando todos os livros");
-        Livro[] livros = servicoLivros.Listar();
 
-        for (Livro livro : livros) {
-            System.out.println(ExibeLivro(livro));
+        for (Livro livro : servicoLivros.Listar()) {
+            System.out.println(exibeLivro(livro));
         }
 
         System.out.println("Pressione Qualquer Tecla para continuar ....");
@@ -84,10 +70,111 @@ public class ControleLivro {
 
         Livro livro = buscarLivro();
 
-        servicoLivros.Remover(livro.ID);
+        if (livro == null)
+            return;
+
+        servicoLivros.Remover(livro);
 
         System.out.println("Removendo o livro ");
 
+    }
+
+    // EMPRESTIMOS
+    public void Emprestar() {
+
+        // procurar o Livro
+        Livro livro = buscarLivro();
+
+        if (livro == null)
+            return;
+
+        System.out.println(livro.toString());
+
+        // procurar o usuario
+        Usuario usuario = ControleUsuario.BuscarUsuarioID(servicoUsuarios, scanner);
+
+        if (usuario == null) {
+            return;
+        }
+
+        System.out.println(usuario.toString());
+
+        try {
+            // Realizar o empréstimo
+            int posicao = servicoLivros.Emprestar(livro, usuario);
+
+            if (posicao == 0) {
+                // se posicao for zero
+                System.out.println("Livro emprestado para: " + livro.Locador.Nome);
+
+                // se retorno da posicao for maior que zero
+            } else {
+                System.out.printf("\n O livro encontra-se emprestado para %s ", livro.Locador.Nome);
+                System.out.printf("\n O usuario %s foi inserido na lista de espera na posição %d",
+                        livro.FilaEspera.Topo().Nome, posicao);
+            }
+
+        } catch (Exception e) {
+            System.out.println("Algo não deu certo: " + e.getMessage());
+            return;
+        }
+
+    }
+
+    // Devolver empréstimo
+    public void Devolver() {
+
+        Livro livro = buscarLivro();
+
+        if (livro == null) {
+            return;
+        }
+
+        System.out.println(exibeLivro(livro));
+
+        servicoLivros.Devolver(livro);
+        System.out.printf("\nLivro devolvido para biblioteca");
+        System.out.printf("\n Próximo Usuário na fila de espera do livro", livro.FilaEspera.Topo());
+
+    }
+
+    public void VisualizarEmprestimos() {
+        System.out.println("Informe o ID do LIVRO para procurar");
+
+        Livro livro = buscarLivro();
+
+        System.out.println(livro.toString());
+
+        System.out.println(exibeFilaEspera(livro));
+
+        System.out.println("Pressione Qualquer Tecla para continuar ....");
+        scanner.nextLine();
+    }
+
+    private String exibeFilaEspera(Livro livro) {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("\nUsuarios na Fila de Espera do livro :");
+        for (var usuario : livro.FilaEspera) {
+            sb.append(String.format(" [%s], ", usuario.Nome));
+        }
+
+        return sb.toString();
+    }
+
+    public void ListarEmprestimos() {
+
+        System.out.println("Listando todos empréstimos de livros : \n");
+        for (var livro : servicoLivros.Listar()) {
+
+            System.out.printf("\n Livro %s / Emprestado para : %s ", livro.Titulo, livro.Locador);
+
+            System.out.println(exibeFilaEspera(livro));
+
+        }
+
+        System.out.println("Pressione Qualquer Tecla para continuar ....");
+        scanner.nextLine();
     }
 
     // recomendacoes
@@ -111,6 +198,7 @@ public class ControleLivro {
         scanner.nextLine();
     }
 
+    // exibições
     private String exibeRecomendacões(Livro livro) {
         StringBuilder sb = new StringBuilder();
         sb.append(String.format("\n Recomendacoes para 4[%s]", livro.Titulo));
@@ -121,104 +209,7 @@ public class ControleLivro {
         return sb.toString();
     }
 
-    // Adcionar um empréstimo
-    public void Emprestar() {
-
-        // procurar o Livro
-        Livro livro = buscarLivro();
-
-        if (livro == null) {
-            return;
-        }
-        System.out.println(livro.toString());
-
-        // procurar o usuario
-        Usuario usuario = ControleUsuario.BuscarUsuarioID(servicoUsuarios, scanner);
-
-        if (usuario == null) {
-            return;
-        }
-        System.out.println(usuario.toString());
-
-        try {
-            // Realizar o empréstimo
-            int posicao = servicoLivros.Emprestar(livro, usuario);
-
-            if (posicao == 0) {
-                // se posicao for zero
-                System.out.println("Livro emprestado para: " + usuario.Nome);
-
-                // se retorno da posicao for maior que zero
-            } else {
-                System.out.printf("\n O livro encontra-se emprestado para %s ", livro.FilaEspera.Topo().Nome);
-                System.out.printf("\n O usuario %s foi inserido na lista de espera na posição %d",
-                        livro.FilaEspera.Topo().Nome, posicao);
-            }
-
-        } catch (Exception e) {
-            System.out.println("Algo não deu certo: " + e.getMessage());
-            return;
-        }
-
-    }
-
-    // Devolver empréstimo
-    public void Devolver() {
-
-        Livro livro = buscarLivro();
-
-        if (livro == null) {
-            return;
-        }
-
-        System.out.println(ExibeLivro(livro));
-
-        servicoLivros.Devolver(livro);
-        System.out.printf("\nLivro devolvido para biblioteca");
-        System.out.printf("\n Próximo Usuário na fila de espera do livro", livro.FilaEspera.Topo());
-
-    }
-
-    //
-    public void VisualizarEmprestimos() {
-        System.out.println("Informe o ID do LIVRO para procurar");
-
-        Livro livro = buscarLivro();
-
-        System.out.println(livro.toString());
-
-        System.out.print("\n Usuarios na fila > ");
-
-        for (var usuario : livro.FilaEspera) {
-            System.out.print(" [" + usuario.toString() + "] ");
-        }
-
-        System.out.println("Pressione Qualquer Tecla para continuar ....");
-        scanner.nextLine();
-    }
-
-    public void ListarEmprestimos() {
-
-        for (var livro : servicoLivros.Listar()) {
-
-            System.out.print("\n Livro " + livro.toString() + " FILA > ");
-
-            StringBuilder sb = new StringBuilder();
-            sb.append("[");
-            for (var usuario : livro.FilaEspera) {
-                sb.append(String.format("%s, ", usuario.Nome));
-            }
-            sb.append("]");
-
-            System.out.println(sb.toString());
-        }
-
-        System.out.println("Pressione Qualquer Tecla para continuar ....");
-        scanner.nextLine();
-    }
-
-    //
-    public String ExibeLivro(Livro livro) {
+    private String exibeLivro(Livro livro) {
 
         int largura = 55;
 
@@ -251,7 +242,19 @@ public class ControleLivro {
 
     }
 
-    // metodos staticos
+    private Livro setLivro(int id) {
+        System.out.println("Informe os dados do livro");
+
+        System.out.print("Digite nome do livro: ");
+        String titulo = scanner.nextLine();// ler titulo
+        System.out.print("Digite autor do livro: ");
+        String autor = scanner.nextLine();
+        System.out.print("Digite ano do livro: ");
+        String ano = scanner.nextLine();
+
+        return new Livro(id, titulo, autor, ano);
+
+    }
 
     private Livro buscarLivro() {
         return BuscarLivro(this.servicoLivros, this.scanner);
@@ -262,7 +265,7 @@ public class ControleLivro {
         System.out.println("Informe o ID do livro para pesquisar");
 
         try {
-            Livro livro = servicoLivros.Visualizar(scanner.nextLine());
+            Livro livro = servicoLivros.BuscarID(scanner.nextLine());
             System.out.println("Livro Encontrado");
             return livro;
 

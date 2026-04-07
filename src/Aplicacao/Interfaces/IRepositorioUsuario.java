@@ -1,21 +1,23 @@
 package Aplicacao.Interfaces;
 
-public interface IRepositorioUsuario<T> extends Iterable<T> {
+import Dominio.Modelos.Usuario;
+
+public interface IRepositorioUsuario extends Iterable<Usuario> {
 
     // inserir um item
-    public int Inserir(T dado);
+    public int Inserir(Usuario dado);
 
     // retira proximo item da fila
-    public T Retirar();
+    public Usuario Retirar();
 
     // retira proximo item da fila
-    public T Ultimo();
+    public Usuario Ultimo();
 
     // visualiza proximo item sem remover
-    public T Topo();
+    public Usuario Topo();
 
     // remove proximo item
-    public void Remover();
+    // public void Remover();
 
     // remove item de indice
     public void Remover(int indice);

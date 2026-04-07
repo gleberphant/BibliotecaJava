@@ -1,9 +1,15 @@
 package Dominio.EstruturasDeDados.Grafos;
 
-public interface IGrafo<T> {
+import java.util.List;
 
-    public Integer InserirNo(T valor);
+public interface IGrafo<T> extends Iterable<T> {
 
-    public Integer InserirConexao(int chave1, int chave2);
+    public T InserirItem(T valor);
+
+    public void RemoverItem(T chave);
+
+    public List<T> InserirConexao(T chave1, T chave2);
+
+    public List<T> VerConexoes(T chave);
 
 }

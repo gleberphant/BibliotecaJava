@@ -8,10 +8,10 @@ import Dominio.Modelos.Livro;
 import Dominio.Modelos.Usuario;
 
 public class ServicoUsuarios {
-    IRepositorioUsuario<Usuario> repositorioUsuarios;
+    IRepositorioUsuario repositorioUsuarios;
     Usuario usuarioLogado;
 
-    public ServicoUsuarios(IRepositorioUsuario<Usuario> repositorio) {
+    public ServicoUsuarios(IRepositorioUsuario repositorio) {
         repositorioUsuarios = repositorio;
 
     }

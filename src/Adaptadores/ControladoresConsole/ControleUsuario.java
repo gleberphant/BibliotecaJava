@@ -52,7 +52,7 @@ public class ControleUsuario {
         if (usuario == null)
             return;
 
-        System.out.println(exibirUsuario(usuario));
+        System.out.println(exibeUsuario(usuario));
     }
 
     public void VisualizarHistorico() {
@@ -61,7 +61,7 @@ public class ControleUsuario {
         if (usuario == null)
             return;
 
-        System.out.println(exibirUsuario(usuario));
+        System.out.println(exibeUsuario(usuario));
         System.out.println(exibirHistorico(usuario));
 
     }
@@ -87,7 +87,7 @@ public class ControleUsuario {
         Usuario[] listUsuarios = servicoUsuarios.Listar();
 
         for (Usuario usuario : listUsuarios) {
-            System.out.println(exibirUsuario(usuario));
+            System.out.println(exibeUsuario(usuario));
         }
 
     }
@@ -134,7 +134,7 @@ public class ControleUsuario {
         servicoUsuarios.Editar(id, nome, cpf);
     }
 
-    public String exibirUsuario(Usuario usuario) {
+    private String exibeUsuario(Usuario usuario) {
 
         int largura = 55;
 
