@@ -4,7 +4,6 @@ import java.util.Scanner;
 
 import Aplicacao.CasosDeUso.ServicoLivros;
 import Aplicacao.CasosDeUso.ServicoUsuarios;
-import Dominio.EstruturasDeDados.Listas.Lista;
 import Dominio.Modelos.Livro;
 import Dominio.Modelos.Usuario;
 
@@ -62,8 +61,7 @@ public class ControleLivro {
             System.out.println(exibeLivro(livro));
         }
 
-        System.out.println("Pressione Qualquer Tecla para continuar ....");
-        scanner.nextLine();
+
     }
 
     public void Remover() {
@@ -147,8 +145,7 @@ public class ControleLivro {
 
         System.out.println(exibeFilaEspera(livro));
 
-        System.out.println("Pressione Qualquer Tecla para continuar ....");
-        scanner.nextLine();
+
     }
 
     private String exibeFilaEspera(Livro livro) {
@@ -173,8 +170,7 @@ public class ControleLivro {
 
         }
 
-        System.out.println("Pressione Qualquer Tecla para continuar ....");
-        scanner.nextLine();
+
     }
 
     // recomendacoes
@@ -185,8 +181,6 @@ public class ControleLivro {
             System.out.println(exibeRecomendacões(livro));
         }
 
-        System.out.println("pressione qualquer tecla para prosseguir ...");
-        scanner.nextLine();
     }
 
     public void VisualizarRecomendacoes() {
@@ -194,8 +188,6 @@ public class ControleLivro {
 
         System.out.println(exibeRecomendacões(livro));
 
-        System.out.println("pressione qualquer tecla para prosseguir ...");
-        scanner.nextLine();
     }
 
     // exibições
@@ -245,11 +237,11 @@ public class ControleLivro {
     private Livro setLivro(int id) {
         System.out.println("Informe os dados do livro");
 
-        System.out.print("Digite nome do livro: ");
+        System.out.print("Titulo: ");
         String titulo = scanner.nextLine();// ler titulo
-        System.out.print("Digite autor do livro: ");
+        System.out.print("Autor : ");
         String autor = scanner.nextLine();
-        System.out.print("Digite ano do livro: ");
+        System.out.print("Ano : ");
         String ano = scanner.nextLine();
 
         return new Livro(id, titulo, autor, ano);
@@ -265,7 +257,7 @@ public class ControleLivro {
         System.out.println("Informe o ID do livro para pesquisar");
 
         try {
-            Livro livro = servicoLivros.BuscarID(scanner.nextLine());
+            Livro livro = servicoLivros.Visualizar(scanner.nextLine());
             System.out.println("Livro Encontrado");
             return livro;
 

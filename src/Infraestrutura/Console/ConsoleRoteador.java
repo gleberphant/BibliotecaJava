@@ -31,8 +31,8 @@ public class ConsoleRoteador {
     }
 
     public Usuario GetLogin() {
-        
-        return login != null? login.get(): null;
+
+        return login != null ? login.get() : null;
     }
 
     // Injeta Acao de Controlador e segue um padrão Builder
@@ -72,9 +72,11 @@ public class ConsoleRoteador {
         if (acoes.containsKey(opcao)) {
             if (acoes.get(opcao) == null)
                 return null;
-            else
+            else {
                 acoes.get(opcao).run();
-
+                System.out.println("pressione qualquer tecla para prosseguir ...");
+                scanner.nextLine();
+            }
             return this; // Mantém na mesma tela após executar
         }
 

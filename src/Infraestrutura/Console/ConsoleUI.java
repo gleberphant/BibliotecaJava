@@ -57,6 +57,7 @@ public class ConsoleUI {
             } else if (proximo != atual) {
                 historico.push(proximo);
             }
+
         } catch (NumberFormatException e) {
             System.out.println("Erro: Digite um número válido.");
         }

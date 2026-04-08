@@ -3,7 +3,7 @@ package Adaptadores.ControladoresConsole;
 import java.util.Scanner;
 
 import Aplicacao.CasosDeUso.ServicoUsuarios;
-import Dominio.Modelos.*;
+import Dominio.Modelos.Usuario;
 
 public class ControleUsuario {
     private final ServicoUsuarios servicoUsuarios;
@@ -16,21 +16,7 @@ public class ControleUsuario {
 
     public void Adicionar() {
 
-        setUsuario(servicoUsuarios.Adicionar(new Usuario()));
-
-    }
-
-    public void FazerLogin() {
-
-        System.out.printf("\nInforme o login");
-        String login = scanner.nextLine();
-
-        System.out.printf("\nInforme a senha");
-        String senha = scanner.nextLine();
-
-        servicoUsuarios.Login(login, senha);
-
-        System.out.printf("\nUsuario Logado: %s", servicoUsuarios.GetUsuarioLogado());
+        servicoUsuarios.Adicionar(setUsuario(0));
 
     }
 
@@ -41,7 +27,7 @@ public class ControleUsuario {
         if (usuario == null)
             return;
 
-        setUsuario(usuario.ID);
+        servicoUsuarios.Editar(setUsuario(usuario.ID));
 
     }
 
@@ -53,40 +39,14 @@ public class ControleUsuario {
             return;
 
         System.out.println(exibeUsuario(usuario));
-    }
 
-    public void VisualizarHistorico() {
-        Usuario usuario = BuscarUsuarioID();
-
-        if (usuario == null)
-            return;
-
-        System.out.println(exibeUsuario(usuario));
-        System.out.println(exibirHistorico(usuario));
-
-    }
-
-    private String exibirHistorico(Usuario usuario) {
-
-        var historico = usuario.historicoNavegacao;
-
-        StringBuilder sb = new StringBuilder();
-
-        sb.append("\nHistórico de visualizações\n");
-        for (var livro : historico) {
-            sb.append(
-                    String.format("|            > %-40s |\n", livro.Titulo));
-        }
-
-        return sb.toString();
     }
 
     public void Listar() {
 
         System.out.println("Listando todos os usuarios");
-        Usuario[] listUsuarios = servicoUsuarios.Listar();
 
-        for (Usuario usuario : listUsuarios) {
+        for (Usuario usuario : servicoUsuarios.Listar()) {
             System.out.println(exibeUsuario(usuario));
         }
 
@@ -96,14 +56,44 @@ public class ControleUsuario {
 
         System.out.println("Informe o ID do usuario para remover");
 
-        servicoUsuarios.Remover(scanner.nextLine());
+        try {
+            servicoUsuarios.Remover(scanner.nextLine());
+        } catch (Exception e) {
+            System.out.printf("Algo deu errado  : %s", e.getMessage());
+            return;
+        }
 
-        System.out.println("Removendo o usuario ");
+        System.out.println("Usuario removido com sucesso.");
 
     }
 
-    private Usuario BuscarUsuarioID() {
-        return BuscarUsuarioID(this.servicoUsuarios, this.scanner);
+    public void FazerLogin() {
+
+        System.out.printf("\nInforme o login");
+        String login = scanner.nextLine();
+
+        System.out.printf("\nInforme a senha");
+        String senha = scanner.nextLine();
+
+        try {
+            servicoUsuarios.Login(login, senha);
+        } catch (Exception e) {
+            System.out.printf("Algo deu errado  : $s", e.getMessage());
+            return;
+        }
+
+        System.out.printf("\nUsuario Logado: %s", servicoUsuarios.GetUsuarioLogado());
+
+    }
+
+    public void VisualizarHistorico() {
+        Usuario usuario = servicoUsuarios.GetUsuarioLogado();
+
+        if (usuario == null)
+            return;
+
+        System.out.println(exibirHistorico(usuario));
+
     }
 
     // metodo static para outros controladores
@@ -122,35 +112,54 @@ public class ControleUsuario {
 
     }
 
-    private void setUsuario(int ID) {
+    private Usuario BuscarUsuarioID() {
+        return BuscarUsuarioID(this.servicoUsuarios, this.scanner);
+    }
+
+    private Usuario setUsuario(int id) {
 
         System.out.println("Informe os dados do usuario");
-        String id = String.valueOf(ID);
-        System.out.print("Digite nome : ");
+        System.out.print("Nome : ");
         String nome = scanner.nextLine();// ler titulo
-        System.out.print("Digite CPF : ");
+        System.out.print("CPF : ");
         String cpf = scanner.nextLine();
+        System.out.print("Senha : ");
+        String senha = scanner.nextLine();
 
-        servicoUsuarios.Editar(id, nome, cpf);
+        return new Usuario(id, nome, cpf, senha);
+    }
+
+    private String exibirHistorico(Usuario usuario) {
+
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("\n ----------------- Histórico de visualizações --------------- \n");
+        sb.append(String.format("\n| Usuario: %-50s| \n", usuario.Nome));
+        sb.append("\n ------------------------------------------------------------ \n");
+        for (var livro : usuario.historicoNavegacao) {
+            sb.append(
+                    String.format("|Título: %-22s Autor: %22s|\n",
+                            livro.Titulo,
+                            livro.Autor));
+        }
+        sb.append("\n ------------------------------------------------------------ \n");
+        return sb.toString();
     }
 
     private String exibeUsuario(Usuario usuario) {
 
-        int largura = 55;
-
         return String.format(
                 """
-                         %s
-                        | ID         : %-40s |
-                        | Nome       : %-40s |
-                        | Senha      : %-40s |
-                        %s %s
+                         ------------------------------------------------------------
+                        | ID         : %-45s |
+                        | Nome       : %-45s |
+                        | CPF        : %-45s |
+                        | Senha      : %-45s |
+                         ------------------------------------------------------------
                         """,
-                "-".repeat(largura),
                 usuario.ID,
                 usuario.Nome,
-                usuario.Senha,
-                "",
-                "-".repeat(largura));
+                usuario.CPF,
+                usuario.Senha);
     }
 }

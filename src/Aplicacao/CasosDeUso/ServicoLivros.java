@@ -6,7 +6,6 @@ import Dominio.Modelos.Usuario;
 
 import java.util.NoSuchElementException;
 
-import java.util.List;
 import Aplicacao.Interfaces.*;
 
 public class ServicoLivros {
@@ -26,7 +25,12 @@ public class ServicoLivros {
         return livro.ID;
     }
 
-    public Livro BuscarID(String stringID) {
+    public Livro Visualizar(String stringID) {
+
+        return BuscarID(stringID);
+    }
+
+    private Livro BuscarID(String stringID) {
 
         int ID = validaID(stringID);
 

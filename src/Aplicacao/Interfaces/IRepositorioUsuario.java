@@ -1,5 +1,6 @@
 package Aplicacao.Interfaces;
 
+import Dominio.EstruturasDeDados.Listas.Lista;
 import Dominio.Modelos.Usuario;
 
 public interface IRepositorioUsuario extends Iterable<Usuario> {
@@ -7,20 +8,16 @@ public interface IRepositorioUsuario extends Iterable<Usuario> {
     // inserir um item
     public int Inserir(Usuario dado);
 
-    // retira proximo item da fila
-    public Usuario Retirar();
+    public Usuario BuscarID(int ID);
 
-    // retira proximo item da fila
-    public Usuario Ultimo();
+    public Usuario BuscarNome(String nome);
 
-    // visualiza proximo item sem remover
-    public Usuario Topo();
-
-    // remove proximo item
-    // public void Remover();
+    public Lista<Usuario> Listar();
 
     // remove item de indice
-    public void Remover(int indice);
+    public boolean Remover(int ID);
+
+    public int Contagem();
 
     // quantidade de itens no repositorio
     public int Tamanho();

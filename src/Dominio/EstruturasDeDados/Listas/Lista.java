@@ -6,6 +6,7 @@ import java.util.Iterator;
 public class Lista<T> implements IListas<T> {
 
     protected final ListaEncadeada<T> lista;
+    protected int contagem;
 
     public Lista() {
         lista = new ListaEncadeada<>();
@@ -15,7 +16,7 @@ public class Lista<T> implements IListas<T> {
         if (dado == null)
             return -1;
         lista.InserirFim(dado);
-        return lista.Tamanho();
+        return contagem++;
     }
 
     // retira proximo item da fila
@@ -55,6 +56,10 @@ public class Lista<T> implements IListas<T> {
 
     public int Tamanho() {
         return lista.Tamanho();
+    }
+
+    public int Contagem() {
+        return contagem;
     }
 
     public String toString() {

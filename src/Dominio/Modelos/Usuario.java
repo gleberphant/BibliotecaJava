@@ -6,23 +6,24 @@ public class Usuario implements Comparable<Usuario> {
 
     public int ID;
     public String Nome;
+    public String CPF;
     public String Senha;
     public Pilha<Livro> historicoNavegacao;
-    // public Lista<Livro> listaLeituras;
 
     public Usuario() {
-        SetUsuario(0, "", "");
+        SetUsuario(0, "", "", "");
 
     }
 
-    public Usuario(int id, String nome, String senha) {
-        SetUsuario(id, nome, senha);
+    public Usuario(int id, String nome, String cpf, String senha) {
+        SetUsuario(id, nome, cpf, senha);
 
     }
 
-    public void SetUsuario(int id, String nome, String senha) {
+    public void SetUsuario(int id, String nome, String cpf, String senha) {
         this.ID = id;
         this.Nome = nome;
+        this.CPF = cpf;
         this.Senha = senha;
         historicoNavegacao = new Pilha<>();
     }
@@ -30,10 +31,10 @@ public class Usuario implements Comparable<Usuario> {
     // mostrar string em formato json
     public String toString() {
 
-        StringBuilder historicoNavegacao = new StringBuilder();
+        StringBuilder sb = new StringBuilder();
 
         for (var livro : this.historicoNavegacao) {
-            historicoNavegacao.append(String.format("Livro:'%s', ", livro.Titulo));
+            sb.append(String.format("Livro:'%s', ", livro.Titulo));
         }
 
         return String.format("""
@@ -42,7 +43,7 @@ public class Usuario implements Comparable<Usuario> {
                 this.ID,
                 this.Nome,
                 this.Senha,
-                historicoNavegacao.toString());
+                sb.toString());
     }
 
     @Override

@@ -17,6 +17,8 @@ public interface IRepositorioLivro extends Iterable<Livro> {
     // Lista de livros
     public Lista<Livro> ListarLivros();
 
+    public int Contagem();
+
     // Editar um livro
     public Livro Editar(Livro novoLivro);
 

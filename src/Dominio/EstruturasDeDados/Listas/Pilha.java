@@ -10,7 +10,7 @@ public class Pilha<T> extends Lista<T> {
     @Override
     public int Inserir(T dado) {
         lista.InserirInicio(dado);
-        return 0;
+        return contagem++;
     }
 
 }

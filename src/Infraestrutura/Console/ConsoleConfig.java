@@ -3,10 +3,10 @@ package Infraestrutura.Console;
 import java.util.Scanner;
 
 import Adaptadores.ControladoresConsole.ControleLivro;
-import Adaptadores.ControladoresConsole.ControleRecomendacoes;
+
 import Adaptadores.ControladoresConsole.ControleUsuario;
 import Adaptadores.Repositorios.EmMemoria.RepositorioLivrosGrafo;
-import Adaptadores.Repositorios.EmMemoria.RepositorioLivrosLista;
+
 import Adaptadores.Repositorios.EmMemoria.RepositorioUsuariosLista;
 import Aplicacao.CasosDeUso.ServicoLivros;
 import Aplicacao.CasosDeUso.ServicoUsuarios;
@@ -27,7 +27,7 @@ public class ConsoleConfig {
                 System.out.println("\n::: Mockando Usuarios :::");
                 for (int i = 1; i < numItens; i++) {
 
-                        servicoUsuarios.Adicionar(new Usuario(i, "Nome" + i, "senha" + i));
+                        servicoUsuarios.Adicionar(new Usuario(i, "Nome" + i, "" + i, "senha"));
                         System.out.println(servicoUsuarios.Visualizar(i + ""));
                 }
 
@@ -43,7 +43,7 @@ public class ConsoleConfig {
                 var servicoUsuarios = new ServicoUsuarios(new RepositorioUsuariosLista());
 
                 // inserir usuario ADM
-                servicoUsuarios.Adicionar(new Usuario(0, "root", "root"));
+                servicoUsuarios.Adicionar(new Usuario(0, "root", "0123456789", "root"));
                 servicoUsuarios.Login("root", "root");
 
                 // mockar dados
@@ -52,7 +52,7 @@ public class ConsoleConfig {
                 // configurar controladores
                 var controleUsuarios = new ControleUsuario(servicoUsuarios, entrada);
                 var controleLivros = new ControleLivro(servicoLivros, servicoUsuarios, entrada);
-                
+
                 // Configuração do Menus da UI
                 // Configuração do SubMenu Usuarios
                 ConsoleRoteador menuUsuario = new ConsoleRoteador("Gestão de Usuários")

@@ -1,39 +1,70 @@
 package Adaptadores.Repositorios.EmMemoria;
 
 import java.util.Iterator;
+
 import Dominio.Modelos.Usuario;
 import Aplicacao.Interfaces.IRepositorioUsuario;
 import Dominio.EstruturasDeDados.Listas.Lista;
 
 public class RepositorioUsuariosLista implements IRepositorioUsuario {
     protected final Lista<Usuario> lista;
+    int contagem;
 
     public RepositorioUsuariosLista() {
         lista = new Lista<>();
+        contagem = 0;
+    }
+
+    public int Contagem() {
+        return contagem;
     }
 
     public int Inserir(Usuario dado) {
-        return lista.Inserir(dado);
+        lista.Inserir(dado);
+        return contagem++;
+
     }
 
-    // retira proximo item da fila
-    public Usuario Retirar() {
-        return lista.Retirar();
+    public Lista<Usuario> Listar() {
+        return lista;
     }
 
-    // retira último item da fila
-    public Usuario Ultimo() {
-        return lista.Ultimo();
+    public Usuario BuscarID(int ID) {
+
+        for (Usuario usuario : lista) {
+            if (usuario.ID == ID) {
+                return usuario;
+            }
+        }
+
+        return null;
+
     }
 
-    // visualiza proximo item sem remover
-    public Usuario Topo() {
-        return lista.Topo();
+    public Usuario BuscarNome(String nome) {
+        for (Usuario usuario : lista) {
+            if (usuario.Nome.equals(nome)) {
+                return usuario;
+            }
+        }
+
+        return null;
     }
 
     // remove item por indice
-    public void Remover(int indice) {
-        lista.Remover(indice);
+    public boolean Remover(int ID) {
+        int indice = 0;
+
+        for (var usuario : lista) {
+
+            if (usuario.ID == ID) {
+                Remover(indice);
+                return true;
+            }
+            indice++;
+        }
+        return false;
+
     }
 
     public int Tamanho() {

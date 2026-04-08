@@ -10,7 +10,8 @@ public class Fila<T> extends Lista<T> {
     @Override
     public int Inserir(T dado) {
         lista.InserirFim(dado);
-        return true;
+        
+        return contagem++;
     }
 
 }
