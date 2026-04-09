@@ -1,4 +1,4 @@
-package Dominio.EstruturasDeDados.Listas;
+package Infraestrutura.EstruturasDeDados.Listas;
 
 
 public interface IListas<T> extends Iterable<T> {

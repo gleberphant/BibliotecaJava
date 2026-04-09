@@ -3,7 +3,7 @@
 
 package Testes;
 
-import Dominio.EstruturasDeDados.Listas.Fila;
+import Infraestrutura.EstruturasDeDados.Listas.Fila;
 
 public class TesteFila {
     public static void main(String[] args) {

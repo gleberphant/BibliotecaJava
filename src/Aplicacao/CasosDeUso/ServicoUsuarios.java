@@ -6,8 +6,8 @@ import Aplicacao.Interfaces.IRepositorioUsuario;
 import Dominio.Algoritmos.Criptografia.Encriptador;
 import Dominio.Modelos.Livro;
 import Dominio.Modelos.Usuario;
-import Dominio.EstruturasDeDados.Listas.Lista;
-import Dominio.EstruturasDeDados.Listas.Pilha;
+import Infraestrutura.EstruturasDeDados.Listas.Lista;
+import Infraestrutura.EstruturasDeDados.Listas.Pilha;
 
 public class ServicoUsuarios {
     IRepositorioUsuario repositorioUsuarios;

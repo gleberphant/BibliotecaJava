@@ -3,8 +3,8 @@ package Adaptadores.Repositorios.EmMemoria;
 import java.util.Iterator;
 
 import Dominio.Modelos.Usuario;
+import Infraestrutura.EstruturasDeDados.Listas.Lista;
 import Aplicacao.Interfaces.IRepositorioUsuario;
-import Dominio.EstruturasDeDados.Listas.Lista;
 
 public class RepositorioUsuariosLista implements IRepositorioUsuario {
     protected final Lista<Usuario> lista;

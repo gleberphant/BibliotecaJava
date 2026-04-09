@@ -1,4 +1,4 @@
-package Dominio.EstruturasDeDados.Grafos;
+package Infraestrutura.EstruturasDeDados.Grafos;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -6,7 +6,7 @@ import java.util.LinkedHashMap;
 
 import java.util.StringJoiner;
 
-import Dominio.EstruturasDeDados.Listas.Lista;
+import Infraestrutura.EstruturasDeDados.Listas.Lista;
 
 public class GrafoHash<T> implements IGrafo<T> {
 

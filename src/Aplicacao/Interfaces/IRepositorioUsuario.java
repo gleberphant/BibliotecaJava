@@ -1,7 +1,7 @@
 package Aplicacao.Interfaces;
 
-import Dominio.EstruturasDeDados.Listas.Lista;
 import Dominio.Modelos.Usuario;
+import Infraestrutura.EstruturasDeDados.Listas.Lista;
 
 public interface IRepositorioUsuario extends Iterable<Usuario> {
 

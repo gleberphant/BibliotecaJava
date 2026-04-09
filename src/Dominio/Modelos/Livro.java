@@ -2,7 +2,7 @@ package Dominio.Modelos;
 
 import java.lang.Comparable;
 
-import Dominio.EstruturasDeDados.Listas.Fila;
+import Infraestrutura.EstruturasDeDados.Listas.Fila;
 
 public class Livro implements Comparable<Livro> {
 

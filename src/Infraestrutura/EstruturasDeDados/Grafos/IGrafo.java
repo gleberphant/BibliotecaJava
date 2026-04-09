@@ -1,6 +1,6 @@
-package Dominio.EstruturasDeDados.Grafos;
+package Infraestrutura.EstruturasDeDados.Grafos;
 
-import Dominio.EstruturasDeDados.Listas.Lista;
+import Infraestrutura.EstruturasDeDados.Listas.Lista;
 
 public interface IGrafo<T> extends Iterable<T> {
 

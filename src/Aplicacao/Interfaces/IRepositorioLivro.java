@@ -1,7 +1,7 @@
 package Aplicacao.Interfaces;
 
-import Dominio.EstruturasDeDados.Listas.Lista;
 import Dominio.Modelos.Livro;
+import Infraestrutura.EstruturasDeDados.Listas.Lista;
 
 public interface IRepositorioLivro extends Iterable<Livro> {
 

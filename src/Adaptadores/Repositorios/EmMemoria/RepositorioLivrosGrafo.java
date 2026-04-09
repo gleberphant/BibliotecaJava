@@ -3,10 +3,9 @@ package Adaptadores.Repositorios.EmMemoria;
 import java.util.Iterator;
 
 import Aplicacao.Interfaces.IRepositorioLivro;
-import Dominio.EstruturasDeDados.Grafos.GrafoHash;
-import Dominio.EstruturasDeDados.Listas.Lista;
-
 import Dominio.Modelos.Livro;
+import Infraestrutura.EstruturasDeDados.Grafos.GrafoHash;
+import Infraestrutura.EstruturasDeDados.Listas.Lista;
 
 public class RepositorioLivrosGrafo implements IRepositorioLivro {
 

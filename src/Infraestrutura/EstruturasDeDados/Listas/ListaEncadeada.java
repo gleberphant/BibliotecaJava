@@ -1,4 +1,4 @@
-package Dominio.EstruturasDeDados.Listas;
+package Infraestrutura.EstruturasDeDados.Listas;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
