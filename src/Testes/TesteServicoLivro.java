@@ -9,6 +9,7 @@ import Adaptadores.Repositorios.EmMemoria.RepositorioUsuariosLista;
 import Aplicacao.CasosDeUso.ServicoLivros;
 import Aplicacao.CasosDeUso.ServicoUsuarios;
 import Dominio.Modelos.Livro;
+import Dominio.Modelos.Usuario;
 
 public class TesteServicoLivro {
 
@@ -19,6 +20,8 @@ public class TesteServicoLivro {
 
         var servicoLivros = new ServicoLivros(new RepositorioLivrosGrafo());
         var servicoUsuarios = new ServicoUsuarios(new RepositorioUsuariosLista());
+        servicoUsuarios.Adicionar(new Usuario(0, "root","","senha"));
+        var root = servicoUsuarios.Login("root", "senha");
 
         int numItens = 5;
 
@@ -32,14 +35,14 @@ public class TesteServicoLivro {
         // visualizar
         System.out.println("\nVisualizando Dados");
         for (int i = 0; i < numItens; i++) {
-            System.out.println(servicoLivros.Visualizar(i+""));
+            System.out.println(servicoLivros.Visualizar(root, i+""));
         }
 
         // remover
         System.out.println("\nRemovendo Dados");
         for (int i = 0; i < numItens - 2; i++) {
 
-            servicoLivros.Remover(servicoLivros.Visualizar(i+""));
+            servicoLivros.Remover(servicoLivros.BuscarID(i+""));
         }
 
         // listar

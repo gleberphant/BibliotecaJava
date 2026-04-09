@@ -79,12 +79,13 @@ public class ServicoUsuarios {
         if (usuario == null)
             throw new NoSuchElementException("Login inválido");
 
-        usuarioLogado = usuario;
-
         if (usuario.Senha.equals(Encriptador.Encriptar(senha)))
-            return usuario;
+            usuarioLogado = usuario;
+
         else
             throw new NoSuchElementException("Senha inválida");
+
+        return usuarioLogado;
     }
 
     public Usuario GetUsuarioLogado() {
