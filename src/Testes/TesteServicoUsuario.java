@@ -25,7 +25,7 @@ public class TesteServicoUsuario {
         System.out.println("\nMockando Usuarios");
         for (int i = 0; i < numItens; i++) {
             System.out.println("ID" + i + "Nome " + i);
-            servicoUsuarios.Adicionar(new Usuario(i, "Nome" + i, "senha" + i));
+            servicoUsuarios.Adicionar(new Usuario(i, "Nome" + i, "cpf" + i, "senha" + i));
         }
 
         // visualizar
@@ -44,7 +44,7 @@ public class TesteServicoUsuario {
         System.out.println("\nRemovendo Dados");
         for (int i = 0; i < numItens - 2; i++) {
             System.out.println("\nRemovendo item " + i);
-            servicoUsuarios.Remover(i);
+            servicoUsuarios.Remover(i + "");
         }
 
         // listar

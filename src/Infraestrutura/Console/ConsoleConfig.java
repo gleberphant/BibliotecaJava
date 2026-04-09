@@ -17,20 +17,30 @@ public class ConsoleConfig {
 
         public static void MockarDados(ServicoLivros servicoLivros, ServicoUsuarios servicoUsuarios) {
                 // mockar dados
-                int numItens = 5;
+                int numItens = 12;
                 System.out.println("\n::: Mockando Livros :::");
-                for (int i = 0; i < numItens; i++) {
-                        servicoLivros.Adicionar(new Livro(i, "Livro" + i, "Autor" + i, ""));
-                        System.out.println(servicoLivros.Visualizar(i + ""));
+                for (int i = 0; i <= numItens; i++) {
+                        servicoLivros.Adicionar(new Livro(i, "Livro " + i, "Autor " + i, ""));
+                        System.out.println(servicoLivros.BuscarID(i + ""));
                 }
 
                 System.out.println("\n::: Mockando Usuarios :::");
-                for (int i = 1; i < numItens; i++) {
+                for (int i = 1; i <= numItens; i++) {
 
-                        servicoUsuarios.Adicionar(new Usuario(i, "Nome" + i, "" + i, "senha"));
+                        servicoUsuarios.Adicionar(new Usuario(i, "Nome " + i, "cpf" + i, "senha"));
                         System.out.println(servicoUsuarios.Visualizar(i + ""));
                 }
 
+                System.out.println("\n::: Inserir conexoes entre os livros :::");
+                for (int i = 0; i < numItens ; i++) {
+
+                        // servicoLivros.InserirRecomendacao(servicoLivros.BuscarID(i + ""),
+                        // servicoLivros.BuscarID((numItens - i) + ""));
+
+                        servicoLivros.Visualizar(servicoUsuarios.GetUsuarioLogado(), i + "");
+                        System.out.println(servicoLivros.VisualizarRecomendacoes(i+""));
+
+                }
         }
 
         public static ConsoleRoteador configurarRoteadorConsole() {

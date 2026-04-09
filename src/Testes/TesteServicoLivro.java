@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 import Adaptadores.ControladoresConsole.*;
 import Adaptadores.Repositorios.EmMemoria.RepositorioLivrosGrafo;
-import Adaptadores.Repositorios.EmMemoria.RepositorioLivrosLista;
+
 import Adaptadores.Repositorios.EmMemoria.RepositorioUsuariosLista;
 import Aplicacao.CasosDeUso.ServicoLivros;
 import Aplicacao.CasosDeUso.ServicoUsuarios;
@@ -32,14 +32,14 @@ public class TesteServicoLivro {
         // visualizar
         System.out.println("\nVisualizando Dados");
         for (int i = 0; i < numItens; i++) {
-            System.out.println(servicoLivros.Visualizar(i));
+            System.out.println(servicoLivros.Visualizar(i+""));
         }
 
         // remover
         System.out.println("\nRemovendo Dados");
         for (int i = 0; i < numItens - 2; i++) {
 
-            servicoLivros.Remover(i);
+            servicoLivros.Remover(servicoLivros.Visualizar(i+""));
         }
 
         // listar

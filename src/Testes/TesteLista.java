@@ -3,18 +3,19 @@
 
 package Testes;
 
-import Dominio.EstruturasDeDados.Listas.ListaEncadeada;
+import Dominio.EstruturasDeDados.Listas.Lista;
+
 
 public class TesteLista {
 
     public static void main(String[] args) {
 
-        ListaEncadeada<Integer> myList = new ListaEncadeada<>();
+        Lista<Integer> myList = new Lista<>();
 
-        myList.InserirInicio(5);
-        myList.InserirInicio(2);
-        myList.InserirInicio(3);
-        myList.InserirInicio(4);
+        myList.Inserir(5);
+        myList.Inserir(2);
+        myList.Inserir(3);
+        myList.Inserir(4);
 
         // percorre toda a lista
 

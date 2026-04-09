@@ -1,7 +1,6 @@
 package Testes;
 
-import EstruturasNaoLineares.*;
-import MinhasInterfaces.InterfaceGrafo;
+import Dominio.EstruturasDeDados.Grafos.GrafoMatriz;
 
 public class TesteGrafosMatriz {
     public static void main(String[] args) {
@@ -9,7 +8,7 @@ public class TesteGrafosMatriz {
         int itens[] = { 1, 2, 3, 4, 5, 6, 7 };
 
         
-        IGrafo g = new GrafoMatriz();
+        GrafoMatriz g = new GrafoMatriz();
 
         System.out.println("\n Grafo do tipo: " + g.getClass());
 

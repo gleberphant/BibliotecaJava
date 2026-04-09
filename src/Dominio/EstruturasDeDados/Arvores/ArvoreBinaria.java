@@ -1,4 +1,6 @@
 package Dominio.EstruturasDeDados.Arvores;
+//implementar
+
 class NoArvore {
 
     int data;

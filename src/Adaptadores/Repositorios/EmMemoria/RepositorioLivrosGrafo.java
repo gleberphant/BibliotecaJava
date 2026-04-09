@@ -33,13 +33,7 @@ public class RepositorioLivrosGrafo implements IRepositorioLivro {
 
     public Lista<Livro> ListarConexoes(Livro livro) {
 
-        Lista<Livro> lista = new Lista<>();
-
-        for (var conexao : grafo.VerConexoes(livro)) {
-            lista.Inserir(conexao);
-        }
-
-        return lista;
+        return grafo.VerConexoes(livro);
 
     }
 
@@ -85,11 +79,16 @@ public class RepositorioLivrosGrafo implements IRepositorioLivro {
 
     // remove proximo item
     public void Remover(Livro chave) {
+
         grafo.RemoverItem(chave);
     }
 
     public int Tamanho() {
         return grafo.Tamanho();
+    }
+
+    public int Contagem() {
+        return contagem;
     }
 
     public String toString() {

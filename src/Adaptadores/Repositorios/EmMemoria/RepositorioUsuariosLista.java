@@ -58,7 +58,7 @@ public class RepositorioUsuariosLista implements IRepositorioUsuario {
         for (var usuario : lista) {
 
             if (usuario.ID == ID) {
-                Remover(indice);
+                lista.Remover(indice);
                 return true;
             }
             indice++;

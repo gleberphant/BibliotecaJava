@@ -12,7 +12,7 @@ public class TesteGrafosHash {
         System.out.println("\n Grafo do tipo: " + g.getClass());
 
         for (Integer item : itens)
-            g.InserirNo(item);
+            g.InserirItem(item);
 
         g.InserirConexao(1, 3);
         g.InserirConexao(1, 2);

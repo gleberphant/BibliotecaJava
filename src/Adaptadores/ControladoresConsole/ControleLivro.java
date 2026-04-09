@@ -38,18 +38,17 @@ public class ControleLivro {
 
     public void Visualizar() {
 
-        Livro livro = buscarLivro();
+        System.out.println("Informe o ID do livro procurado");
+        try {
 
-        if (livro == null)
-            return;
+            Livro livro = servicoLivros.Visualizar(servicoUsuarios.GetUsuarioLogado(), scanner.nextLine());
+            // servicoUsuarios.RegistrarHistórico(livro);
+            System.out.println(exibeLivro(livro));
 
-        servicoUsuarios.RegistrarHistórico(livro);
+        } catch (Exception e) {
+            System.err.printf("Algo deu errado %s", e.getMessage());
 
-        // criar relações com os livros que o usuario ja visualizacou
-        for (var livro2 : servicoUsuarios.GetUsuarioLogado().historicoNavegacao) {
-            servicoLivros.InserirRecomendacao(livro, livro2);
         }
-        System.out.println(exibeLivro(livro));
 
     }
 
@@ -60,7 +59,6 @@ public class ControleLivro {
         for (Livro livro : servicoLivros.Listar()) {
             System.out.println(exibeLivro(livro));
         }
-
 
     }
 
@@ -131,7 +129,7 @@ public class ControleLivro {
         System.out.println(exibeLivro(livro));
 
         servicoLivros.Devolver(livro);
-        System.out.printf("\nLivro devolvido para biblioteca");
+        System.out.printf("\n Livro devolvido para biblioteca");
         System.out.printf("\n Próximo Usuário na fila de espera do livro", livro.FilaEspera.Topo());
 
     }
@@ -141,22 +139,9 @@ public class ControleLivro {
 
         Livro livro = buscarLivro();
 
-        System.out.println(livro.toString());
-
+        System.out.println("Exibindo emprestivos no livro \n");
         System.out.println(exibeFilaEspera(livro));
 
-
-    }
-
-    private String exibeFilaEspera(Livro livro) {
-        StringBuilder sb = new StringBuilder();
-
-        sb.append("\nUsuarios na Fila de Espera do livro :");
-        for (var usuario : livro.FilaEspera) {
-            sb.append(String.format(" [%s], ", usuario.Nome));
-        }
-
-        return sb.toString();
     }
 
     public void ListarEmprestimos() {
@@ -164,12 +149,9 @@ public class ControleLivro {
         System.out.println("Listando todos empréstimos de livros : \n");
         for (var livro : servicoLivros.Listar()) {
 
-            System.out.printf("\n Livro %s / Emprestado para : %s ", livro.Titulo, livro.Locador);
-
             System.out.println(exibeFilaEspera(livro));
 
         }
-
 
     }
 
@@ -191,11 +173,24 @@ public class ControleLivro {
     }
 
     // exibições
+
+    private String exibeFilaEspera(Livro livro) {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(String.format("\n Livro %s / Emprestado para : %s ", livro.Titulo, livro.Locador));
+        sb.append("\n Usuarios na Fila de Espera do livro :");
+        for (var usuario : livro.FilaEspera) {
+            sb.append(String.format(" [%s], ", usuario.Nome));
+        }
+
+        return sb.toString();
+    }
+
     private String exibeRecomendacões(Livro livro) {
         StringBuilder sb = new StringBuilder();
-        sb.append(String.format("\n Recomendacoes para 4[%s]", livro.Titulo));
-        for (Livro recomendacao : servicoLivros.VisualizarRecomendacoes(livro)) {
-            sb.append(String.format("\n >> Livro %s Autor: %s", recomendacao.Titulo, recomendacao.Autor));
+        sb.append(String.format("\n Recomendacoes para o Livro : %s", livro.Titulo));
+        for (Livro recomendacao : servicoLivros.VisualizarRecomendacoes(livro.ID + "")) {
+            sb.append(String.format("\n >> Livro: '%s' Autor: '%s'", recomendacao.Titulo, recomendacao.Autor));
         }
 
         return sb.toString();
@@ -257,7 +252,7 @@ public class ControleLivro {
         System.out.println("Informe o ID do livro para pesquisar");
 
         try {
-            Livro livro = servicoLivros.Visualizar(scanner.nextLine());
+            Livro livro = servicoLivros.BuscarID(scanner.nextLine());
             System.out.println("Livro Encontrado");
             return livro;
 

@@ -25,12 +25,25 @@ public class ServicoLivros {
         return livro.ID;
     }
 
-    public Livro Visualizar(String stringID) {
+    public Livro Visualizar(Usuario usuario, String stringID) {
 
-        return BuscarID(stringID);
+        if (usuario == null)
+            throw new NoSuchElementException("Usuario inválido");
+
+        Livro livro = BuscarID(stringID);
+
+        for (var livro2 : usuario.historicoNavegacao) {
+
+            InserirRecomendacao(livro, livro2);
+
+        }
+
+        usuario.historicoNavegacao.Inserir(livro);
+
+        return livro;
     }
 
-    private Livro BuscarID(String stringID) {
+    public Livro BuscarID(String stringID) {
 
         int ID = validaID(stringID);
 
@@ -138,7 +151,9 @@ public class ServicoLivros {
         return;
     }
 
-    public Lista<Livro> VisualizarRecomendacoes(Livro livro) {
+    public Lista<Livro> VisualizarRecomendacoes(String stringID) {
+
+        Livro livro = BuscarID(stringID);
 
         return repositorioLivros.ListarConexoes(livro);
 

@@ -1,20 +1,19 @@
 package Dominio.EstruturasDeDados.Grafos;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
-import java.util.ArrayList;
 
-import java.util.Map;
-
-import java.util.List;
 import java.util.StringJoiner;
+
+import Dominio.EstruturasDeDados.Listas.Lista;
 
 public class GrafoHash<T> implements IGrafo<T> {
 
     // mapa de adjacências
     // { no_origem :[ no_destino1, no_destino2 ..... ] }
 
-    private Map<T, List<T>> mapaAdjacencias;
+    private HashMap<T, Lista<T>> mapaAdjacencias;
 
     public GrafoHash() {
         this.mapaAdjacencias = new LinkedHashMap<>();
@@ -22,13 +21,13 @@ public class GrafoHash<T> implements IGrafo<T> {
     }
 
     public T InserirItem(T item) {
-        this.mapaAdjacencias.putIfAbsent(item, new ArrayList<>());
+        this.mapaAdjacencias.putIfAbsent(item, new Lista<>());
 
         return mapaAdjacencias.containsKey(item) ? item : null;
 
     }
 
-    public List<T> InserirConexao(T chave1, T chave2) {
+    public Lista<T> InserirConexao(T chave1, T chave2) {
         // impede relações recursivas.
         if (chave1.equals(chave2))
             return null;
@@ -39,15 +38,15 @@ public class GrafoHash<T> implements IGrafo<T> {
             return null;
         }
 
-        List<T> item1 = mapaAdjacencias.get(chave1);
+        Lista<T> item1 = mapaAdjacencias.get(chave1);
 
-        item1.add(chave2);
+        item1.Inserir(chave2);
 
         return item1;
 
     }
 
-    public List<T> VerConexoes(T chave) {
+    public Lista<T> VerConexoes(T chave) {
 
         return mapaAdjacencias.get(chave);
 
