@@ -6,8 +6,8 @@ import Adaptadores.ControladoresConsole.*;
 import Adaptadores.Repositorios.EmMemoria.RepositorioLivrosGrafo;
 
 import Adaptadores.Repositorios.EmMemoria.RepositorioUsuariosLista;
-import Aplicacao.CasosDeUso.ServicoLivros;
-import Aplicacao.CasosDeUso.ServicoUsuarios;
+import Aplicacao.Servicos.ServicoLivros;
+import Aplicacao.Servicos.ServicoUsuarios;
 import Dominio.Modelos.Livro;
 import Dominio.Modelos.Usuario;
 
@@ -15,7 +15,7 @@ public class TesteServicoLivro {
 
     public static void main(String[] args) {
 
-        System.out.println("REALIZANDO TESTES DAS FUNCIONALDIADES DA APLICAÇÃO");
+        System.out.println("REALIZANDO TESTES DO SERVICO LIVRO");
         // configura aplicação
 
         var servicoLivros = new ServicoLivros(new RepositorioLivrosGrafo());

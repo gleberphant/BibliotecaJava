@@ -4,8 +4,7 @@ import java.util.Scanner;
 
 import Adaptadores.ControladoresConsole.*;
 import Adaptadores.Repositorios.EmMemoria.RepositorioUsuariosLista;
-
-import Aplicacao.CasosDeUso.ServicoUsuarios;
+import Aplicacao.Servicos.ServicoUsuarios;
 import Dominio.Modelos.Livro;
 import Dominio.Modelos.Usuario;
 
@@ -13,7 +12,7 @@ public class TesteServicoUsuario {
 
     public static void main(String[] args) {
 
-        System.out.println("REALIZANDO TESTES DAS FUNCIONALDIADES DA APLICAÇÃO");
+        System.out.println("REALIZANDO TESTES DO SERVICO USUARIO");
         // configura aplicação
 
         // var servicoLivros = new ServicoLivros(new RepositorioLivros());

@@ -1,9 +1,13 @@
 package Aplicacao.Interfaces;
 
+import Dominio.EstruturasDeDados.Grafos.GrafoHash;
+import Dominio.EstruturasDeDados.Listas.Lista;
 import Dominio.Modelos.Livro;
-import Infraestrutura.EstruturasDeDados.Listas.Lista;
 
 public interface IRepositorioLivro extends Iterable<Livro> {
+
+    // pegar o grafo de livro para processamentos
+    public GrafoHash<Livro> GetGrafo();
 
     // inserir um item
     public Livro InserirLivro(Livro dado);

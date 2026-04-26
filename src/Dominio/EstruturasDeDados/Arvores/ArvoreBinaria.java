@@ -1,4 +1,4 @@
-package Infraestrutura.EstruturasDeDados.Arvores;
+package Dominio.EstruturasDeDados.Arvores;
 //implementar
 
 class NoArvore {

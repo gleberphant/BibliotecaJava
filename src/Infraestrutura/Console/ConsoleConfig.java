@@ -8,8 +8,8 @@ import Adaptadores.ControladoresConsole.ControleUsuario;
 import Adaptadores.Repositorios.EmMemoria.RepositorioLivrosGrafo;
 
 import Adaptadores.Repositorios.EmMemoria.RepositorioUsuariosLista;
-import Aplicacao.CasosDeUso.ServicoLivros;
-import Aplicacao.CasosDeUso.ServicoUsuarios;
+import Aplicacao.Servicos.ServicoLivros;
+import Aplicacao.Servicos.ServicoUsuarios;
 import Dominio.Modelos.Livro;
 import Dominio.Modelos.Usuario;
 

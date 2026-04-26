@@ -2,7 +2,7 @@ package Adaptadores.ControladoresConsole;
 
 import java.util.Scanner;
 
-import Aplicacao.CasosDeUso.ServicoUsuarios;
+import Aplicacao.Servicos.ServicoUsuarios;
 import Dominio.Modelos.Usuario;
 
 public class ControleUsuario {

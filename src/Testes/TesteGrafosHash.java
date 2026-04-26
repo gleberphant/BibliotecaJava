@@ -1,6 +1,6 @@
 package Testes;
 
-import Infraestrutura.EstruturasDeDados.Grafos.GrafoHash;
+import Dominio.EstruturasDeDados.Grafos.GrafoHash;
 
 public class TesteGrafosHash {
     public static void main(String[] args) {

@@ -1,8 +1,8 @@
-package Aplicacao.CasosDeUso;
+package Aplicacao.Servicos;
 
+import Dominio.EstruturasDeDados.Listas.Lista;
 import Dominio.Modelos.Livro;
 import Dominio.Modelos.Usuario;
-import Infraestrutura.EstruturasDeDados.Listas.Lista;
 
 import java.util.NoSuchElementException;
 

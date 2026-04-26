@@ -1,4 +1,4 @@
-package Infraestrutura.EstruturasDeDados.Listas;
+package Dominio.EstruturasDeDados.Listas;
 
 import java.util.Iterator;
 

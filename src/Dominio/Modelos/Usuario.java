@@ -1,6 +1,6 @@
 package Dominio.Modelos;
 
-import Infraestrutura.EstruturasDeDados.Listas.*;
+import Dominio.EstruturasDeDados.Listas.*;
 
 public class Usuario implements Comparable<Usuario> {
 
