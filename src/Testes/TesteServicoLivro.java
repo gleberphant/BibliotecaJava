@@ -4,10 +4,11 @@ import java.util.Scanner;
 
 import Adaptadores.ControladoresConsole.*;
 import Adaptadores.Repositorios.EmMemoria.RepositorioLivrosGrafo;
-
 import Adaptadores.Repositorios.EmMemoria.RepositorioUsuariosLista;
+
 import Aplicacao.Servicos.ServicoLivros;
 import Aplicacao.Servicos.ServicoUsuarios;
+
 import Dominio.Modelos.Livro;
 import Dominio.Modelos.Usuario;
 
@@ -23,10 +24,10 @@ public class TesteServicoLivro {
         servicoUsuarios.Adicionar(new Usuario(0, "root","","senha"));
         var root = servicoUsuarios.Login("root", "senha");
 
-        int numItens = 5;
+        int numItens = 20;
 
         // mocar dados em massa
-        System.out.println("\nMockando Dados");
+        System.out.println("\n Mockando Dados");
         for (int i = 0; i < numItens; i++) {
             System.out.println("Livro " + i + "Autor " + i);
             servicoLivros.Adicionar(new Livro(i, "Livro " + i, "Autor " + i, ""));
@@ -40,7 +41,7 @@ public class TesteServicoLivro {
 
         // remover
         System.out.println("\nRemovendo Dados");
-        for (int i = 0; i < numItens - 2; i++) {
+        for (int i = 0; i < numItens-4 ; i++) {
 
             servicoLivros.Remover(servicoLivros.BuscarID(i+""));
         }

@@ -2,8 +2,9 @@ package Infraestrutura.Console;
 
 import java.util.Scanner;
 
+import Adaptadores.ControladoresConsole.ControleEmprestimos;
 import Adaptadores.ControladoresConsole.ControleLivro;
-
+import Adaptadores.ControladoresConsole.ControleRecomendacoes;
 import Adaptadores.ControladoresConsole.ControleUsuario;
 import Adaptadores.Repositorios.EmMemoria.RepositorioLivrosGrafo;
 
@@ -13,7 +14,7 @@ import Aplicacao.Servicos.ServicoUsuarios;
 import Dominio.Modelos.Livro;
 import Dominio.Modelos.Usuario;
 
-public class ConsoleConfig {
+public class ConfigRoteador {
 
         public static void MockarDados(ServicoLivros servicoLivros, ServicoUsuarios servicoUsuarios) {
                 // mockar dados
@@ -62,6 +63,8 @@ public class ConsoleConfig {
                 // configurar controladores
                 var controleUsuarios = new ControleUsuario(servicoUsuarios, entrada);
                 var controleLivros = new ControleLivro(servicoLivros, servicoUsuarios, entrada);
+                var controleEmprestimos = new ControleEmprestimos(servicoLivros, servicoUsuarios, entrada);
+                var controleRecomendacoes = new ControleRecomendacoes(servicoLivros, servicoUsuarios, entrada);
 
                 // Configuração do Menus da UI
                 // Configuração do SubMenu Usuarios
@@ -83,24 +86,24 @@ public class ConsoleConfig {
                                 .adicionarRota(0, "Voltar", null);
 
                 // Configuração do SubMenu Espera
-                ConsoleRoteador menuEspera = new ConsoleRoteador("Empréstimo de Livros")
-                                .adicionarRota(1, "Emprestar um Livro", controleLivros::Emprestar)
-                                .adicionarRota(2, "Devolver Livro", controleLivros::Devolver)
-                                .adicionarRota(3, "Visualizar Empréstimos", controleLivros::VisualizarEmprestimos)
-                                .adicionarRota(4, "Listar Todos Empréstimos", controleLivros::ListarEmprestimos)
+                ConsoleRoteador menuEmprestimos = new ConsoleRoteador("Empréstimo de Livros")
+                                .adicionarRota(1, "Emprestar um Livro", controleEmprestimos::Emprestar)
+                                .adicionarRota(2, "Devolver Livro", controleEmprestimos::Devolver)
+                                .adicionarRota(3, "Visualizar Empréstimos", controleEmprestimos::VisualizarEmprestimos)
+                                .adicionarRota(4, "Listar Todos Empréstimos", controleEmprestimos::ListarEmprestimos)
                                 .adicionarRota(0, "Voltar", null);
 
                 // Configuração do SubMenu Recomendacao
                 ConsoleRoteador menuRecomendacao = new ConsoleRoteador("Gestão de Recomendacao")
-                                .adicionarRota(1, "Visualizar Recomendacoes", controleLivros::VisualizarRecomendacoes)
-                                .adicionarRota(2, "Listar Todas Recomendacoes", controleLivros::ListarRecomendacoes)
+                                .adicionarRota(1, "Visualizar Recomendacoes", controleRecomendacoes::VisualizarRecomendacoes)
+                                .adicionarRota(2, "Listar Todas Recomendacoes", controleRecomendacoes::ListarRecomendacoes)
                                 .adicionarRota(0, "Voltar", null);
 
                 // Configuração do Menu Principal
                 ConsoleRoteador menuRaiz = new ConsoleRoteador("Sistema Biblioteca")
                                 .adicionarSubRoteador(1, "Menu Usuarios", menuUsuario)
                                 .adicionarSubRoteador(2, "Menu Livros", menuLivros)
-                                .adicionarSubRoteador(3, "Menu Empréstimos", menuEspera)
+                                .adicionarSubRoteador(3, "Menu Empréstimos", menuEmprestimos)
                                 .adicionarRota(4, "Visualizar Histórico", controleUsuarios::VisualizarHistorico)
                                 .adicionarSubRoteador(5, "Menu Recomendacoes", menuRecomendacao)
                                 .adicionarRota(9, "Fazer Login", controleUsuarios::FazerLogin)

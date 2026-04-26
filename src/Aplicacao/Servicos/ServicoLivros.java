@@ -1,6 +1,7 @@
 package Aplicacao.Servicos;
 
 import Dominio.EstruturasDeDados.Listas.Lista;
+
 import Dominio.Modelos.Livro;
 import Dominio.Modelos.Usuario;
 
@@ -10,7 +11,7 @@ import Aplicacao.Interfaces.*;
 
 public class ServicoLivros {
 
-    IRepositorioLivro repositorioLivros;
+    public IRepositorioLivro repositorioLivros;
 
     public ServicoLivros(IRepositorioLivro repositorio) {
         repositorioLivros = repositorio;

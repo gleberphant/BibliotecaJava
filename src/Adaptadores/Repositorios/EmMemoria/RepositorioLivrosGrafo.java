@@ -1,5 +1,6 @@
 package Adaptadores.Repositorios.EmMemoria;
 
+
 import java.util.Iterator;
 
 import Aplicacao.Interfaces.IRepositorioLivro;
@@ -16,10 +17,11 @@ public class RepositorioLivrosGrafo implements IRepositorioLivro {
         grafo = new GrafoHash<>();
     }
 
-    public GrafoHash<Livro> GetGrafo(){
+    public GrafoHash<Livro> GetGrafo() {
         return grafo;
 
     }
+
     public Livro InserirLivro(Livro livro) {
         if (livro == null)
             return null;
@@ -36,7 +38,12 @@ public class RepositorioLivrosGrafo implements IRepositorioLivro {
 
     public Lista<Livro> ListarConexoes(Livro livro) {
 
-        return grafo.VerConexoes(livro);
+        Lista<Livro> lista = new Lista<>();
+
+        for (var item : grafo.VerConexoes(livro).keySet()) {
+            lista.Inserir(item);
+        }
+        return lista;
 
     }
 
