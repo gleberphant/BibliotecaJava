@@ -1,4 +1,4 @@
-package Infraestrutura.Console;
+package Infraestrutura.ConsoleUI;
 
 import java.util.Scanner;
 
@@ -6,23 +6,25 @@ import Adaptadores.ControladoresConsole.ControleEmprestimos;
 import Adaptadores.ControladoresConsole.ControleLivro;
 import Adaptadores.ControladoresConsole.ControleRecomendacoes;
 import Adaptadores.ControladoresConsole.ControleUsuario;
+import Adaptadores.ExibicaoConsole.ExibicaoConsole;
 import Adaptadores.Repositorios.EmMemoria.RepositorioLivrosGrafo;
 
 import Adaptadores.Repositorios.EmMemoria.RepositorioUsuariosLista;
+import Aplicacao.Servicos.ServicoEmprestimos;
 import Aplicacao.Servicos.ServicoLivros;
 import Aplicacao.Servicos.ServicoUsuarios;
 import Dominio.Modelos.Livro;
 import Dominio.Modelos.Usuario;
 
-public class ConfigRoteador {
+public class ConsoleConfigRoteador {
 
         public static void MockarDados(ServicoLivros servicoLivros, ServicoUsuarios servicoUsuarios) {
                 // mockar dados
                 int numItens = 12;
                 System.out.println("\n::: Mockando Livros :::");
                 for (int i = 0; i <= numItens; i++) {
-                        servicoLivros.Adicionar(new Livro(i, "Livro " + i, "Autor " + i, ""));
-                        System.out.println(servicoLivros.BuscarID(i + ""));
+                        servicoLivros.AdicionarLivro(new Livro(i, "Livro " + i, "Autor " + i, ""));
+                        System.out.println(servicoLivros.BuscarLivroPorID(i + ""));
                 }
 
                 System.out.println("\n::: Mockando Usuarios :::");
@@ -33,25 +35,31 @@ public class ConfigRoteador {
                 }
 
                 System.out.println("\n::: Inserir conexoes entre os livros :::");
-                for (int i = 0; i < numItens ; i++) {
+                for (int i = 0; i < numItens; i++) {
 
                         // servicoLivros.InserirRecomendacao(servicoLivros.BuscarID(i + ""),
                         // servicoLivros.BuscarID((numItens - i) + ""));
 
-                        servicoLivros.Visualizar(servicoUsuarios.GetUsuarioLogado(), i + "");
-                        System.out.println(servicoLivros.VisualizarRecomendacoes(i+""));
-
+                        servicoLivros.VisualizarLivro(servicoUsuarios.GetUsuarioLogado(), i + "");
+                        System.out.println(servicoLivros.ListarRecomendacoes(i + ""));
                 }
         }
 
+        // configura menus e injeta dependências
         public static ConsoleRoteador configurarRoteadorConsole() {
 
                 // configurar entrada de dados
                 var entrada = new Scanner(System.in);
+                var exibicao = new ExibicaoConsole();
+                // criar repositorios
+
+                var respositorioLivros = new RepositorioLivrosGrafo();
+                var respositorioUsuarios = new RepositorioUsuariosLista();
 
                 // configurar servicos
-                var servicoLivros = new ServicoLivros(new RepositorioLivrosGrafo());
-                var servicoUsuarios = new ServicoUsuarios(new RepositorioUsuariosLista());
+                var servicoLivros = new ServicoLivros(respositorioLivros);
+                var servicoUsuarios = new ServicoUsuarios(respositorioUsuarios);
+                var servicoEmprestimos = new ServicoEmprestimos(respositorioLivros);
 
                 // inserir usuario ADM
                 servicoUsuarios.Adicionar(new Usuario(0, "root", "0123456789", "root"));
@@ -61,10 +69,11 @@ public class ConfigRoteador {
                 MockarDados(servicoLivros, servicoUsuarios);
 
                 // configurar controladores
-                var controleUsuarios = new ControleUsuario(servicoUsuarios, entrada);
-                var controleLivros = new ControleLivro(servicoLivros, servicoUsuarios, entrada);
-                var controleEmprestimos = new ControleEmprestimos(servicoLivros, servicoUsuarios, entrada);
-                var controleRecomendacoes = new ControleRecomendacoes(servicoLivros, servicoUsuarios, entrada);
+                var controleUsuarios = new ControleUsuario(servicoUsuarios, entrada, exibicao);
+                var controleLivros = new ControleLivro(servicoLivros, servicoUsuarios, entrada, exibicao);
+                var controleEmprestimos = new ControleEmprestimos(servicoLivros, servicoUsuarios, servicoEmprestimos,
+                                entrada, exibicao);
+                var controleRecomendacoes = new ControleRecomendacoes(servicoLivros, servicoUsuarios, entrada, exibicao);
 
                 // Configuração do Menus da UI
                 // Configuração do SubMenu Usuarios
@@ -95,8 +104,10 @@ public class ConfigRoteador {
 
                 // Configuração do SubMenu Recomendacao
                 ConsoleRoteador menuRecomendacao = new ConsoleRoteador("Gestão de Recomendacao")
-                                .adicionarRota(1, "Visualizar Recomendacoes", controleRecomendacoes::VisualizarRecomendacoes)
-                                .adicionarRota(2, "Listar Todas Recomendacoes", controleRecomendacoes::ListarRecomendacoes)
+                                .adicionarRota(1, "Visualizar Recomendacoes",
+                                                controleRecomendacoes::VisualizarRecomendacoes)
+                                .adicionarRota(2, "Listar Todas Recomendacoes",
+                                                controleRecomendacoes::ListarRecomendacoes)
                                 .adicionarRota(0, "Voltar", null);
 
                 // Configuração do Menu Principal

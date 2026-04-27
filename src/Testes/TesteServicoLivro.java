@@ -30,20 +30,20 @@ public class TesteServicoLivro {
         System.out.println("\n Mockando Dados");
         for (int i = 0; i < numItens; i++) {
             System.out.println("Livro " + i + "Autor " + i);
-            servicoLivros.Adicionar(new Livro(i, "Livro " + i, "Autor " + i, ""));
+            servicoLivros.AdicionarLivro(new Livro(i, "Livro " + i, "Autor " + i, ""));
         }
 
         // visualizar
         System.out.println("\nVisualizando Dados");
         for (int i = 0; i < numItens; i++) {
-            System.out.println(servicoLivros.Visualizar(root, i+""));
+            System.out.println(servicoLivros.VisualizarLivro(root, i+""));
         }
 
         // remover
         System.out.println("\nRemovendo Dados");
         for (int i = 0; i < numItens-4 ; i++) {
 
-            servicoLivros.Remover(servicoLivros.BuscarID(i+""));
+            servicoLivros.RemoverLivro(servicoLivros.BuscarLivroPorID(i+""));
         }
 
         // listar

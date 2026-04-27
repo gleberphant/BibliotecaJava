@@ -1,4 +1,4 @@
-package Infraestrutura.Console;
+package Infraestrutura.ConsoleUI;
 
 import java.util.Map;
 import java.util.Scanner;
@@ -6,11 +6,11 @@ import java.util.Stack;
 
 import Dominio.Modelos.Usuario;
 
-public class ConsoleUI {
+public class ConsoleMain {
     private final Scanner scanner;
     private final Stack<ConsoleRoteador> historico;
 
-    public ConsoleUI(ConsoleRoteador menuRaiz) {
+    public ConsoleMain(ConsoleRoteador menuRaiz) {
         this.scanner = menuRaiz.GetScanner();
         this.historico = new Stack<>();
         this.historico.push(menuRaiz);

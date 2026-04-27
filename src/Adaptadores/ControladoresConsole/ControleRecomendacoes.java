@@ -2,6 +2,7 @@ package Adaptadores.ControladoresConsole;
 
 import java.util.Scanner;
 
+import Adaptadores.ExibicaoConsole.ExibicaoConsole;
 import Aplicacao.Servicos.ServicoLivros;
 import Aplicacao.Servicos.ServicoUsuarios;
 import Dominio.Modelos.Livro;
@@ -9,22 +10,22 @@ import Dominio.Modelos.Livro;
 public class ControleRecomendacoes {
 
     private final ServicoLivros servicoLivros;
-    //private final ServicoUsuarios servicoUsuarios;
+    private final ExibicaoConsole exibe;
 
     private final Scanner scanner;
 
-    public ControleRecomendacoes(ServicoLivros servicoLivros, ServicoUsuarios servicoUsuarios, Scanner scanner) {
+    public ControleRecomendacoes(ServicoLivros servicoLivros, ServicoUsuarios servicoUsuarios, Scanner scanner, ExibicaoConsole exibe) {
         this.scanner = scanner;
         this.servicoLivros = servicoLivros;
-        //this.servicoUsuarios = servicoUsuarios;
+        this.exibe = exibe;
     }
 
-    // recomendacoes
+
     public void ListarRecomendacoes() {
 
-        for (var livro : servicoLivros.Listar()) {
+        for (var livro : servicoLivros.ListarLivros()) {
 
-            System.out.println(exibeRecomendacões(livro));
+            System.out.println(exibe.exibeRecomendacoes(livro, servicoLivros.ListarRecomendacoes(livro.ID + "")));
         }
 
     }
@@ -32,19 +33,9 @@ public class ControleRecomendacoes {
     public void VisualizarRecomendacoes() {
         Livro livro = ControleLivro.BuscarLivro(servicoLivros, scanner);
 
-        System.out.println(exibeRecomendacões(livro));
+        System.out.println(exibe.exibeRecomendacoes(livro, servicoLivros.ListarRecomendacoes(livro.ID + "")));
 
     }
 
-    // exibições
-    private String exibeRecomendacões(Livro livro) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(String.format("\n Recomendacoes para o Livro : %s", livro.Titulo));
-        for (Livro recomendacao : servicoLivros.VisualizarRecomendacoes(livro.ID + "")) {
-            sb.append(String.format("\n >> Livro: '%s' Autor: '%s'", recomendacao.Titulo, recomendacao.Autor));
-        }
-
-        return sb.toString();
-    }
 
 }

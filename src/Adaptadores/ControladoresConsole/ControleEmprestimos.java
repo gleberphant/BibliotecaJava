@@ -2,6 +2,8 @@ package Adaptadores.ControladoresConsole;
 
 import java.util.Scanner;
 
+import Adaptadores.ExibicaoConsole.ExibicaoConsole;
+import Aplicacao.Servicos.ServicoEmprestimos;
 import Aplicacao.Servicos.ServicoLivros;
 import Aplicacao.Servicos.ServicoUsuarios;
 import Dominio.Modelos.Livro;
@@ -10,13 +12,18 @@ import Dominio.Modelos.Usuario;
 public class ControleEmprestimos {
     private final ServicoLivros servicoLivros;
     private final ServicoUsuarios servicoUsuarios;
+    private final ServicoEmprestimos servicoEmprestimos;
+    private final ExibicaoConsole exibe;
 
     private final Scanner scanner;
 
-    public ControleEmprestimos(ServicoLivros servicoLivros, ServicoUsuarios servicoUsuarios, Scanner scanner) {
+    public ControleEmprestimos(ServicoLivros servicoLivros, ServicoUsuarios servicoUsuarios,
+            ServicoEmprestimos servicoEmprestimos, Scanner scanner, ExibicaoConsole exibe) {
         this.scanner = scanner;
         this.servicoLivros = servicoLivros;
         this.servicoUsuarios = servicoUsuarios;
+        this.servicoEmprestimos = servicoEmprestimos;
+        this.exibe = exibe;
     }
 
     // EMPRESTIMOS
@@ -41,7 +48,7 @@ public class ControleEmprestimos {
 
         try {
             // Realizar o empréstimo
-            int posicao = servicoLivros.Emprestar(livro, usuario);
+            int posicao = servicoEmprestimos.Emprestar(livro, usuario);
 
             if (posicao == 0) {
                 // se posicao for zero
@@ -70,9 +77,9 @@ public class ControleEmprestimos {
             return;
         }
 
-        System.out.println(ControleLivro.exibeLivro(livro));
+        System.out.println(exibe.exibeLivro(livro));
 
-        servicoLivros.Devolver(livro);
+        servicoEmprestimos.Devolver(livro);
         System.out.printf("\n Livro devolvido para biblioteca");
         System.out.printf("\n Próximo Usuário na fila de espera do livro", livro.FilaEspera.Topo());
 
@@ -84,16 +91,16 @@ public class ControleEmprestimos {
         Livro livro = ControleLivro.BuscarLivro(servicoLivros, scanner);
 
         System.out.println("Exibindo emprestivos no livro \n");
-        System.out.println(ControleLivro.exibeFilaEspera(livro));
+        System.out.println(exibe.exibeFilaEspera(livro));
 
     }
 
     public void ListarEmprestimos() {
 
         System.out.println("Listando todos empréstimos de livros : \n");
-        for (var livro : servicoLivros.Listar()) {
+        for (var livro : servicoLivros.ListarLivros()) {
 
-            System.out.println(ControleLivro.exibeFilaEspera(livro));
+            System.out.println(exibe.exibeFilaEspera(livro));
 
         }
 

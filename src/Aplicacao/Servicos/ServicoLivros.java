@@ -19,34 +19,62 @@ public class ServicoLivros {
     }
 
     // RETORNA O ID DO NOVO LIVRO
-    public int Adicionar(Livro livro) {
+    public int AdicionarLivro(Livro livro) {
 
         repositorioLivros.InserirLivro(livro);
 
         return livro.ID;
     }
 
-    public Livro Visualizar(Usuario usuario, String stringID) {
+    public Livro VisualizarLivro(Usuario usuarioLogado, String livroID) {
 
-        if (usuario == null)
-            throw new NoSuchElementException("Usuario inválido");
+        if (usuarioLogado == null)
+            throw new NoSuchElementException("usuarioLogado inválido");
 
-        Livro livro = BuscarID(stringID);
+        Livro livro1 = BuscarLivroPorID(livroID);
 
-        for (var livro2 : usuario.historicoNavegacao) {
-
-            InserirRecomendacao(livro, livro2);
+        for (var livro2 : usuarioLogado.historicoNavegacao) {
+            // inserir recomendacao
+            InserirRecomendacao(livro1, livro2);
 
         }
 
-        usuario.historicoNavegacao.Inserir(livro);
+        usuarioLogado.historicoNavegacao.Inserir(livro1);
 
-        return livro;
+        return livro1;
     }
 
-    public Livro BuscarID(String stringID) {
+    public Lista<Livro> ListarLivros() {
 
-        int ID = validaID(stringID);
+        Lista<Livro> lista = repositorioLivros.ListarLivros();
+
+        return lista;
+    }
+
+    public Livro EditarLivro(Livro novoLivro) {
+
+        repositorioLivros.Editar(novoLivro);
+
+        return novoLivro;
+
+    }
+
+    public void RemoverLivro(Livro livro) {
+
+        for (var item : repositorioLivros) {
+
+            if (item.ID == livro.ID) {
+                repositorioLivros.Remover(item);
+                return;
+            }
+        }
+
+        throw new NoSuchElementException("Livro não encontrado");
+    }
+
+    public Livro BuscarLivroPorID(String livroID) {
+
+        int ID = validarLivroID(livroID);
 
         if (ID < 0)
             throw new IllegalArgumentException("ID inválido: deve ser um número positivo.");
@@ -59,114 +87,30 @@ public class ServicoLivros {
 
     }
 
-    public Lista<Livro> Listar() {
+    private int validarLivroID(String livroID) {
 
-        Lista<Livro> lista = repositorioLivros.ListarLivros();
-
-        return lista;
+        try {
+            return Integer.parseInt(livroID);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("ID deve ser no formato numérico");
+        }
     }
 
-    public Livro Editar(Livro novoLivro) {
+    // Recomendacoes - talvez eu precise criar um serviço exclusivo para
 
-        repositorioLivros.Editar(novoLivro);
+    public void InserirRecomendacao(Livro livroOrigem, Livro livroDestino) {
 
-        return novoLivro;
-
-    }
-
-    public void Remover(Livro livro) {
-
-        for (var item : repositorioLivros) {
-
-            if (item.ID == livro.ID) {
-                repositorioLivros.Remover(item);
-                return;
-            }
-        }
-
-        throw new NoSuchElementException("Livro não encontrado");
-
-    }
-
-    // emprestimos
-    public int Emprestar(Livro livro, Usuario locador) {
-        // se o livro não estiver com ninguem, empresa pra locador, se o locador for o
-        // proximo da fila então o livro é empresato para ele. senão adiciona o locador
-        // na fila de espera. se o locador ja estiver na fila de esperra não adiciona
-
-        int posicao = 0;
-        // se livro nao tem locador então adiciona
-        if (livro.Locador == null) {
-            livro.Locador = locador;
-            return posicao;
-        }
-
-        // se livro emprestado e fila de espera vazia, insere na fila
-        if (livro.FilaEspera.Topo() == null) {
-            livro.FilaEspera.Inserir(locador);
-            return posicao;
-        }
-
-        // se livro emprestado e e fila não vazia
-        // locador é o proximo da fila?
-        if (livro.FilaEspera.Topo().ID == locador.ID) {
-            livro.Locador = livro.FilaEspera.Retirar();
-            return posicao;
-        }
-
-        // procura se locador ja existe na fila.
-
-        for (var usuario : livro.FilaEspera) {
-            // se locador ja esta na fila não modifica
-            if (usuario.ID == locador.ID)
-                return posicao;
-            posicao++;
-        }
-
-        // se locador não está na fila, então adiciona.
-        livro.FilaEspera.Inserir(locador);
-        return posicao;
-
-    }
-
-    public void Devolver(Livro livro) {
-
-        livro.Locador = null;
-        PassarParaProximo(livro);
-
-    }
-
-    public void PassarParaProximo(Livro livro) {
-
-        if (livro.FilaEspera.Tamanho() > 0) {
-            livro.Locador = livro.FilaEspera.Retirar();
-        }
-
-    }
-
-    // Recomendacoes
-    public void InserirRecomendacao(Livro livro1, Livro livro2) {
-
-        repositorioLivros.InserirConexao(livro1, livro2);
+        repositorioLivros.InserirConexao(livroOrigem, livroDestino);
 
         return;
     }
 
-    public Lista<Livro> VisualizarRecomendacoes(String stringID) {
+    public Lista<Livro> ListarRecomendacoes(String livroID) {
 
-        Livro livro = BuscarID(stringID);
+        Livro livro = BuscarLivroPorID(livroID);
 
         return repositorioLivros.ListarConexoes(livro);
 
-    }
-
-    private int validaID(String stringID) {
-
-        try {
-            return Integer.parseInt(stringID);
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("ID deve ser no formato numérico");
-        }
     }
 
 }

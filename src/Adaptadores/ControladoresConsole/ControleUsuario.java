@@ -2,16 +2,19 @@ package Adaptadores.ControladoresConsole;
 
 import java.util.Scanner;
 
+import Adaptadores.ExibicaoConsole.ExibicaoConsole;
 import Aplicacao.Servicos.ServicoUsuarios;
 import Dominio.Modelos.Usuario;
 
 public class ControleUsuario {
     private final ServicoUsuarios servicoUsuarios;
     private final Scanner scanner;
+    private final ExibicaoConsole exibe;
 
-    public ControleUsuario(ServicoUsuarios servicoUsuarios, Scanner scanner) {
+    public ControleUsuario(ServicoUsuarios servicoUsuarios, Scanner scanner, ExibicaoConsole exibe) {
         this.scanner = scanner;
         this.servicoUsuarios = servicoUsuarios;
+        this.exibe = exibe;
     }
 
     public void Adicionar() {
@@ -38,7 +41,7 @@ public class ControleUsuario {
         if (usuario == null)
             return;
 
-        System.out.println(exibeUsuario(usuario));
+        System.out.println(exibe.exibeUsuario(usuario));
 
     }
 
@@ -47,7 +50,7 @@ public class ControleUsuario {
         System.out.println("Listando todos os usuarios");
 
         for (Usuario usuario : servicoUsuarios.Listar()) {
-            System.out.println(exibeUsuario(usuario));
+            System.out.println(exibe.exibeUsuario(usuario));
         }
 
     }
@@ -92,7 +95,7 @@ public class ControleUsuario {
         if (usuario == null)
             return;
 
-        System.out.println(exibirHistorico(usuario));
+        System.out.println(exibe.exibirHistorico(usuario));
 
     }
 
@@ -129,37 +132,5 @@ public class ControleUsuario {
         return new Usuario(id, nome, cpf, senha);
     }
 
-    private String exibirHistorico(Usuario usuario) {
-
-        StringBuilder sb = new StringBuilder();
-
-        sb.append("\n ----------------- Histórico de visualizações --------------- \n");
-        sb.append(String.format("\n| Usuario: %-50s| \n", usuario.Nome));
-        sb.append("\n ------------------------------------------------------------ \n");
-        for (var livro : usuario.historicoNavegacao) {
-            sb.append(
-                    String.format("|Título: %-22s Autor: %22s|\n",
-                            livro.Titulo,
-                            livro.Autor));
-        }
-        sb.append("\n ------------------------------------------------------------ \n");
-        return sb.toString();
-    }
-
-    private String exibeUsuario(Usuario usuario) {
-
-        return String.format(
-                """
-                         ------------------------------------------------------------
-                        | ID         : %-45s |
-                        | Nome       : %-45s |
-                        | CPF        : %-45s |
-                        | Senha      : %-45s |
-                         ------------------------------------------------------------
-                        """,
-                usuario.ID,
-                usuario.Nome,
-                usuario.CPF,
-                usuario.Senha);
-    }
+ 
 }

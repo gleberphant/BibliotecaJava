@@ -2,6 +2,7 @@ package Adaptadores.ControladoresConsole;
 
 import java.util.Scanner;
 
+import Adaptadores.ExibicaoConsole.ExibicaoConsole;
 import Aplicacao.CasosDeUso.BuscaLivroID;
 
 import Aplicacao.Servicos.ServicoLivros;
@@ -11,22 +12,24 @@ import Dominio.Modelos.Livro;
 public class ControleLivro {
     private final ServicoLivros servicoLivros;
     private final ServicoUsuarios servicoUsuarios;
-    // private final IRepositorioLivro repositorioLivros;
+    private final ExibicaoConsole exibe;
+    
 
     private final Scanner scanner;
 
-    public ControleLivro(ServicoLivros servicoLivros, ServicoUsuarios servicoUsuarios, Scanner scanner) {
+    public ControleLivro(ServicoLivros servicoLivros, ServicoUsuarios servicoUsuarios, Scanner scanner,ExibicaoConsole exibe) {
         this.scanner = scanner;
         this.servicoLivros = servicoLivros;
         // this.repositorioLivros = servicoLivros.repositorioLivros;
         this.servicoUsuarios = servicoUsuarios;
+        this.exibe = exibe;
     }
 
     public void Adicionar() {
 
         var novoLivro = novoLivro();
 
-        servicoLivros.Adicionar(novoLivro);
+        servicoLivros.AdicionarLivro(novoLivro);
 
     }
 
@@ -41,7 +44,7 @@ public class ControleLivro {
 
         novoLivro.ID = livro.ID;
 
-        servicoLivros.Editar(novoLivro);
+        servicoLivros.EditarLivro(novoLivro);
 
     }
 
@@ -50,9 +53,9 @@ public class ControleLivro {
         System.out.println("Informe o ID do livro procurado");
         try {
 
-            Livro livro = servicoLivros.Visualizar(servicoUsuarios.GetUsuarioLogado(), scanner.nextLine());
+            Livro livro = servicoLivros.VisualizarLivro(servicoUsuarios.GetUsuarioLogado(), scanner.nextLine());
             // servicoUsuarios.RegistrarHistórico(livro);
-            System.out.println(exibeLivro(livro));
+            System.out.println(exibe.exibeLivro(livro));
 
         } catch (Exception e) {
             System.err.printf("Algo deu errado %s", e.getMessage());
@@ -65,8 +68,8 @@ public class ControleLivro {
 
         System.out.println("Listando todos os livros");
 
-        for (Livro livro : servicoLivros.Listar()) {
-            System.out.println(exibeLivro(livro));
+        for (Livro livro : servicoLivros.ListarLivros()) {
+            System.out.println(exibe.exibeLivro(livro));
         }
 
     }
@@ -78,7 +81,7 @@ public class ControleLivro {
         if (livro == null)
             return;
 
-        servicoLivros.Remover(livro);
+        servicoLivros.RemoverLivro(livro);
 
         System.out.println("Removendo o livro ");
 
@@ -117,49 +120,5 @@ public class ControleLivro {
 
     }
 
-    public static String exibeFilaEspera(Livro livro) {
-        StringBuilder sb = new StringBuilder();
-
-        sb.append(String.format("\n Livro %s / Emprestado para : %s ", livro.Titulo, livro.Locador));
-        sb.append("\n Usuarios na Fila de Espera do livro :");
-        for (var usuario : livro.FilaEspera) {
-            sb.append(String.format(" [%s], ", usuario.Nome));
-        }
-
-        return sb.toString();
-    }
-
-    public static String exibeLivro(Livro livro) {
-
-        int largura = 55;
-
-        StringBuilder sb = new StringBuilder();
-
-        for (var usuario : livro.FilaEspera) {
-
-            sb.append(usuario.Nome);
-        }
-
-        return String.format(
-                """
-                         %s
-                        | ID         : %-40s |
-                        | Titulo     : %-40s |
-                        | Autor      : %-40s |
-                        | Ano        : %-40s |
-                        | Locado Para: %-40s |
-                        | Fila Espera: %-40s |
-                         %s
-                        """,
-                "-".repeat(largura),
-                livro.ID,
-                livro.Titulo,
-                livro.Autor,
-                livro.Ano,
-                (livro.Locador != null ? livro.Locador.Nome : "Ninguém"),
-                (livro.FilaEspera.Tamanho() > 0 ? sb.toString() : "Sem espera"),
-                "-".repeat(largura));
-
-    }
 
 }

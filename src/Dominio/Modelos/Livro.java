@@ -11,12 +11,14 @@ public class Livro implements Comparable<Livro> {
     public String Autor;
     public String Ano;
     public String Categoria;
+    public boolean Disponivel;
 
     public Usuario Locador;
     public Fila<Usuario> FilaEspera; // FILA DE ESPERA VAI RECEBER USUARIOS
 
     public Livro() {
         SetLivro(0, "titulo", "autor", "ano");
+        this.Disponivel=true;
     }
 
     public Livro(int id, String titulo, String autor, String ano) {
