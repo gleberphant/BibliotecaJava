@@ -10,7 +10,6 @@ import Dominio.EstruturasDeDados.Grafos.GrafoHash;
 public class BuscaCaminho<T> {
 
     // busca o menor caminho usando o dijkstra.
-    // recebe no inicio e no fim
     public HashMap<T, T> Dijkstra(GrafoHash<T> grafo, T inicio, T Fim) {
 
         HashMap<T, Integer> distanciasAcumuladas = new HashMap<>();
