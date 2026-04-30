@@ -5,7 +5,6 @@ import java.util.LinkedList;
 
 import java.util.NoSuchElementException;
 
-
 import java.util.Iterator;
 
 public class ArvoreBinaria<T extends Comparable<T>> implements Iterable<T> {
@@ -81,10 +80,6 @@ public class ArvoreBinaria<T extends Comparable<T>> implements Iterable<T> {
         return tamanho;
     }
 
-    public T Procurar(T dado) {
-        return null;
-    }
-
     // retira o elemento raiz
     public T Retirar() {
         T dado = Topo();
@@ -97,11 +92,11 @@ public class ArvoreBinaria<T extends Comparable<T>> implements Iterable<T> {
     public T Ultimo() {
         if (raiz == null)
             return null;
-        
+
         T dado = null;
         var iterador = this.iterator();
 
-        while (iterador.hasNext()){
+        while (iterador.hasNext()) {
             dado = iterador.next();
         }
 
@@ -115,14 +110,116 @@ public class ArvoreBinaria<T extends Comparable<T>> implements Iterable<T> {
 
     }
 
-    // remove proximo item
-    public void Remover(T chave) {
-        var novaArvore = new ArvoreBinaria<>();
+    public NoArvore<T> ProcurarNoSubarvore(T dado, NoArvore<T> inicio) {
 
+        var ponteiro = inicio;
+        while (true) {
 
-        for (var item : this){
-            novaArvore.Inserir(item);
+            if (ponteiro.dado.compareTo(dado) < 0)
+                ponteiro = ponteiro.filhoEsquerdo;
+
+            if (ponteiro.dado.compareTo(dado) > 0)
+                ponteiro = ponteiro.filhoEsquerdo;
+
+            if (ponteiro.dado == dado)
+                return ponteiro;
         }
+
+    }
+
+    // procura no com o dado
+    public NoArvore<T> ProcurarNo(T dado) {
+        return ProcurarNoSubarvore(dado, raiz);
+    }
+
+    // remove proximo item
+    public void Remover(T dado) {
+
+        var no = ProcurarNo(dado);
+
+        // caso 1 remover sem filhos
+        if (no.filhoEsquerdo == null && no.filhoDireito == null) {
+            no = null;
+            return;
+        }
+
+        // caso 2 remover pai de 1 filho
+        // **se filho esquerdo é nulo. então o no vira filho direito
+        if (no.filhoEsquerdo == null) {
+            no = no.filhoDireito;
+            return;
+        }
+
+        // **se filho direito é nulo. então o no vira filho esquerda
+        if (no.filhoDireito == null) {
+            no = no.filhoEsquerdo;
+            return;
+        }
+
+        // caso 3 remover pai de 2 filhos - precisa rebalancer a bagaça
+        // Encontra o sucessor (maior elementado da subárvore esquerda)
+        var sucessor = no.filhoEsquerdo;
+        while (sucessor.filhoDireito != null) {
+            sucessor = sucessor.filhoDireito;
+        }
+
+        sucessor.filhoDireito = no.filhoDireito;
+        no = sucessor;
+
+    }
+
+    public NoArvore<T> removerRecursivo(NoArvore<T> atual, T dado) {
+
+        if (atual == null)
+            return null;
+
+        int comparacao = dado.compareTo(atual.dado);
+
+        if (comparacao < 0) {
+            atual.filhoEsquerdo = removerRecursivo(atual.filhoEsquerdo, dado);
+            return atual;
+        }
+        if (comparacao > 0) {
+            atual.filhoDireito = removerRecursivo(atual.filhoDireito, dado);
+            return atual;
+        }
+        // encontrou o no
+        if (comparacao == 0) {
+            tamanho--;
+
+            // caso 1 - no sem filhos
+            if (atual.filhoEsquerdo == null && atual.filhoDireito == null) {
+                return null;
+            }
+
+            // caso 2 - no com 1 filho
+            if (atual.filhoEsquerdo == null) {
+                return atual.filhoDireito;
+            }
+
+            if (atual.filhoDireito == null) {
+                return atual.filhoEsquerdo;
+            }
+
+            // caso 3 - no com 2 filhos
+            // sucesssor é o  maior do ramo esquerdo
+            var sucessor = atual.filhoEsquerdo;
+            while (sucessor.filhoDireito != null) {
+                sucessor = sucessor.filhoDireito;
+            }
+
+            //o no removido vira o maior do ramo esquerdo
+            sucessor.filhoDireito = atual.filhoDireito;
+            atual = sucessor;
+
+            //  remove o nó substituto original da subárvore esquerda
+            atual.filhoEsquerdo = removerRecursivo(atual.filhoEsquerdo, atual.dado);
+
+            return atual;
+
+        }
+        return atual;
+
     }
 
     // remove item por indice
