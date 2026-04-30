@@ -6,7 +6,7 @@ import java.util.NoSuchElementException;
 public class ListaEncadeada<T> implements Iterable<T> {
 
     // Nó como classe interna privada para Encapsulamento
-    private static class No<T> {
+    static class No<T> {
         T dado;
         No<T> proximo;
 

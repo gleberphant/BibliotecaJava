@@ -1,22 +1,23 @@
 package Dominio.Algoritmos;
 
 
+import java.util.Map;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 
-
-import Dominio.EstruturasDeDados.Grafos.GrafoHash;
+import Dominio.EstruturasDeDados.Listas.Lista;
 
 public class BuscaCaminho<T> {
 
     // busca o menor caminho usando o dijkstra.
-    public HashMap<T, T> Dijkstra(GrafoHash<T> grafo, T inicio, T Fim) {
+    public Map<T, T> BuscarCaminho( Map<T, Map<T, Integer>> grafo, T inicio, T fim) {
 
         HashMap<T, Integer> distanciasAcumuladas = new HashMap<>();
-        HashMap<T, T> caminho = new HashMap<>();
+        LinkedHashMap<T, T> caminho = new LinkedHashMap<>();
 
-        for (var item : grafo) {
-            distanciasAcumuladas.putIfAbsent(item, Integer.MAX_VALUE);
+        for (var item : grafo.entrySet()) {
+            distanciasAcumuladas.putIfAbsent(item.getKey(), Integer.MAX_VALUE);
         }
 
         LinkedList<T> fila = new LinkedList<>();
@@ -27,11 +28,11 @@ public class BuscaCaminho<T> {
         while (!fila.isEmpty()) {
             T pai = fila.poll();
 
-            if (pai.equals(Fim)) {
+            if (pai.equals(fim)) {
                 break;
             }
 
-            var filhos = grafo.VerConexoes(pai);
+            var filhos = grafo.get(pai);
 
             for (var no : filhos.entrySet()) {
 
@@ -41,7 +42,6 @@ public class BuscaCaminho<T> {
                 int distanciaAcumuladaFilho = distanciasAcumuladas.get(filho);
 
                 // se custo acumulado pai+ custo filho < custo acumulado filho
-                
 
                 if ((distanciaAcumuladaPai + distanciaFilho) < distanciaAcumuladaFilho) {
                     distanciasAcumuladas.put(filho, distanciaAcumuladaPai + distanciaFilho);
@@ -54,7 +54,27 @@ public class BuscaCaminho<T> {
         }
 
         return caminho;
+    }
 
+    public Lista<T> BuscarCaminhoLista(Map<T, Map<T, Integer>> grafo, T inicio, T fim) {
+        // converte caminho em uma lista
+        var caminho = BuscarCaminho(grafo, inicio, fim);
+
+        Lista<T> lista = new Lista<>();
+        
+        T atual = fim;
+        while (atual != null) {
+
+            lista.Inserir(atual);
+
+              if (atual.equals(inicio))
+                break;
+
+            atual = caminho.get(atual);
+          
+        }
+
+        return lista;
     }
 
 }

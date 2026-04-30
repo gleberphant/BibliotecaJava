@@ -54,12 +54,12 @@ public class Livro implements Comparable<Livro> {
                 (this.FilaEspera.Tamanho() > 0 ? sb.toString() : "'Sem espera'"));
     }
 
-    @Override
-    public int compareTo(Livro outroLivro) {
-
-        return Integer.compare(this.ID, outroLivro.ID);
-
-        // Alternativa: Ordenação alfabética pelo título
-        // return this.titulo.compareTo(outroLivro.Titulo);
+@Override
+    public int compareTo(Livro outro) {
+        // Verifica se o objeto comparado é nulo 
+        if (outro == null) return 1;
+        
+        // Delega a comparação para a implementação de comparação ao tipo
+        return this.ID.compareTo(outro.ID);
     }
 }

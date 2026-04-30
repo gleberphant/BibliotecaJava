@@ -3,7 +3,7 @@ package Testes;
 import java.util.Scanner;
 
 import Adaptadores.ControladoresConsole.*;
-import Adaptadores.Repositorios.EmMemoria.RepositorioLivrosGrafo;
+import Adaptadores.Repositorios.EmMemoria.RepositorioLivros;
 import Adaptadores.Repositorios.EmMemoria.RepositorioUsuariosLista;
 
 import Aplicacao.Servicos.ServicoLivros;
@@ -19,7 +19,7 @@ public class TesteServicoLivro {
         System.out.println("REALIZANDO TESTES DO SERVICO LIVRO");
         // configura aplicação
 
-        var servicoLivros = new ServicoLivros(new RepositorioLivrosGrafo());
+        var servicoLivros = new ServicoLivros(new RepositorioLivros());
         var servicoUsuarios = new ServicoUsuarios(new RepositorioUsuariosLista());
         servicoUsuarios.Adicionar(new Usuario(0, "root","","senha"));
         var root = servicoUsuarios.Login("root", "senha");

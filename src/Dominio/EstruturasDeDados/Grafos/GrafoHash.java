@@ -1,10 +1,12 @@
 package Dominio.EstruturasDeDados.Grafos;
 
+import Dominio.Algoritmos.BuscaCaminho;
+import Dominio.EstruturasDeDados.Listas.Lista;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
-import java.util.StringJoiner;
 
 public class GrafoHash<T> implements IGrafo<T> {
 
@@ -12,7 +14,7 @@ public class GrafoHash<T> implements IGrafo<T> {
 
     // { no_origem1 :{ no_destino1: peso , no_destino2: peso, .... }, ... }
 
-    private HashMap<T, HashMap<T, Integer>> mapaAdjacencias;
+    private Map<T, Map<T, Integer>> mapaAdjacencias;
 
     public GrafoHash() {
         this.mapaAdjacencias = new LinkedHashMap<>();
@@ -27,7 +29,7 @@ public class GrafoHash<T> implements IGrafo<T> {
 
     }
 
-    public HashMap<T, Integer> InserirConexao(T chave1, T chave2) {
+    public Map<T, Integer> InserirConexao(T chave1, T chave2) {
         // impede relações recursivas.
         if (chave1.equals(chave2))
             return null;
@@ -53,56 +55,21 @@ public class GrafoHash<T> implements IGrafo<T> {
 
     }
 
-    public HashMap<T, Integer> VerConexoes(T chave) {
+    public Map<T, Integer> VerConexoes(T chave) {
 
         return mapaAdjacencias.get(chave);
 
     }
 
     // busca o menor caminho usando o dijkstra.
-    public HashMap<T, T> BuscarCaminho(GrafoHash<T> grafo, T inicio, T Fim) {
+    public Map<T, T> BuscarCaminho(T inicio, T fim) {
 
-        HashMap<T, Integer> distanciasAcumuladas = new HashMap<>();
-        HashMap<T, T> caminho = new HashMap<>();
+        return new BuscaCaminho<T>().BuscarCaminho(mapaAdjacencias, inicio, fim);
+    }
 
-        for (var item : grafo) {
-            distanciasAcumuladas.putIfAbsent(item, Integer.MAX_VALUE);
-        }
-
-        LinkedList<T> fila = new LinkedList<>();
-
-        distanciasAcumuladas.put(inicio, 0);
-        fila.add(inicio);
-
-        while (!fila.isEmpty()) {
-            T pai = fila.poll();
-
-            if (pai.equals(Fim)) {
-                break;
-            }
-
-            var filhos = grafo.VerConexoes(pai);
-
-            for (var no : filhos.entrySet()) {
-
-                T filho = no.getKey();
-                int distanciaFilho = no.getValue();
-                int distanciaAcumuladaPai = distanciasAcumuladas.get(pai);
-                int distanciaAcumuladaFilho = distanciasAcumuladas.get(filho);
-
-                // se custo acumulado pai+ custo filho < custo acumulado filho
-
-                if ((distanciaAcumuladaPai + distanciaFilho) < distanciaAcumuladaFilho) {
-                    distanciasAcumuladas.put(filho, distanciaAcumuladaPai + distanciaFilho);
-                    caminho.put(filho, pai);
-                }
-
-                fila.add(filho);
-            }
-
-        }
-
-        return caminho;
+    public Lista<T> BuscarCaminhoLista(T inicio, T fim) {
+        // converte caminho em uma lista
+        return new BuscaCaminho<T>().BuscarCaminhoLista(mapaAdjacencias, inicio, fim);
 
     }
 
@@ -139,21 +106,27 @@ public class GrafoHash<T> implements IGrafo<T> {
         if (mapaAdjacencias.isEmpty())
             return "{}";
 
-        StringJoiner sj = new StringJoiner(", ", "{", "}");
+        var sj = new StringBuilder();
 
+        sj.append(String.format("{\n"));
         for (var item : mapaAdjacencias.entrySet()) {
 
-            sj.add(String.format("'%d': %s",
-                    item.getKey(),
-                    item.getValue().toString()));
+            sj.append(String.format("'%2d': {", item.getKey()));
+
+            for (var destino : item.getValue().entrySet()) {
+                sj.append(String.format("'%d': %d, ", destino.getKey(), destino.getValue()));
+            }
+
+            sj.append(String.format("},\n", item.getKey()));
         }
 
+        sj.append(String.format("}"));
         return sj.toString();
     }
 
     public String toStringArvore() {
         StringBuilder sb = new StringBuilder();
-        
+
         // Itera sobre cada item (origem) no grafo
         for (T origem : mapaAdjacencias.keySet()) {
             sb.append("Livro [").append(origem.toString()).append("]\n");

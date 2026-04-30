@@ -4,21 +4,24 @@ package Adaptadores.Repositorios.EmMemoria;
 import java.util.Iterator;
 
 import Aplicacao.Interfaces.IRepositorioLivro;
+import Dominio.EstruturasDeDados.Arvores.ArvoreBinaria;
 import Dominio.EstruturasDeDados.Grafos.GrafoHash;
 import Dominio.EstruturasDeDados.Listas.Lista;
 import Dominio.Modelos.Livro;
 
-public class RepositorioLivrosGrafo implements IRepositorioLivro {
+public class RepositorioLivros implements IRepositorioLivro {
 
-    private GrafoHash<Livro> grafo;
+    private GrafoHash<Livro> grafoRecomendacoes;
+    private ArvoreBinaria<Livro> indicesLivros;
+
     int contagem;
 
-    public RepositorioLivrosGrafo() {
-        grafo = new GrafoHash<>();
+    public RepositorioLivros() {
+        grafoRecomendacoes = new GrafoHash<>();
     }
 
     public GrafoHash<Livro> GetGrafo() {
-        return grafo;
+        return grafoRecomendacoes;
 
     }
 
@@ -28,19 +31,19 @@ public class RepositorioLivrosGrafo implements IRepositorioLivro {
 
         livro.ID = contagem++;
 
-        return grafo.InserirItem(livro);
+        return grafoRecomendacoes.InserirItem(livro);
 
     }
 
     public void InserirConexao(Livro livro1, Livro livro2) {
-        grafo.InserirConexao(livro1, livro2);
+        grafoRecomendacoes.InserirConexao(livro1, livro2);
     }
 
     public Lista<Livro> ListarConexoes(Livro livro) {
 
         Lista<Livro> lista = new Lista<>();
 
-        for (var item : grafo.VerConexoes(livro).keySet()) {
+        for (var item : grafoRecomendacoes.VerConexoes(livro).keySet()) {
             lista.Inserir(item);
         }
         return lista;
@@ -51,7 +54,7 @@ public class RepositorioLivrosGrafo implements IRepositorioLivro {
 
         Lista<Livro> lista = new Lista<>();
 
-        for (var livro : grafo) {
+        for (var livro : grafoRecomendacoes) {
             lista.Inserir(livro);
         }
 
@@ -61,7 +64,7 @@ public class RepositorioLivrosGrafo implements IRepositorioLivro {
 
     public Livro Editar(Livro novoLivro) {
 
-        for (var livro : grafo) {
+        for (var livro : grafoRecomendacoes) {
             // se encontrar o livro modifica os dados
             if (livro.ID == novoLivro.ID) {
                 livro.Titulo = novoLivro.Titulo;
@@ -72,12 +75,12 @@ public class RepositorioLivrosGrafo implements IRepositorioLivro {
         }
         // se não encontrar o livro insere um novo
 
-        return grafo.InserirItem(novoLivro);
+        return grafoRecomendacoes.InserirItem(novoLivro);
     }
 
     public Livro BuscarID(int ID) {
 
-        for (Livro livro : grafo) {
+        for (Livro livro : grafoRecomendacoes) {
             if (livro.ID == ID) {
                 return livro;
             }
@@ -90,11 +93,11 @@ public class RepositorioLivrosGrafo implements IRepositorioLivro {
     // remove proximo item
     public void Remover(Livro chave) {
 
-        grafo.RemoverItem(chave);
+        grafoRecomendacoes.RemoverItem(chave);
     }
 
     public int Tamanho() {
-        return grafo.Tamanho();
+        return grafoRecomendacoes.Tamanho();
     }
 
     public int Contagem() {
@@ -102,13 +105,13 @@ public class RepositorioLivrosGrafo implements IRepositorioLivro {
     }
 
     public String toString() {
-        return grafo.toString();
+        return grafoRecomendacoes.toString();
     }
 
     // percorre a fila sem remover
     @Override
     public Iterator<Livro> iterator() {
         // a iteração segue normal pq estou inserindo no fim da lista
-        return grafo.iterator();
+        return grafoRecomendacoes.iterator();
     }
 }

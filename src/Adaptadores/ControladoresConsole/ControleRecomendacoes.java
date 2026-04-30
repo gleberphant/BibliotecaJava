@@ -14,12 +14,12 @@ public class ControleRecomendacoes {
 
     private final Scanner scanner;
 
-    public ControleRecomendacoes(ServicoLivros servicoLivros, ServicoUsuarios servicoUsuarios, Scanner scanner, ExibicaoConsole exibe) {
+    public ControleRecomendacoes(ServicoLivros servicoLivros, ServicoUsuarios servicoUsuarios, Scanner scanner,
+            ExibicaoConsole exibe) {
         this.scanner = scanner;
         this.servicoLivros = servicoLivros;
         this.exibe = exibe;
     }
-
 
     public void ListarRecomendacoes() {
 
@@ -37,5 +37,13 @@ public class ControleRecomendacoes {
 
     }
 
+    public void BuscarCaminho() {
+        Livro livro = ControleLivro.BuscarLivro(servicoLivros, scanner);
+
+        for (var item : servicoLivros.BuscarCaminho(livro)) {
+            System.out.print(" > " + item + " ");
+        }
+
+    }
 
 }

@@ -7,7 +7,7 @@ import Adaptadores.ControladoresConsole.ControleLivro;
 import Adaptadores.ControladoresConsole.ControleRecomendacoes;
 import Adaptadores.ControladoresConsole.ControleUsuario;
 import Adaptadores.ExibicaoConsole.ExibicaoConsole;
-import Adaptadores.Repositorios.EmMemoria.RepositorioLivrosGrafo;
+import Adaptadores.Repositorios.EmMemoria.RepositorioLivros;
 
 import Adaptadores.Repositorios.EmMemoria.RepositorioUsuariosLista;
 import Aplicacao.Servicos.ServicoEmprestimos;
@@ -53,7 +53,7 @@ public class ConsoleConfigRoteador {
                 var exibicao = new ExibicaoConsole();
                 // criar repositorios
 
-                var respositorioLivros = new RepositorioLivrosGrafo();
+                var respositorioLivros = new RepositorioLivros();
                 var respositorioUsuarios = new RepositorioUsuariosLista();
 
                 // configurar servicos
@@ -73,7 +73,8 @@ public class ConsoleConfigRoteador {
                 var controleLivros = new ControleLivro(servicoLivros, servicoUsuarios, entrada, exibicao);
                 var controleEmprestimos = new ControleEmprestimos(servicoLivros, servicoUsuarios, servicoEmprestimos,
                                 entrada, exibicao);
-                var controleRecomendacoes = new ControleRecomendacoes(servicoLivros, servicoUsuarios, entrada, exibicao);
+                var controleRecomendacoes = new ControleRecomendacoes(servicoLivros, servicoUsuarios, entrada,
+                                exibicao);
 
                 // Configuração do Menus da UI
                 // Configuração do SubMenu Usuarios
@@ -108,6 +109,8 @@ public class ConsoleConfigRoteador {
                                                 controleRecomendacoes::VisualizarRecomendacoes)
                                 .adicionarRota(2, "Listar Todas Recomendacoes",
                                                 controleRecomendacoes::ListarRecomendacoes)
+                                .adicionarRota(3, "Explorar Livros",
+                                                controleRecomendacoes::BuscarCaminho)
                                 .adicionarRota(0, "Voltar", null);
 
                 // Configuração do Menu Principal

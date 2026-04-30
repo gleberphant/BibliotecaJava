@@ -1,115 +1,173 @@
 package Dominio.EstruturasDeDados.Arvores;
 //implementar
 
-class NoArvore {
+import java.util.LinkedList;
 
-    int data;
-    NoArvore nextEsquerdo;
-    NoArvore nextDireito;
+import java.util.NoSuchElementException;
 
-    public NoArvore(int value){
-        data= value;
+
+import java.util.Iterator;
+
+public class ArvoreBinaria<T extends Comparable<T>> implements Iterable<T> {
+    // Coloquei no como classe interna privada para encapsulamento
+
+    static class NoArvore<T> {
+
+        T dado;
+        NoArvore<T> filhoEsquerdo;
+        NoArvore<T> filhoDireito;
+
+        NoArvore(T dado) {
+            this.dado = dado;
+        }
+
     }
 
+    NoArvore<T> raiz;
+    int tamanho;
 
-    public int GetData() {
-        return data;
+    ArvoreBinaria() {
+        raiz = null;
+        tamanho = 0;
     }
 
-
-    public NoArvore GetDireito(){
-        return nextDireito;
-    }
-
-
-    public NoArvore GetEsquerdo(){
-        return nextEsquerdo;
-    }
-
-
-    public void SetDireito(NoArvore newNode){
-        nextDireito = newNode;
-    }
-
-
-    public void SetEsquerdo(NoArvore newNode){
-        nextEsquerdo = newNode;
-    }
-
-}
-
-
-
-public class ArvoreBinaria {
-    NoArvore head;
-    NoArvore current;
-
-    public boolean AddNode(NoArvore newNode) {
+    public int Inserir(T dado) {
         // tenta balancear arvore para verificar onde deve adicionar o novo no
+        var novo = new NoArvore<T>(dado);
 
         // primeiro verifica se o cabecalho é nullo
-        if (head == null) {
-            head = newNode;
-            current = head;
-            return true;
+        if (raiz == null) {
+            raiz = novo;
+            tamanho++;
+            return tamanho;
         }
 
         // começa no inicio da arvore
-        current = head;
+        var ponteiro = raiz;
 
         while (true) {
 
             // é menor menor que valor atual ? então vai adicionar no lado esquerdo
-            if (newNode.GetData() < current.GetData()) {
+            if (novo.dado.compareTo(ponteiro.dado) < 0) {
 
                 // esquerdo esta vazio? então adiciona nele
-                if (current.GetEsquerdo() == null) {
-                    current.SetEsquerdo(newNode);
+                if (ponteiro.filhoEsquerdo == null) {
+                    ponteiro.filhoEsquerdo = novo;
                     break;
                 }
 
-
                 // senao. se é maior que o esquerdo então move para esquerda. recomeça o loop
-                MoveEsquerda();
+                ponteiro = ponteiro.filhoEsquerdo;
                 continue;
 
             }
 
             else {
                 // se direito estiver vazio, ocupa o direito do atual
-                if (current.GetDireito() == null) {
-                    current.SetDireito(newNode);
+                if (ponteiro.filhoDireito == null) {
+                    ponteiro.filhoDireito = novo;
+
                     break;
                 }
 
                 // senao. se é menor que o direito então move para direita e recomeça o loop
-                MoveDireita();
+                ponteiro = ponteiro.filhoDireito;
                 continue;
 
             }
 
         }
-
-        current = head;
-        return true;
+        tamanho++;
+        return tamanho;
     }
 
-    public void Reset() {
-        current = head;
+    public T Procurar(T dado) {
+        return null;
     }
 
-    public NoArvore GetCurrent() {
-        return current;
+    // retira o elemento raiz
+    public T Retirar() {
+        T dado = Topo();
+        Remover(0);
+
+        return dado;
     }
 
-    public boolean MoveEsquerda() {
-        current = current.GetEsquerdo();
-        return true;
+    // pega o último dado da arvore
+    public T Ultimo() {
+        if (raiz == null)
+            return null;
+        
+        T dado = null;
+        var iterador = this.iterator();
+
+        while (iterador.hasNext()){
+            dado = iterador.next();
+        }
+
+        return dado;
+
     }
 
-    public boolean MoveDireita() {
-        current = current.GetDireito();
-        return true;
+    // visualiza a raiz da arvore
+    public T Topo() {
+        return raiz.dado;
+
     }
 
+    // remove proximo item
+    public void Remover(T chave) {
+        var novaArvore = new ArvoreBinaria<>();
+
+
+        for (var item : this){
+            novaArvore.Inserir(item);
+        }
+    }
+
+    // remove item por indice
+    public void Remover(int indice) {
+
+    }
+
+    public int Tamanho() {
+        return tamanho;
+    }
+
+    // vou iterar a arvore usando BSF para percorrer todos itens
+    @Override
+    public Iterator<T> iterator() {
+
+        return new Iterator<T>() {
+
+            private LinkedList<NoArvore<T>> fila = new LinkedList<>();
+
+            {
+                if (raiz != null)
+                    fila.add(raiz);
+
+            }
+
+            @Override
+            public boolean hasNext() {
+                return (fila.isEmpty()) ? false : true;
+            }
+
+            @Override
+            public T next() {
+                if (!hasNext())
+                    throw new NoSuchElementException();
+
+                var ponteiro = fila.poll();
+
+                if (ponteiro.filhoEsquerdo != null)
+                    fila.add(ponteiro.filhoEsquerdo);
+                if (ponteiro.filhoDireito != null)
+                    fila.add(ponteiro.filhoDireito);
+
+                return ponteiro.dado;
+            }
+        };
+
+    }
 }

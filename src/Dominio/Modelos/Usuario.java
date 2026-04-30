@@ -4,7 +4,7 @@ import Dominio.EstruturasDeDados.Listas.*;
 
 public class Usuario implements Comparable<Usuario> {
 
-    public int ID;
+    public Integer ID;
     public String Nome;
     public String CPF;
     public String Senha;
@@ -48,10 +48,11 @@ public class Usuario implements Comparable<Usuario> {
 
     @Override
     public int compareTo(Usuario outro) {
+        // Verifica se o objeto comparado é nulo
+        if (outro == null)
+            return 1;
 
-        return Integer.compare(this.ID, outro.ID);
-
-        // Alternativa: Ordenação alfabética pelo título
-        // return this.titulo.compareTo(outro.Titulo);
+        // Delega a comparação para a implementação de comparação ao tipo
+        return this.ID.compareTo(outro.ID);
     }
 }

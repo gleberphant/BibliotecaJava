@@ -113,4 +113,12 @@ public class ServicoLivros {
 
     }
 
+    public Lista<Livro> BuscarCaminho(Livro livro) {
+
+        var livro2 = repositorioLivros.GetGrafo().GetPrimeiro();
+
+        return repositorioLivros.GetGrafo().BuscarCaminhoLista(livro, livro2);
+
+    }
+
 }

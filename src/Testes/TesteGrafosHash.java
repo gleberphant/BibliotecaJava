@@ -42,10 +42,12 @@ public class TesteGrafosHash {
         System.out.println(g.toString());
 
         System.out.println("CAMINHO MAIS CURTO");
-        imprimirCaminho(g.BuscarCaminho(g, 1, 11), 1, 11);
-        System.out.println("Estrutura do GRAFO");
-        System.out.println(g.toStringArvore());
-        // imprimirGrafoDetalhado(g);
+        
+        for(var item : g.BuscarCaminhoLista(1, 11)){
+            System.out.print(" > "+item+" ");
+        }
+        //imprimirCaminho(g.BuscarCaminho(g, 1, 11), 1, 11);
+        
     }
 
     public static void imprimirCaminho(HashMap<Integer, Integer> caminho, Integer inicio, Integer fim) {

@@ -2,7 +2,7 @@ package Aplicacao.CasosDeUso;
 
 import java.util.NoSuchElementException;
 
-import Adaptadores.Repositorios.EmMemoria.RepositorioLivrosGrafo;
+import Adaptadores.Repositorios.EmMemoria.RepositorioLivros;
 import Aplicacao.Interfaces.IRepositorioLivro;
 import Dominio.Modelos.Livro;
 
