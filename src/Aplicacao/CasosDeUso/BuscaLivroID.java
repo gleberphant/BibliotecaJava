@@ -19,7 +19,7 @@ public class BuscaLivroID {
         if (ID < 0)
             throw new IllegalArgumentException("ID inválido: deve ser um número positivo.");
 
-        Livro livro = repositorioLivros.BuscarID(ID);
+        Livro livro = repositorioLivros.BuscarLivroPorID(ID);
         if (livro == null)
             throw new NoSuchElementException("Livro não encontrado");
 

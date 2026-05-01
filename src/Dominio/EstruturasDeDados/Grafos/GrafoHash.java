@@ -1,12 +1,12 @@
 package Dominio.EstruturasDeDados.Grafos;
 
-import Dominio.Algoritmos.BuscaCaminho;
+import Dominio.Algoritmos.BuscaDijkstra;
 import Dominio.EstruturasDeDados.Listas.Lista;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
+
 
 public class GrafoHash<T> implements IGrafo<T> {
 
@@ -55,7 +55,7 @@ public class GrafoHash<T> implements IGrafo<T> {
 
     }
 
-    public Map<T, Integer> VerConexoes(T chave) {
+    public Map<T, Integer> MapaDeConexoes(T chave) {
 
         return mapaAdjacencias.get(chave);
 
@@ -64,15 +64,10 @@ public class GrafoHash<T> implements IGrafo<T> {
     // busca o menor caminho usando o dijkstra.
     public Map<T, T> BuscarCaminho(T inicio, T fim) {
 
-        return new BuscaCaminho<T>().BuscarCaminho(mapaAdjacencias, inicio, fim);
+        return new BuscaDijkstra<T>().BuscarCaminho(mapaAdjacencias, inicio, fim);
     }
 
-    public Lista<T> BuscarCaminhoLista(T inicio, T fim) {
-        // converte caminho em uma lista
-        return new BuscaCaminho<T>().BuscarCaminhoLista(mapaAdjacencias, inicio, fim);
-
-    }
-
+ 
     public void RemoverItem(T chave) {
         mapaAdjacencias.remove(chave);
     }

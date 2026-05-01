@@ -10,10 +10,10 @@ public class BuscaRecomendacoesLivro {
     public Livro Executar(String origemID, String destinoID, IRepositorioLivro repositorioLivros) {
         
 
-        var origem = repositorioLivros.BuscarID(validarLivroID(origemID));
-        var destino = repositorioLivros.BuscarID(validarLivroID(destinoID));
+        var origem = repositorioLivros.BuscarLivroPorID(validarLivroID(origemID));
+        var destino = repositorioLivros.BuscarLivroPorID(validarLivroID(destinoID));
 
-        algoritmo.BuscarCaminho(repositorioLivros.GetGrafo(), origem, destino);
+        algoritmo.BuscarCaminho(repositorioLivros.GetRecomendacoes(), origem, destino);
         
         
         return null;

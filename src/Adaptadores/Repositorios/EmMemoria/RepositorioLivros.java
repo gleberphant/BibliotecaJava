@@ -1,60 +1,45 @@
 package Adaptadores.Repositorios.EmMemoria;
 
-
 import java.util.Iterator;
 
 import Aplicacao.Interfaces.IRepositorioLivro;
+import Dominio.Algoritmos.BuscaDijkstra;
 import Dominio.EstruturasDeDados.Arvores.ArvoreBinaria;
 import Dominio.EstruturasDeDados.Grafos.GrafoHash;
 import Dominio.EstruturasDeDados.Listas.Lista;
 import Dominio.Modelos.Livro;
 
+// repositorio dos livros
+// armazena os livros em uma arvore binária
+// armazena as recomendações em um grafo
+
 public class RepositorioLivros implements IRepositorioLivro {
 
-    private GrafoHash<Livro> grafoRecomendacoes;
     private ArvoreBinaria<Livro> indicesLivros;
+    private GrafoHash<Livro> grafoRecomendacoes;
 
     int contagem;
 
     public RepositorioLivros() {
-        grafoRecomendacoes = new GrafoHash<>();
-    }
-
-    public GrafoHash<Livro> GetGrafo() {
-        return grafoRecomendacoes;
+        indicesLivros = new ArvoreBinaria<Livro>();
+        grafoRecomendacoes = new GrafoHash<Livro>();
 
     }
 
     public Livro InserirLivro(Livro livro) {
-        if (livro == null)
-            return null;
+        livro.ID = "" + (contagem);
+        contagem++;
+        indicesLivros.Inserir(livro);
+        // grafoRecomendacoes.InserirItem(livro);
 
-        livro.ID = contagem++;
-
-        return grafoRecomendacoes.InserirItem(livro);
-
-    }
-
-    public void InserirConexao(Livro livro1, Livro livro2) {
-        grafoRecomendacoes.InserirConexao(livro1, livro2);
-    }
-
-    public Lista<Livro> ListarConexoes(Livro livro) {
-
-        Lista<Livro> lista = new Lista<>();
-
-        for (var item : grafoRecomendacoes.VerConexoes(livro).keySet()) {
-            lista.Inserir(item);
-        }
-        return lista;
-
+        return livro;
     }
 
     public Lista<Livro> ListarLivros() {
 
         Lista<Livro> lista = new Lista<>();
 
-        for (var livro : grafoRecomendacoes) {
+        for (var livro : indicesLivros) {
             lista.Inserir(livro);
         }
 
@@ -62,56 +47,98 @@ public class RepositorioLivros implements IRepositorioLivro {
 
     }
 
-    public Livro Editar(Livro novoLivro) {
+    public Livro EditarLivro(Livro novoLivro) {
 
-        for (var livro : grafoRecomendacoes) {
-            // se encontrar o livro modifica os dados
-            if (livro.ID == novoLivro.ID) {
-                livro.Titulo = novoLivro.Titulo;
-                livro.Autor = novoLivro.Autor;
-                livro.Ano = novoLivro.Ano;
-                return livro;
-            }
-        }
-        // se não encontrar o livro insere um novo
+        var livro = BuscarLivroPorID(novoLivro.ID);
+        livro = novoLivro;
 
-        return grafoRecomendacoes.InserirItem(novoLivro);
+        return livro;
+
     }
 
-    public Livro BuscarID(int ID) {
+    // comparableTo de Livro, compara apenas  pelo ID
+    public Livro BuscarLivroPorID(String ID) {
 
-        for (Livro livro : grafoRecomendacoes) {
-            if (livro.ID == ID) {
-                return livro;
-            }
-        }
+        return indicesLivros.Buscar(new Livro(ID, null, null, null));
 
-        return null;
+    }
 
+    // por quanto to pegando apenas o primeiro livro da arvore, depois implemento algo melhor
+    public Livro BuscarLivroAleatorio(){
+
+        return indicesLivros.iterator().next();
+        
     }
 
     // remove proximo item
-    public void Remover(Livro chave) {
+    public void RemoverLivro(Livro livro) {
 
-        grafoRecomendacoes.RemoverItem(chave);
+        indicesLivros.Remover(livro);
+        grafoRecomendacoes.RemoverItem(livro);
     }
 
-    public int Tamanho() {
+    public int QuantidadeLivros() {
         return grafoRecomendacoes.Tamanho();
     }
 
-    public int Contagem() {
+    public int ContagemLivros() {
         return contagem;
     }
 
-    public String toString() {
-        return grafoRecomendacoes.toString();
+    // ------- recomendacoes
+    public GrafoHash<Livro> GetRecomendacoes() {
+        return grafoRecomendacoes;
+
     }
 
-    // percorre a fila sem remover
+    public void InserirRecomendacao(Livro livro1, Livro livro2) {
+        grafoRecomendacoes.InserirConexao(livro1, livro2);
+    }
+
+    public Lista<Livro> ListarRecomendacoes(Livro livro) {
+
+        Lista<Livro> lista = new Lista<>();
+
+        for (var item : grafoRecomendacoes.MapaDeConexoes(livro).keySet()) {
+            lista.Inserir(item);
+        }
+        return lista;
+
+    }
+
+    public Lista<Livro> BuscarCaminho(Livro livro1, Livro livro2) {
+
+        var caminho = grafoRecomendacoes.BuscarCaminho(livro2, livro2);
+
+        // converte caminho em uma lista
+        Lista<Livro> lista = new Lista<>();
+
+        Livro ponteiro = livro2;
+        while (ponteiro != null) {
+
+            lista.Inserir(ponteiro);
+
+            if (ponteiro.equals(livro1))
+                break;
+
+            ponteiro = caminho.get(ponteiro);
+
+        }
+
+        return lista;
+    }
+
+    }
+
+    //
+    public String toString() {
+        return indicesLivros.toString();
+    }
+
+    // percorre toda arvore
     @Override
     public Iterator<Livro> iterator() {
         // a iteração segue normal pq estou inserindo no fim da lista
-        return grafoRecomendacoes.iterator();
+        return indicesLivros.iterator();
     }
 }

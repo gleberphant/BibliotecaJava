@@ -5,8 +5,10 @@ import java.lang.Comparable;
 import Dominio.EstruturasDeDados.Listas.Fila;
 
 public class Livro implements Comparable<Livro> {
+    
+    // eu pretendia utilizar UUID mas isso vai dificultar os testes
+    public String ID;
 
-    public Integer ID;
     public String Titulo;
     public String Autor;
     public String Ano;
@@ -17,16 +19,16 @@ public class Livro implements Comparable<Livro> {
     public Fila<Usuario> FilaEspera; // FILA DE ESPERA VAI RECEBER USUARIOS
 
     public Livro() {
-        SetLivro(0, "titulo", "autor", "ano");
-        this.Disponivel=true;
+        SetLivro("0", "titulo", "autor", "ano");
+        this.Disponivel = true;
     }
 
-    public Livro(int id, String titulo, String autor, String ano) {
+    public Livro(String id, String titulo, String autor, String ano) {
         SetLivro(id, titulo, autor, ano);
 
     }
 
-    public void SetLivro(int id, String titulo, String autor, String ano) {
+    public void SetLivro(String id, String titulo, String autor, String ano) {
         this.ID = id;
         this.Titulo = titulo;
         this.Autor = autor;
@@ -54,11 +56,13 @@ public class Livro implements Comparable<Livro> {
                 (this.FilaEspera.Tamanho() > 0 ? sb.toString() : "'Sem espera'"));
     }
 
-@Override
+    @Override
+    // compara apenas o ID
     public int compareTo(Livro outro) {
-        // Verifica se o objeto comparado é nulo 
-        if (outro == null) return 1;
-        
+        // Verifica se o objeto comparado é nulo
+        if (outro == null)
+            return 1;
+
         // Delega a comparação para a implementação de comparação ao tipo
         return this.ID.compareTo(outro.ID);
     }

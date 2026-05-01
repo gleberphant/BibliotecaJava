@@ -1,11 +1,11 @@
-package Dominio.Criptografia;
+package Dominio.Algoritmos;
 
 import Aplicacao.Interfaces.IEncriptador;
 
-public class CifraCesar implements IEncriptador {
+public class CifraDeCesar implements IEncriptador {
     private int cifra = 7;
 
-    private String criptografiaCesar(String texto, int chave) {
+    private String encriptar(String texto, int chave) {
         StringBuilder resultado = new StringBuilder();
         for (char caractere : texto.toCharArray()) {
             // verifica se é uma letra
@@ -21,11 +21,11 @@ public class CifraCesar implements IEncriptador {
     }
 
     public String Encriptar(String texto) {
-        return criptografiaCesar(texto, cifra);
+        return encriptar(texto, cifra);
     }
 
     public String Desencriptar(String texto) {
-        return criptografiaCesar(texto, -cifra);
+        return encriptar(texto, -cifra);
     }
 
 }

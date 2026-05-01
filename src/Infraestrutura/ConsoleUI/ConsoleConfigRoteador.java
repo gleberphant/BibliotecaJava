@@ -23,7 +23,7 @@ public class ConsoleConfigRoteador {
                 int numItens = 12;
                 System.out.println("\n::: Mockando Livros :::");
                 for (int i = 0; i <= numItens; i++) {
-                        servicoLivros.AdicionarLivro(new Livro(i, "Livro " + i, "Autor " + i, ""));
+                        servicoLivros.AdicionarLivro(new Livro(""+i, "Livro " + i, "Autor " + i, ""));
                         System.out.println(servicoLivros.BuscarLivroPorID(i + ""));
                 }
 

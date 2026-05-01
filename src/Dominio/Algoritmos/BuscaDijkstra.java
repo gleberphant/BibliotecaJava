@@ -1,6 +1,5 @@
 package Dominio.Algoritmos;
 
-
 import java.util.Map;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -8,10 +7,10 @@ import java.util.LinkedList;
 
 import Dominio.EstruturasDeDados.Listas.Lista;
 
-public class BuscaCaminho<T> {
+public class BuscaDijkstra<T> {
 
     // busca o menor caminho usando o dijkstra.
-    public Map<T, T> BuscarCaminho( Map<T, Map<T, Integer>> grafo, T inicio, T fim) {
+    public Map<T, T> BuscarCaminho(Map<T, Map<T, Integer>> grafo, T inicio, T fim) {
 
         HashMap<T, Integer> distanciasAcumuladas = new HashMap<>();
         LinkedHashMap<T, T> caminho = new LinkedHashMap<>();
@@ -56,22 +55,20 @@ public class BuscaCaminho<T> {
         return caminho;
     }
 
-    public Lista<T> BuscarCaminhoLista(Map<T, Map<T, Integer>> grafo, T inicio, T fim) {
-        // converte caminho em uma lista
-        var caminho = BuscarCaminho(grafo, inicio, fim);
+    public Lista<T> ConverteCaminhoParaLista(Map<T, T> caminho, T inicio, T fim) {
 
         Lista<T> lista = new Lista<>();
-        
+
         T atual = fim;
         while (atual != null) {
 
             lista.Inserir(atual);
 
-              if (atual.equals(inicio))
+            if (atual.equals(inicio))
                 break;
 
             atual = caminho.get(atual);
-          
+
         }
 
         return lista;

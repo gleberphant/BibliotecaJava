@@ -4,7 +4,7 @@ import java.util.NoSuchElementException;
 
 import Aplicacao.Interfaces.IEncriptador;
 import Aplicacao.Interfaces.IRepositorioUsuario;
-import Dominio.Criptografia.CifraCesar;
+import Dominio.Algoritmos.CifraDeCesar;
 import Dominio.EstruturasDeDados.Listas.Lista;
 import Dominio.EstruturasDeDados.Listas.Pilha;
 import Dominio.Modelos.Livro;
@@ -24,7 +24,7 @@ public class ServicoUsuarios {
         usuario.ID = repositorioUsuarios.Contagem();
 
         // encriptar a senha
-        IEncriptador encriptador = new CifraCesar();
+        IEncriptador encriptador = new CifraDeCesar();
         usuario.Senha = encriptador.Encriptar(usuario.Senha);
 
         repositorioUsuarios.Inserir(usuario);
@@ -81,7 +81,7 @@ public class ServicoUsuarios {
         if (usuario == null)
             throw new NoSuchElementException("Login inválido");
 
-        IEncriptador encriptador = new CifraCesar();
+        IEncriptador encriptador = new CifraDeCesar();
 
         if (usuario.Senha.equals(encriptador.Encriptar(senha)))
             usuarioLogado = usuario;

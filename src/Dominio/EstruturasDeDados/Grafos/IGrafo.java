@@ -12,7 +12,7 @@ public interface IGrafo<T> extends Iterable<T> {
 
     public Map<T, Integer> InserirConexao(T chave1, T chave2);
 
-    public Map<T, Integer> VerConexoes(T chave);
+    public Map<T, Integer> MapaDeConexoes(T chave);
 
     public Map<T, T> BuscarCaminho(T inicio, T fim);
 

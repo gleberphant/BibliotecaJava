@@ -53,7 +53,7 @@ public class ServicoLivros {
 
     public Livro EditarLivro(Livro novoLivro) {
 
-        repositorioLivros.Editar(novoLivro);
+        repositorioLivros.EditarLivro(novoLivro);
 
         return novoLivro;
 
@@ -64,7 +64,7 @@ public class ServicoLivros {
         for (var item : repositorioLivros) {
 
             if (item.ID == livro.ID) {
-                repositorioLivros.Remover(item);
+                repositorioLivros.RemoverLivro(item);
                 return;
             }
         }
@@ -74,12 +74,8 @@ public class ServicoLivros {
 
     public Livro BuscarLivroPorID(String livroID) {
 
-        int ID = validarLivroID(livroID);
+        Livro livro = repositorioLivros.BuscarLivroPorID(livroID);
 
-        if (ID < 0)
-            throw new IllegalArgumentException("ID inválido: deve ser um número positivo.");
-
-        Livro livro = repositorioLivros.BuscarID(ID);
         if (livro == null)
             throw new NoSuchElementException("Livro não encontrado");
 
@@ -87,20 +83,11 @@ public class ServicoLivros {
 
     }
 
-    private int validarLivroID(String livroID) {
-
-        try {
-            return Integer.parseInt(livroID);
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("ID deve ser no formato numérico");
-        }
-    }
-
-    // Recomendacoes - talvez eu precise criar um serviço exclusivo para
+    // Recomendacoes - talvez eu precise criar um serviço exclusivo para recomendacoes
 
     public void InserirRecomendacao(Livro livroOrigem, Livro livroDestino) {
 
-        repositorioLivros.InserirConexao(livroOrigem, livroDestino);
+        repositorioLivros.InserirRecomendacao(livroOrigem, livroDestino);
 
         return;
     }
@@ -109,15 +96,15 @@ public class ServicoLivros {
 
         Livro livro = BuscarLivroPorID(livroID);
 
-        return repositorioLivros.ListarConexoes(livro);
+        return repositorioLivros.ListarRecomendacoes(livro);
 
     }
 
     public Lista<Livro> BuscarCaminho(Livro livro) {
 
-        var livro2 = repositorioLivros.GetGrafo().GetPrimeiro();
+        var livro2 = repositorioLivros.BuscarLivroPorID(0+"");
 
-        return repositorioLivros.GetGrafo().BuscarCaminhoLista(livro, livro2);
+        return repositorioLivros.BuscarCaminho(livro, livro2);
 
     }
 
