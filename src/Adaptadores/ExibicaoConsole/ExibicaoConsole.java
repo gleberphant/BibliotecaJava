@@ -1,8 +1,8 @@
 package Adaptadores.ExibicaoConsole;
 
-import Dominio.EstruturasDeDados.Listas.Lista;
 import Dominio.Modelos.Livro;
 import Dominio.Modelos.Usuario;
+import Dominio.MinhasEstruturasDeDados.Listas.Lista;
 
 public class ExibicaoConsole {
     // usuario

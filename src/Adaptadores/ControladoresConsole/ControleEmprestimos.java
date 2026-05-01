@@ -3,11 +3,11 @@ package Adaptadores.ControladoresConsole;
 import java.util.Scanner;
 
 import Adaptadores.ExibicaoConsole.ExibicaoConsole;
+import Dominio.Modelos.Livro;
+import Dominio.Modelos.Usuario;
 import Aplicacao.Servicos.ServicoEmprestimos;
 import Aplicacao.Servicos.ServicoLivros;
 import Aplicacao.Servicos.ServicoUsuarios;
-import Dominio.Modelos.Livro;
-import Dominio.Modelos.Usuario;
 
 public class ControleEmprestimos {
     private final ServicoLivros servicoLivros;

@@ -1,12 +1,12 @@
-package Dominio.EstruturasDeDados.Grafos;
+package Dominio.MinhasEstruturasDeDados.Grafos;
 
-import Dominio.Algoritmos.BuscaDijkstra;
-import Dominio.EstruturasDeDados.Listas.Lista;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 
+import Dominio.MinhasEstruturasDeDados.Listas.Lista;
+import Dominio.MeusAlgoritmos.BuscaDijkstra;
 
 public class GrafoHash<T> implements IGrafo<T> {
 
@@ -67,7 +67,6 @@ public class GrafoHash<T> implements IGrafo<T> {
         return new BuscaDijkstra<T>().BuscarCaminho(mapaAdjacencias, inicio, fim);
     }
 
- 
     public void RemoverItem(T chave) {
         mapaAdjacencias.remove(chave);
     }

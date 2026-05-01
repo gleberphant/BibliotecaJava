@@ -1,13 +1,12 @@
 package Aplicacao.Servicos;
 
-import Dominio.EstruturasDeDados.Listas.Lista;
-
-import Dominio.Modelos.Livro;
-import Dominio.Modelos.Usuario;
-
 import java.util.NoSuchElementException;
 
 import Aplicacao.Interfaces.*;
+import Dominio.Modelos.Livro;
+import Dominio.Modelos.Usuario;
+
+import Dominio.MinhasEstruturasDeDados.Listas.Lista;
 
 public class ServicoLivros {
 
@@ -83,7 +82,8 @@ public class ServicoLivros {
 
     }
 
-    // Recomendacoes - talvez eu precise criar um serviço exclusivo para recomendacoes
+    // Recomendacoes - talvez eu precise criar um serviço exclusivo para
+    // recomendacoes
 
     public void InserirRecomendacao(Livro livroOrigem, Livro livroDestino) {
 
@@ -102,7 +102,7 @@ public class ServicoLivros {
 
     public Lista<Livro> BuscarCaminho(Livro livro) {
 
-        var livro2 = repositorioLivros.BuscarLivroPorID(0+"");
+        var livro2 = repositorioLivros.BuscarLivroPorID(0 + "");
 
         return repositorioLivros.BuscarCaminho(livro, livro2);
 

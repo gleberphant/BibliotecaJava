@@ -3,11 +3,10 @@ package Adaptadores.ControladoresConsole;
 import java.util.Scanner;
 
 import Adaptadores.ExibicaoConsole.ExibicaoConsole;
-import Aplicacao.CasosDeUso.BuscaLivroID;
-
+import Dominio.Modelos.Livro;
+import Aplicacao.CasosDeUso.BuscaLivroPorID;
 import Aplicacao.Servicos.ServicoLivros;
 import Aplicacao.Servicos.ServicoUsuarios;
-import Dominio.Modelos.Livro;
 
 public class ControleLivro {
     private final ServicoLivros servicoLivros;
@@ -25,22 +24,22 @@ public class ControleLivro {
         this.exibe = exibe;
     }
 
-    public void Adicionar() {
+    public void AdicionarLivro() {
 
-        var novoLivro = novoLivro();
+        var novoLivro = formularioNovoLivro();
 
         servicoLivros.AdicionarLivro(novoLivro);
 
     }
 
-    public void Editar() {
+    public void EditarLivro() {
 
         Livro livro = buscarLivro();
 
         if (livro == null)
             return;
 
-        var novoLivro = novoLivro();
+        var novoLivro = formularioNovoLivro();
 
         novoLivro.ID = livro.ID;
 
@@ -48,7 +47,7 @@ public class ControleLivro {
 
     }
 
-    public void Visualizar() {
+    public void VisualizarLivro() {
 
         System.out.println("Informe o ID do livro procurado");
         try {
@@ -64,7 +63,7 @@ public class ControleLivro {
 
     }
 
-    public void Listar() {
+    public void ListarLivros() {
 
         System.out.println("Listando todos os livros");
 
@@ -74,7 +73,7 @@ public class ControleLivro {
 
     }
 
-    public void Remover() {
+    public void RemoverLivro() {
 
         Livro livro = buscarLivro();
 
@@ -87,7 +86,7 @@ public class ControleLivro {
 
     }
 
-    private Livro novoLivro() {
+    private Livro formularioNovoLivro() {
         System.out.println("Informe os dados do livro");
 
         System.out.print("Titulo: ");
@@ -97,7 +96,7 @@ public class ControleLivro {
         System.out.print("Ano : ");
         String ano = scanner.nextLine();
 
-        return new Livro(0, titulo, autor, ano);
+        return new Livro("0", titulo, autor, ano);
 
     }
 
@@ -109,7 +108,7 @@ public class ControleLivro {
         System.out.println("Informe o ID do livro para pesquisar");
 
         try {
-            Livro livro = new BuscaLivroID().Executar(scanner.nextLine(), servicoLivros.repositorioLivros);
+            Livro livro = new BuscaLivroPorID().Executar(scanner.nextLine(), servicoLivros.repositorioLivros);
             System.out.println("Livro Encontrado");
             return livro;
 

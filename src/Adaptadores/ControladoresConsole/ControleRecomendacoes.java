@@ -3,9 +3,9 @@ package Adaptadores.ControladoresConsole;
 import java.util.Scanner;
 
 import Adaptadores.ExibicaoConsole.ExibicaoConsole;
+import Dominio.Modelos.Livro;
 import Aplicacao.Servicos.ServicoLivros;
 import Aplicacao.Servicos.ServicoUsuarios;
-import Dominio.Modelos.Livro;
 
 public class ControleRecomendacoes {
 

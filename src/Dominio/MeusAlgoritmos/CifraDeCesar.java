@@ -1,4 +1,4 @@
-package Dominio.Algoritmos;
+package Dominio.MeusAlgoritmos;
 
 import Aplicacao.Interfaces.IEncriptador;
 

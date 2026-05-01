@@ -1,4 +1,4 @@
-package Infraestrutura.ConsoleUI;
+package ConsoleUI;
 
 import java.util.Scanner;
 
@@ -10,32 +10,30 @@ import Adaptadores.ExibicaoConsole.ExibicaoConsole;
 import Adaptadores.Repositorios.EmMemoria.RepositorioLivros;
 
 import Adaptadores.Repositorios.EmMemoria.RepositorioUsuariosLista;
+import Dominio.Modelos.Livro;
+import Dominio.Modelos.Usuario;
 import Aplicacao.Servicos.ServicoEmprestimos;
 import Aplicacao.Servicos.ServicoLivros;
 import Aplicacao.Servicos.ServicoUsuarios;
-import Dominio.Modelos.Livro;
-import Dominio.Modelos.Usuario;
 
 public class ConsoleConfigRoteador {
 
-        public static void MockarDados(ServicoLivros servicoLivros, ServicoUsuarios servicoUsuarios) {
+        public static void MockarDados(RepositorioLivros repositorioLivros, RepositorioUsuariosLista repositorioUsuarios) {
                 // mockar dados
-                int numItens = 12;
+
+                int numLivros   = (int) (Math.random() * 100);
+                int numUsuarios = 10;
+
                 System.out.println("\n::: Mockando Livros :::");
-                for (int i = 0; i <= numItens; i++) {
-                        servicoLivros.AdicionarLivro(new Livro(""+i, "Livro " + i, "Autor " + i, ""));
-                        System.out.println(servicoLivros.BuscarLivroPorID(i + ""));
-                }
 
-                System.out.println("\n::: Mockando Usuarios :::");
-                for (int i = 1; i <= numItens; i++) {
-
-                        servicoUsuarios.Adicionar(new Usuario(i, "Nome " + i, "cpf" + i, "senha"));
-                        System.out.println(servicoUsuarios.Visualizar(i + ""));
+                for (int i = 0; i <= numLivros; i++) {
+                        var id = ((int) (Math.random() * 100));
+                        repositorioLivros.InserirLivro(new Livro("" + id, "Livro " + id, "Autor " + id, ""));
+                        System.out.println(repositorioLivros.BuscarLivroPorID(id+""));
                 }
 
                 System.out.println("\n::: Inserir conexoes entre os livros :::");
-                for (int i = 0; i < numItens; i++) {
+                for (int i = 0; i < numLivros; i++) {
 
                         // servicoLivros.InserirRecomendacao(servicoLivros.BuscarID(i + ""),
                         // servicoLivros.BuscarID((numItens - i) + ""));
@@ -43,6 +41,15 @@ public class ConsoleConfigRoteador {
                         servicoLivros.VisualizarLivro(servicoUsuarios.GetUsuarioLogado(), i + "");
                         System.out.println(servicoLivros.ListarRecomendacoes(i + ""));
                 }
+
+
+                                System.out.println("\n::: Mockando Usuarios :::");
+                for (int i = 1; i <= numUsuarios; i++) {
+
+                        repositorioUsuarios.Inserir(new Usuario(i, "Nome " + i, "cpf" + i, "senha"));
+                        System.out.println(repositorioUsuarios.BuscarID(i));
+                }
+
         }
 
         // configura menus e injeta dependências
@@ -88,11 +95,11 @@ public class ConsoleConfigRoteador {
 
                 // Configuração do SubMenu Livros
                 ConsoleRoteador menuLivros = new ConsoleRoteador("Gestão de Livros")
-                                .adicionarRota(1, "Adicionar Livro", controleLivros::Adicionar)
-                                .adicionarRota(2, "Visualizar Livros", controleLivros::Visualizar)
-                                .adicionarRota(3, "Editar Livros", controleLivros::Editar)
-                                .adicionarRota(4, "Listar Livros", controleLivros::Listar)
-                                .adicionarRota(5, "Remover Livros", controleLivros::Remover)
+                                .adicionarRota(1, "Adicionar Livro", controleLivros::AdicionarLivro)
+                                .adicionarRota(2, "Visualizar Livros", controleLivros::VisualizarLivro)
+                                .adicionarRota(3, "Editar Livros", controleLivros::EditarLivro)
+                                .adicionarRota(4, "Listar Livros", controleLivros::ListarLivros)
+                                .adicionarRota(5, "Remover Livros", controleLivros::RemoverLivro)
                                 .adicionarRota(0, "Voltar", null);
 
                 // Configuração do SubMenu Espera

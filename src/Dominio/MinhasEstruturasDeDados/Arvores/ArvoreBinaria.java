@@ -1,4 +1,4 @@
-package Dominio.EstruturasDeDados.Arvores;
+package Dominio.MinhasEstruturasDeDados.Arvores;
 //implementar
 
 import java.util.LinkedList;
@@ -83,7 +83,6 @@ public class ArvoreBinaria<T extends Comparable<T>> implements Iterable<T> {
     public T Topo() {
         return raiz.dado;
     }
-
 
     public T Buscar(T chave) {
         return buscaRecursiva(chave, raiz).dado;
@@ -195,6 +194,43 @@ public class ArvoreBinaria<T extends Comparable<T>> implements Iterable<T> {
 
     public int Tamanho() {
         return tamanho;
+    }
+
+    // string em formato json
+    public String toString() {
+        return gerarASCII(this.raiz, "", true);
+    }
+
+    private String gerarASCII(NoArvore<T> no, String prefixo, boolean eUltimo) {
+        if (no == null)
+            return "";
+
+        StringBuilder sb = new StringBuilder();
+
+        // Adiciona o prefixo do nível atual
+        sb.append(prefixo);
+
+        // Define o caractere de ramificação (galho)
+        sb.append(eUltimo ? "└── " : "├── ");
+
+        // Adiciona o dado do nó
+        sb.append(no.dado).append("\n");
+
+        // Prepara o prefixo para os filhos
+        String novoPrefixo = prefixo + (eUltimo ? "    " : "│   ");
+
+        // Chama recursivamente para os filhos
+        // Precisamos tratar a exibição para garantir que o desenho não quebre
+        if (no.filhoEsquerdo != null || no.filhoDireito != null) {
+            if (no.filhoEsquerdo != null) {
+                sb.append(gerarASCII(no.filhoEsquerdo, novoPrefixo, no.filhoDireito == null));
+            }
+            if (no.filhoDireito != null) {
+                sb.append(gerarASCII(no.filhoDireito, novoPrefixo, true));
+            }
+        }
+
+        return sb.toString();
     }
 
     // vou iterar a arvore usando BSF para percorrer todos itens

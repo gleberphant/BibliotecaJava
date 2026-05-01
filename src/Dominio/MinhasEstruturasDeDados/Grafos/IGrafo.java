@@ -1,8 +1,6 @@
-package Dominio.EstruturasDeDados.Grafos;
+package Dominio.MinhasEstruturasDeDados.Grafos;
 
 import java.util.Map;
-
-import Dominio.EstruturasDeDados.Listas.Lista;
 
 public interface IGrafo<T> extends Iterable<T> {
 
@@ -15,7 +13,5 @@ public interface IGrafo<T> extends Iterable<T> {
     public Map<T, Integer> MapaDeConexoes(T chave);
 
     public Map<T, T> BuscarCaminho(T inicio, T fim);
-
-    public Lista<T> BuscarCaminhoLista(T inicio, T fim);
 
 }

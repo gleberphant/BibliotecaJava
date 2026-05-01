@@ -2,12 +2,12 @@ package Dominio.Modelos;
 
 import java.lang.Comparable;
 
-import Dominio.EstruturasDeDados.Listas.Fila;
+import MinhasEstruturasDeDados.Listas.Fila;
 
 public class Livro implements Comparable<Livro> {
-    
+
     // eu pretendia utilizar UUID mas isso vai dificultar os testes
-    public String ID;
+    public Integer ID;
 
     public String Titulo;
     public String Autor;
@@ -24,12 +24,13 @@ public class Livro implements Comparable<Livro> {
     }
 
     public Livro(String id, String titulo, String autor, String ano) {
+       
         SetLivro(id, titulo, autor, ano);
 
     }
 
     public void SetLivro(String id, String titulo, String autor, String ano) {
-        this.ID = id;
+        this.ID = Integer.parseInt(id);
         this.Titulo = titulo;
         this.Autor = autor;
         this.Ano = ano;
@@ -63,7 +64,7 @@ public class Livro implements Comparable<Livro> {
         if (outro == null)
             return 1;
 
-        // Delega a comparação para a implementação de comparação ao tipo
+        //comapara  o id
         return this.ID.compareTo(outro.ID);
     }
 }

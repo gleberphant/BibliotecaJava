@@ -5,12 +5,10 @@ import java.util.Scanner;
 import Adaptadores.ControladoresConsole.*;
 import Adaptadores.Repositorios.EmMemoria.RepositorioLivros;
 import Adaptadores.Repositorios.EmMemoria.RepositorioUsuariosLista;
-
-import Aplicacao.Servicos.ServicoLivros;
-import Aplicacao.Servicos.ServicoUsuarios;
-
 import Dominio.Modelos.Livro;
 import Dominio.Modelos.Usuario;
+import Aplicacao.Servicos.ServicoLivros;
+import Aplicacao.Servicos.ServicoUsuarios;
 
 public class TesteServicoLivro {
 
@@ -53,7 +51,7 @@ public class TesteServicoLivro {
                 new Scanner(System.in));
 
         System.out.println("\nListar Dados");
-        app.Listar();
+        app.ListarLivros();
 
     }
 

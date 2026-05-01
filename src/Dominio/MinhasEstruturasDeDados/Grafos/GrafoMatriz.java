@@ -1,4 +1,4 @@
-package Dominio.EstruturasDeDados.Grafos;
+package Dominio.MinhasEstruturasDeDados.Grafos;
 
 import java.util.ArrayList;
 import java.util.Arrays;

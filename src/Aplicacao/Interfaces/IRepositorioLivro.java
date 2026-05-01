@@ -1,12 +1,12 @@
 package Aplicacao.Interfaces;
 
-import Dominio.EstruturasDeDados.Listas.Lista;
 import Dominio.Modelos.Livro;
+import Dominio.MinhasEstruturasDeDados.Listas.Lista;
 
 public interface IRepositorioLivro extends Iterable<Livro> {
 
     // inserir um item
-    public Livro InserirLivro(Livro dado);
+    public Livro InserirLivro(Livro livro);
 
     // Lista de livros
     public Lista<Livro> ListarLivros();

@@ -1,7 +1,7 @@
 package Main;
 
-import Infraestrutura.ConsoleUI.ConsoleConfigRoteador;
-import Infraestrutura.ConsoleUI.ConsoleMain;
+import ConsoleUI.ConsoleConfigRoteador;
+import ConsoleUI.ConsoleMain;
 
 
 public class App {

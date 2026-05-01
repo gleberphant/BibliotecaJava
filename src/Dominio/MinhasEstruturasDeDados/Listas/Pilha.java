@@ -1,4 +1,4 @@
-package Dominio.EstruturasDeDados.Listas;
+package Dominio.MinhasEstruturasDeDados.Listas;
 
 public class Pilha<T> extends Lista<T> {
 

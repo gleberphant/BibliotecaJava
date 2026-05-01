@@ -2,7 +2,7 @@ package Adaptadores.Repositorios.EmMemoria;
 
 import java.util.Iterator;
 
-import Dominio.EstruturasDeDados.Listas.Lista;
+import Dominio.MinhasEstruturasDeDados.Listas.Lista;
 import Dominio.Modelos.Usuario;
 import Aplicacao.Interfaces.IRepositorioUsuario;
 
@@ -10,10 +10,10 @@ public class RepositorioUsuariosLista implements IRepositorioUsuario {
     protected final Lista<Usuario> lista;
     int contagem;
 
-    public Lista<Usuario> GetLista(){
+    public Lista<Usuario> GetLista() {
         return lista;
     }
-    
+
     public RepositorioUsuariosLista() {
         lista = new Lista<>();
         contagem = 0;

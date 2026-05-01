@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-import Dominio.EstruturasDeDados.Grafos.GrafoHash;
+import Dominio.MinhasEstruturasDeDados.Grafos.GrafoHash;
 
 public class TesteGrafosHash {
     public static void main(String[] args) {

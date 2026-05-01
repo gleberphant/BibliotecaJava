@@ -2,13 +2,13 @@ package Aplicacao.Servicos;
 
 import java.util.NoSuchElementException;
 
-import Aplicacao.Interfaces.IEncriptador;
-import Aplicacao.Interfaces.IRepositorioUsuario;
-import Dominio.Algoritmos.CifraDeCesar;
-import Dominio.EstruturasDeDados.Listas.Lista;
-import Dominio.EstruturasDeDados.Listas.Pilha;
 import Dominio.Modelos.Livro;
 import Dominio.Modelos.Usuario;
+import Dominio.MeusAlgoritmos.CifraDeCesar;
+import Dominio.MinhasEstruturasDeDados.Listas.Lista;
+import Dominio.MinhasEstruturasDeDados.Listas.Pilha;
+import Aplicacao.Interfaces.IEncriptador;
+import Aplicacao.Interfaces.IRepositorioUsuario;
 
 public class ServicoUsuarios {
     IRepositorioUsuario repositorioUsuarios;

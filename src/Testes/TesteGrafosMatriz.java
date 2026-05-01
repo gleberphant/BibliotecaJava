@@ -1,6 +1,6 @@
 package Testes;
 
-import Dominio.EstruturasDeDados.Grafos.GrafoMatriz;
+import Dominio.MinhasEstruturasDeDados.Grafos.GrafoMatriz;
 
 public class TesteGrafosMatriz {
     public static void main(String[] args) {

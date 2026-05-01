@@ -4,9 +4,9 @@ import java.util.Scanner;
 
 import Adaptadores.ControladoresConsole.*;
 import Adaptadores.Repositorios.EmMemoria.RepositorioUsuariosLista;
-import Aplicacao.Servicos.ServicoUsuarios;
 import Dominio.Modelos.Livro;
 import Dominio.Modelos.Usuario;
+import Aplicacao.Servicos.ServicoUsuarios;
 
 public class TesteServicoUsuario {
 

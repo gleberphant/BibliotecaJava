@@ -1,4 +1,4 @@
-package Infraestrutura.ConsoleUI;
+package ConsoleUI;
 
 import java.util.Map;
 import java.util.Scanner;

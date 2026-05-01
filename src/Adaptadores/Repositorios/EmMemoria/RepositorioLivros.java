@@ -3,10 +3,9 @@ package Adaptadores.Repositorios.EmMemoria;
 import java.util.Iterator;
 
 import Aplicacao.Interfaces.IRepositorioLivro;
-import Dominio.Algoritmos.BuscaDijkstra;
-import Dominio.EstruturasDeDados.Arvores.ArvoreBinaria;
-import Dominio.EstruturasDeDados.Grafos.GrafoHash;
-import Dominio.EstruturasDeDados.Listas.Lista;
+import Dominio.MinhasEstruturasDeDados.Arvores.ArvoreBinaria;
+import Dominio.MinhasEstruturasDeDados.Grafos.GrafoHash;
+import Dominio.MinhasEstruturasDeDados.Listas.Lista;
 import Dominio.Modelos.Livro;
 
 // repositorio dos livros
@@ -27,7 +26,7 @@ public class RepositorioLivros implements IRepositorioLivro {
     }
 
     public Livro InserirLivro(Livro livro) {
-        livro.ID = "" + (contagem);
+        livro.ID = contagem;
         contagem++;
         indicesLivros.Inserir(livro);
         // grafoRecomendacoes.InserirItem(livro);
@@ -35,7 +34,7 @@ public class RepositorioLivros implements IRepositorioLivro {
         return livro;
     }
 
-    public Lista<Livro> ListarLivros() {
+    public Lista<Livro> ListarLivros(){
 
         Lista<Livro> lista = new Lista<>();
 
@@ -49,14 +48,14 @@ public class RepositorioLivros implements IRepositorioLivro {
 
     public Livro EditarLivro(Livro novoLivro) {
 
-        var livro = BuscarLivroPorID(novoLivro.ID);
+        var livro = BuscarLivroPorID(novoLivro.ID+"");
         livro = novoLivro;
 
         return livro;
 
     }
 
-    // comparableTo de Livro, compara apenas  pelo ID
+    // comparableTo de Livro, compara apenas somente pelo ID
     public Livro BuscarLivroPorID(String ID) {
 
         return indicesLivros.Buscar(new Livro(ID, null, null, null));
@@ -128,7 +127,7 @@ public class RepositorioLivros implements IRepositorioLivro {
         return lista;
     }
 
-    }
+    
 
     //
     public String toString() {

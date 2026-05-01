@@ -3,8 +3,8 @@ package Adaptadores.ControladoresConsole;
 import java.util.Scanner;
 
 import Adaptadores.ExibicaoConsole.ExibicaoConsole;
-import Aplicacao.Servicos.ServicoUsuarios;
 import Dominio.Modelos.Usuario;
+import Aplicacao.Servicos.ServicoUsuarios;
 
 public class ControleUsuario {
     private final ServicoUsuarios servicoUsuarios;

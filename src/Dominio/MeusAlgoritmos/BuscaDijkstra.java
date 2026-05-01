@@ -1,11 +1,12 @@
-package Dominio.Algoritmos;
+package Dominio.MeusAlgoritmos;
 
 import java.util.Map;
+
+import Dominio.MinhasEstruturasDeDados.Listas.Lista;
+
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
-
-import Dominio.EstruturasDeDados.Listas.Lista;
 
 public class BuscaDijkstra<T> {
 
