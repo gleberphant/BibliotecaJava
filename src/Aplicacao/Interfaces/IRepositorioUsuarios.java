@@ -3,7 +3,7 @@ package Aplicacao.Interfaces;
 import Dominio.Modelos.Usuario;
 import Dominio.MinhasEstruturasDeDados.Listas.Lista;
 
-public interface IRepositorioUsuario extends Iterable<Usuario> {
+public interface IRepositorioUsuarios extends Iterable<Usuario> {
 
     // pegar o grafo de livro para processamentos
     public Lista<Usuario> GetLista();
@@ -11,7 +11,7 @@ public interface IRepositorioUsuario extends Iterable<Usuario> {
     // inserir um item
     public int Inserir(Usuario dado);
 
-    public Usuario BuscarID(int ID);
+    public Usuario BuscarUsuarioPorID(int ID);
 
     public Usuario BuscarNome(String nome);
 
@@ -27,5 +27,6 @@ public interface IRepositorioUsuario extends Iterable<Usuario> {
 
     // converter os dados do repositorio para uma string
     public String toString();
+
 
 }

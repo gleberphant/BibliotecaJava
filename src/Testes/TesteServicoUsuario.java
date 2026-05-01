@@ -3,7 +3,7 @@ package Testes;
 import java.util.Scanner;
 
 import Adaptadores.ControladoresConsole.*;
-import Adaptadores.Repositorios.EmMemoria.RepositorioUsuariosLista;
+import Adaptadores.Repositorios.EmMemoria.RepositorioUsuarios;
 import Dominio.Modelos.Livro;
 import Dominio.Modelos.Usuario;
 import Aplicacao.Servicos.ServicoUsuarios;
@@ -16,7 +16,7 @@ public class TesteServicoUsuario {
         // configura aplicação
 
         // var servicoLivros = new ServicoLivros(new RepositorioLivros());
-        var servicoUsuarios = new ServicoUsuarios(new RepositorioUsuariosLista());
+        var servicoUsuarios = new ServicoUsuarios(new RepositorioUsuarios());
 
         int numItens = 5;
 

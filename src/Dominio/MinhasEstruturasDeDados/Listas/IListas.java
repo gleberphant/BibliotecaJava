@@ -14,6 +14,12 @@ public interface IListas<T> extends Iterable<T> {
     // visualiza proximo item sem remover
     public T Topo();
 
+    // busca por indice
+    public T Busca(int i);
+
+    // informa se vazia
+    public boolean EstaVazia();
+
     // remove proximo item
     public void Remover(T chave);
 

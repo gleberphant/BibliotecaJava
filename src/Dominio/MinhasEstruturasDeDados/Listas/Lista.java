@@ -23,6 +23,7 @@ public class Lista<T> implements IListas<T> {
     public T Retirar() {
         T dado = Topo();
         Remover(0);
+        contagem--;
         return dado;
     }
 
@@ -34,6 +35,11 @@ public class Lista<T> implements IListas<T> {
     // visualiza proximo item sem remover
     public T Topo() {
         return lista.Get(0);
+    }
+
+    //
+    public T Busca(int i) {
+        return lista.Get(i);
     }
 
     // remove proximo item
@@ -60,6 +66,14 @@ public class Lista<T> implements IListas<T> {
 
     public int Contagem() {
         return contagem;
+    }
+
+    public boolean EstaVazia() {
+
+        if (lista.Tamanho() < 1)
+            return true;
+        else
+            return false;
     }
 
     public String toString() {

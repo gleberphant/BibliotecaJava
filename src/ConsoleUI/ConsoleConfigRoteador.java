@@ -7,50 +7,17 @@ import Adaptadores.ControladoresConsole.ControleLivro;
 import Adaptadores.ControladoresConsole.ControleRecomendacoes;
 import Adaptadores.ControladoresConsole.ControleUsuario;
 import Adaptadores.ExibicaoConsole.ExibicaoConsole;
-import Adaptadores.Repositorios.EmMemoria.RepositorioLivros;
 
-import Adaptadores.Repositorios.EmMemoria.RepositorioUsuariosLista;
-import Dominio.Modelos.Livro;
+import Adaptadores.Repositorios.EmMemoria.RepositorioLivros;
+import Adaptadores.Repositorios.EmMemoria.RepositorioRecomendacoes;
+import Adaptadores.Repositorios.EmMemoria.RepositorioUsuarios;
+
 import Dominio.Modelos.Usuario;
 import Aplicacao.Servicos.ServicoEmprestimos;
 import Aplicacao.Servicos.ServicoLivros;
 import Aplicacao.Servicos.ServicoUsuarios;
 
 public class ConsoleConfigRoteador {
-
-        public static void MockarDados(RepositorioLivros repositorioLivros, RepositorioUsuariosLista repositorioUsuarios) {
-                // mockar dados
-
-                int numLivros   = (int) (Math.random() * 100);
-                int numUsuarios = 10;
-
-                System.out.println("\n::: Mockando Livros :::");
-
-                for (int i = 0; i <= numLivros; i++) {
-                        var id = ((int) (Math.random() * 100));
-                        repositorioLivros.InserirLivro(new Livro("" + id, "Livro " + id, "Autor " + id, ""));
-                        System.out.println(repositorioLivros.BuscarLivroPorID(id+""));
-                }
-
-                System.out.println("\n::: Inserir conexoes entre os livros :::");
-                for (int i = 0; i < numLivros; i++) {
-
-                        // servicoLivros.InserirRecomendacao(servicoLivros.BuscarID(i + ""),
-                        // servicoLivros.BuscarID((numItens - i) + ""));
-
-                        servicoLivros.VisualizarLivro(servicoUsuarios.GetUsuarioLogado(), i + "");
-                        System.out.println(servicoLivros.ListarRecomendacoes(i + ""));
-                }
-
-
-                                System.out.println("\n::: Mockando Usuarios :::");
-                for (int i = 1; i <= numUsuarios; i++) {
-
-                        repositorioUsuarios.Inserir(new Usuario(i, "Nome " + i, "cpf" + i, "senha"));
-                        System.out.println(repositorioUsuarios.BuscarID(i));
-                }
-
-        }
 
         // configura menus e injeta dependências
         public static ConsoleRoteador configurarRoteadorConsole() {
@@ -61,19 +28,24 @@ public class ConsoleConfigRoteador {
                 // criar repositorios
 
                 var respositorioLivros = new RepositorioLivros();
-                var respositorioUsuarios = new RepositorioUsuariosLista();
+                var respositorioUsuarios = new RepositorioUsuarios();
+                var respositorioRecomendacoes = new RepositorioRecomendacoes();
+
+                // mockar dados
+                MockarDados.Mockar(respositorioLivros, respositorioUsuarios, respositorioRecomendacoes);
+
+                System.out.println(respositorioLivros.toString());
+                System.out.println(respositorioUsuarios.toString());
+                System.out.println(respositorioRecomendacoes.toString());
 
                 // configurar servicos
-                var servicoLivros = new ServicoLivros(respositorioLivros);
+                var servicoLivros = new ServicoLivros(respositorioLivros, respositorioRecomendacoes);
                 var servicoUsuarios = new ServicoUsuarios(respositorioUsuarios);
                 var servicoEmprestimos = new ServicoEmprestimos(respositorioLivros);
 
                 // inserir usuario ADM
                 servicoUsuarios.Adicionar(new Usuario(0, "root", "0123456789", "root"));
                 servicoUsuarios.Login("root", "root");
-
-                // mockar dados
-                MockarDados(servicoLivros, servicoUsuarios);
 
                 // configurar controladores
                 var controleUsuarios = new ControleUsuario(servicoUsuarios, entrada, exibicao);

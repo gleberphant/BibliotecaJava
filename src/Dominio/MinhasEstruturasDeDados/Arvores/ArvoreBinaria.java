@@ -7,12 +7,12 @@ import java.util.NoSuchElementException;
 
 import java.util.Iterator;
 
-public class ArvoreBinaria<T extends Comparable<T>> implements Iterable<T> {
-    // Coloquei no como classe interna privada para encapsulamento
+// Coloquei no como classe interna privada para encapsulamento
 
+public class ArvoreBinaria<T extends Comparable<T>> implements Iterable<T> {
     static class NoArvore<T> {
 
-        public T dado;
+        T dado;
         NoArvore<T> filhoEsquerdo;
         NoArvore<T> filhoDireito;
 
@@ -80,12 +80,17 @@ public class ArvoreBinaria<T extends Comparable<T>> implements Iterable<T> {
         return tamanho;
     }
 
+    public NoArvore<T> raiz() {
+        return raiz;
+    }
+
     public T Topo() {
         return raiz.dado;
     }
 
     public T Buscar(T chave) {
-        return buscaRecursiva(chave, raiz).dado;
+        var resultado = buscaRecursiva(chave, raiz);
+        return resultado != null ? resultado.dado : null;
     }
 
     // remove item
@@ -93,25 +98,27 @@ public class ArvoreBinaria<T extends Comparable<T>> implements Iterable<T> {
         removerRecursivo(chave, raiz);
     }
 
-    private NoArvore<T> buscaRecursiva(T chave, NoArvore<T> pai) {
-        // 1. Caso Base: O dado não foi encontrado ou a árvore/subárvore está vazia
-        if (pai == null) {
+    private NoArvore<T> buscaRecursiva(T chave, NoArvore<T> atual) {
+        // 1. Caso Base: a árvore/subárvore está vazia
+        if (atual == null) {
             return null;
         }
 
-        int comparacao = chave.compareTo(pai.dado);
+        // compara valor buscado com o valor da raiz/atual
+        int comparacao = atual.dado.compareTo(chave);
 
-        // 2. Caso Base: Encontrou o nó
+        // Caso 1: Encontrou o nó
         if (comparacao == 0) {
-            return pai;
+            return atual;
         }
 
-        // 3. Navegação: Decide para qual lado ir
-        if (comparacao < 0) {
-            return buscaRecursiva(chave, pai.filhoEsquerdo);
+        // caso 2: Decide para qual lado ir
+        if (comparacao > 0) {
+            return buscaRecursiva(chave, atual.filhoEsquerdo);
         } else {
-            return buscaRecursiva(chave, pai.filhoDireito);
+            return buscaRecursiva(chave, atual.filhoDireito);
         }
+
     }
 
     private NoArvore<T> buscaPaiRecursivo(T chave, NoArvore<T> pai) {

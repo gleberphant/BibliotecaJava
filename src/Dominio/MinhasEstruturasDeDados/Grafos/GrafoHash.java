@@ -2,11 +2,12 @@ package Dominio.MinhasEstruturasDeDados.Grafos;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import Dominio.MeusAlgoritmos.BuscaDijkstra;
+
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 
-import Dominio.MinhasEstruturasDeDados.Listas.Lista;
-import Dominio.MeusAlgoritmos.BuscaDijkstra;
 
 public class GrafoHash<T> implements IGrafo<T> {
 
@@ -14,7 +15,7 @@ public class GrafoHash<T> implements IGrafo<T> {
 
     // { no_origem1 :{ no_destino1: peso , no_destino2: peso, .... }, ... }
 
-    private Map<T, Map<T, Integer>> mapaAdjacencias;
+    public Map<T, Map<T, Integer>> mapaAdjacencias;
 
     public GrafoHash() {
         this.mapaAdjacencias = new LinkedHashMap<>();
@@ -64,7 +65,7 @@ public class GrafoHash<T> implements IGrafo<T> {
     // busca o menor caminho usando o dijkstra.
     public Map<T, T> BuscarCaminho(T inicio, T fim) {
 
-        return new BuscaDijkstra<T>().BuscarCaminho(mapaAdjacencias, inicio, fim);
+        return new BuscaCaminhoLivrosDijkstra<T>().BuscarCaminho(mapaAdjacencias, inicio, fim);
     }
 
     public void RemoverItem(T chave) {

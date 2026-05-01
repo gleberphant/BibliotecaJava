@@ -5,15 +5,18 @@ import java.util.NoSuchElementException;
 import Aplicacao.Interfaces.*;
 import Dominio.Modelos.Livro;
 import Dominio.Modelos.Usuario;
+import Adaptadores.Repositorios.EmMemoria.RepositorioRecomendacoes;
 
 import Dominio.MinhasEstruturasDeDados.Listas.Lista;
 
 public class ServicoLivros {
 
-    public IRepositorioLivro repositorioLivros;
+    public IRepositorioLivros repositorioLivros;
+    public IRepositorioRecomendacoes respositorioRecomendacoes;
 
-    public ServicoLivros(IRepositorioLivro repositorio) {
-        repositorioLivros = repositorio;
+    public ServicoLivros(IRepositorioLivros repositorioLivros, IRepositorioRecomendacoes respositorioRecomendacoes) {
+        this.repositorioLivros = repositorioLivros;
+        this.respositorioRecomendacoes = respositorioRecomendacoes;
 
     }
 
@@ -30,7 +33,7 @@ public class ServicoLivros {
         if (usuarioLogado == null)
             throw new NoSuchElementException("usuarioLogado inválido");
 
-        Livro livro1 = BuscarLivroPorID(livroID);
+        Livro livro1 = BuscarLivroPorID(validaId(livroID));
 
         for (var livro2 : usuarioLogado.historicoNavegacao) {
             // inserir recomendacao
@@ -71,9 +74,9 @@ public class ServicoLivros {
         throw new NoSuchElementException("Livro não encontrado");
     }
 
-    public Livro BuscarLivroPorID(String livroID) {
+    public Livro BuscarLivroPorID(int ID) {
 
-        Livro livro = repositorioLivros.BuscarLivroPorID(livroID);
+        Livro livro = repositorioLivros.BuscarLivroPorID(ID);
 
         if (livro == null)
             throw new NoSuchElementException("Livro não encontrado");
@@ -92,9 +95,20 @@ public class ServicoLivros {
         return;
     }
 
+    private int validaId(String stringID) {
+        int id;
+        try {
+            id = Integer.parseInt(stringID);
+        } catch (Exception e) {
+            throw new NoSuchElementException("Digite um ID válido");
+        }
+
+        return id;
+    }
+
     public Lista<Livro> ListarRecomendacoes(String livroID) {
 
-        Livro livro = BuscarLivroPorID(livroID);
+        Livro livro = BuscarLivroPorID(validaId(livroID));
 
         return repositorioLivros.ListarRecomendacoes(livro);
 
@@ -102,7 +116,7 @@ public class ServicoLivros {
 
     public Lista<Livro> BuscarCaminho(Livro livro) {
 
-        var livro2 = repositorioLivros.BuscarLivroPorID(0 + "");
+        var livro2 = repositorioLivros.iterator().next();
 
         return repositorioLivros.BuscarCaminho(livro, livro2);
 

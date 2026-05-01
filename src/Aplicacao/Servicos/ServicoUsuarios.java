@@ -7,14 +7,14 @@ import Dominio.Modelos.Usuario;
 import Dominio.MeusAlgoritmos.CifraDeCesar;
 import Dominio.MinhasEstruturasDeDados.Listas.Lista;
 import Dominio.MinhasEstruturasDeDados.Listas.Pilha;
-import Aplicacao.Interfaces.IEncriptador;
-import Aplicacao.Interfaces.IRepositorioUsuario;
+
+import Aplicacao.Interfaces.*;
 
 public class ServicoUsuarios {
-    IRepositorioUsuario repositorioUsuarios;
+    IRepositorioUsuarios repositorioUsuarios;
     Usuario usuarioLogado;
 
-    public ServicoUsuarios(IRepositorioUsuario repositorio) {
+    public ServicoUsuarios(IRepositorioUsuarios repositorio) {
         repositorioUsuarios = repositorio;
 
     }
@@ -36,7 +36,7 @@ public class ServicoUsuarios {
 
         int ID = validaID(stringID);
 
-        Usuario usuario = repositorioUsuarios.BuscarID(ID);
+        Usuario usuario = repositorioUsuarios.BuscarUsuarioPorID(ID);
 
         if (usuario == null)
             throw new NoSuchElementException("Usuario não encontrado");
@@ -52,7 +52,7 @@ public class ServicoUsuarios {
 
     public Usuario Editar(Usuario novoUsuario) {
 
-        Usuario usuario = repositorioUsuarios.BuscarID(novoUsuario.ID);
+        Usuario usuario = repositorioUsuarios.BuscarUsuarioPorID(novoUsuario.ID);
 
         if (usuario == null)
             throw new NoSuchElementException("Usuario não encontrado");
@@ -119,7 +119,7 @@ public class ServicoUsuarios {
 
     public Pilha<Livro> ListarHistoricoNavegacao(String stringID) {
         int ID = validaID(stringID);
-        Usuario usuario = repositorioUsuarios.BuscarID(ID);
+        Usuario usuario = repositorioUsuarios.BuscarUsuarioPorID(ID);
 
         if (usuario == null)
             throw new NoSuchElementException("Usuario não encontrado");

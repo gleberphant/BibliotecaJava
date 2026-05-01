@@ -2,7 +2,8 @@ package Adaptadores.Repositorios.EmMemoria;
 
 import java.util.Iterator;
 
-import Aplicacao.Interfaces.IRepositorioLivro;
+
+import Aplicacao.Interfaces.IRepositorioLivros;
 import Dominio.MinhasEstruturasDeDados.Arvores.ArvoreBinaria;
 import Dominio.MinhasEstruturasDeDados.Grafos.GrafoHash;
 import Dominio.MinhasEstruturasDeDados.Listas.Lista;
@@ -12,7 +13,7 @@ import Dominio.Modelos.Livro;
 // armazena os livros em uma arvore binária
 // armazena as recomendações em um grafo
 
-public class RepositorioLivros implements IRepositorioLivro {
+public class RepositorioLivros implements IRepositorioLivros {
 
     private ArvoreBinaria<Livro> indicesLivros;
     private GrafoHash<Livro> grafoRecomendacoes;
@@ -25,19 +26,24 @@ public class RepositorioLivros implements IRepositorioLivro {
 
     }
 
+    public GrafoHash<Livro> GetGrafo() {
+        return grafoRecomendacoes;
+    }
+
     public Livro InserirLivro(Livro livro) {
-        livro.ID = contagem;
+
         contagem++;
         indicesLivros.Inserir(livro);
-        // grafoRecomendacoes.InserirItem(livro);
+        grafoRecomendacoes.InserirItem(livro);
 
         return livro;
     }
 
-    public Lista<Livro> ListarLivros(){
+    public Lista<Livro> ListarLivros() {
 
         Lista<Livro> lista = new Lista<>();
 
+        // transforma arvore em lista;
         for (var livro : indicesLivros) {
             lista.Inserir(livro);
         }
@@ -48,7 +54,7 @@ public class RepositorioLivros implements IRepositorioLivro {
 
     public Livro EditarLivro(Livro novoLivro) {
 
-        var livro = BuscarLivroPorID(novoLivro.ID+"");
+        var livro = BuscarLivroPorID(novoLivro.ID);
         livro = novoLivro;
 
         return livro;
@@ -56,20 +62,31 @@ public class RepositorioLivros implements IRepositorioLivro {
     }
 
     // comparableTo de Livro, compara apenas somente pelo ID
-    public Livro BuscarLivroPorID(String ID) {
+    public Livro BuscarLivroPorID(int ID) {
 
         return indicesLivros.Buscar(new Livro(ID, null, null, null));
 
     }
 
-    // por quanto to pegando apenas o primeiro livro da arvore, depois implemento algo melhor
-    public Livro BuscarLivroAleatorio(){
+    public Livro Topo() {
 
         return indicesLivros.iterator().next();
-        
     }
 
-    // remove proximo item
+    public Livro BuscarLivroAleatorio() {
+
+        /// percorre a arvore e com 20% de chance de retornar um valor
+        for (var item : this) {
+            if (Math.random() < 0.2) {
+                return item;
+            }
+
+        }
+
+        return indicesLivros.iterator().next();
+
+    }
+
     public void RemoverLivro(Livro livro) {
 
         indicesLivros.Remover(livro);
@@ -84,52 +101,6 @@ public class RepositorioLivros implements IRepositorioLivro {
         return contagem;
     }
 
-    // ------- recomendacoes
-    public GrafoHash<Livro> GetRecomendacoes() {
-        return grafoRecomendacoes;
-
-    }
-
-    public void InserirRecomendacao(Livro livro1, Livro livro2) {
-        grafoRecomendacoes.InserirConexao(livro1, livro2);
-    }
-
-    public Lista<Livro> ListarRecomendacoes(Livro livro) {
-
-        Lista<Livro> lista = new Lista<>();
-
-        for (var item : grafoRecomendacoes.MapaDeConexoes(livro).keySet()) {
-            lista.Inserir(item);
-        }
-        return lista;
-
-    }
-
-    public Lista<Livro> BuscarCaminho(Livro livro1, Livro livro2) {
-
-        var caminho = grafoRecomendacoes.BuscarCaminho(livro2, livro2);
-
-        // converte caminho em uma lista
-        Lista<Livro> lista = new Lista<>();
-
-        Livro ponteiro = livro2;
-        while (ponteiro != null) {
-
-            lista.Inserir(ponteiro);
-
-            if (ponteiro.equals(livro1))
-                break;
-
-            ponteiro = caminho.get(ponteiro);
-
-        }
-
-        return lista;
-    }
-
-    
-
-    //
     public String toString() {
         return indicesLivros.toString();
     }
@@ -140,4 +111,5 @@ public class RepositorioLivros implements IRepositorioLivro {
         // a iteração segue normal pq estou inserindo no fim da lista
         return indicesLivros.iterator();
     }
+
 }

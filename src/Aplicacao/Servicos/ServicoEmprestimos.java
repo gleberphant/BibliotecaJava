@@ -1,13 +1,14 @@
 package Aplicacao.Servicos;
 
-import Aplicacao.Interfaces.IRepositorioLivro;
+
+import Aplicacao.Interfaces.IRepositorioLivros;
 import Dominio.Modelos.Livro;
 import Dominio.Modelos.Usuario;
 
 public class ServicoEmprestimos {
-    public IRepositorioLivro repositorioLivros;
+    public IRepositorioLivros repositorioLivros;
 
-    public ServicoEmprestimos(IRepositorioLivro repositorio) {
+    public ServicoEmprestimos(IRepositorioLivros repositorio) {
         repositorioLivros = repositorio;
 
     }

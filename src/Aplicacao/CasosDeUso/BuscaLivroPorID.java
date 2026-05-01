@@ -3,13 +3,14 @@ package Aplicacao.CasosDeUso;
 import java.util.NoSuchElementException;
 
 import Dominio.Modelos.Livro;
-import Aplicacao.Interfaces.IRepositorioLivro;
+import Aplicacao.Interfaces.IRepositorioLivros;
 
 public class BuscaLivroPorID {
 
-    public Livro Executar(String stringID, IRepositorioLivro repositorioLivros) {
+    public Livro Executar(String stringID, IRepositorioLivros repositorioLivros) {
 
-        Livro livro = repositorioLivros.BuscarLivroPorID(stringID);
+        var ID = Integer.parseInt(stringID);
+        Livro livro = repositorioLivros.BuscarLivroPorID(ID);
         if (livro == null)
             throw new NoSuchElementException("Livro não encontrado");
 

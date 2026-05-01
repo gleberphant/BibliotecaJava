@@ -2,7 +2,7 @@ package Dominio.Modelos;
 
 import java.lang.Comparable;
 
-import MinhasEstruturasDeDados.Listas.Fila;
+import Dominio.MinhasEstruturasDeDados.Listas.Fila;
 
 public class Livro implements Comparable<Livro> {
 
@@ -19,18 +19,25 @@ public class Livro implements Comparable<Livro> {
     public Fila<Usuario> FilaEspera; // FILA DE ESPERA VAI RECEBER USUARIOS
 
     public Livro() {
-        SetLivro("0", "titulo", "autor", "ano");
+        SetLivro(0, "titulo", "autor", "ano");
         this.Disponivel = true;
     }
 
-    public Livro(String id, String titulo, String autor, String ano) {
-       
+    public Livro(int id, String titulo, String autor, String ano) {
+
         SetLivro(id, titulo, autor, ano);
 
     }
 
-    public void SetLivro(String id, String titulo, String autor, String ano) {
-        this.ID = Integer.parseInt(id);
+    public Livro(String id, String titulo, String autor, String ano) {
+
+        SetLivro(Integer.parseInt(id), titulo, autor, ano);
+
+    }
+
+    public void SetLivro(int id, String titulo, String autor, String ano) {
+
+        this.ID = id;
         this.Titulo = titulo;
         this.Autor = autor;
         this.Ano = ano;
@@ -64,7 +71,13 @@ public class Livro implements Comparable<Livro> {
         if (outro == null)
             return 1;
 
-        //comapara  o id
-        return this.ID.compareTo(outro.ID);
+        // comapara o id
+        if (ID == outro.ID)
+            return 0;
+        if (ID > outro.ID)
+            return 1;
+        else
+            return -1;
+        // return this.ID.compareTo(outro.ID);
     }
 }

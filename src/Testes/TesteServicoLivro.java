@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 import Adaptadores.ControladoresConsole.*;
 import Adaptadores.Repositorios.EmMemoria.RepositorioLivros;
-import Adaptadores.Repositorios.EmMemoria.RepositorioUsuariosLista;
+import Adaptadores.Repositorios.EmMemoria.RepositorioUsuarios;
 import Dominio.Modelos.Livro;
 import Dominio.Modelos.Usuario;
 import Aplicacao.Servicos.ServicoLivros;
@@ -18,7 +18,7 @@ public class TesteServicoLivro {
         // configura aplicação
 
         var servicoLivros = new ServicoLivros(new RepositorioLivros());
-        var servicoUsuarios = new ServicoUsuarios(new RepositorioUsuariosLista());
+        var servicoUsuarios = new ServicoUsuarios(new RepositorioUsuarios());
         servicoUsuarios.Adicionar(new Usuario(0, "root","","senha"));
         var root = servicoUsuarios.Login("root", "senha");
 

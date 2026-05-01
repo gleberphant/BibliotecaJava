@@ -2,20 +2,23 @@ package Adaptadores.Repositorios.EmMemoria;
 
 import java.util.Iterator;
 
+import Dominio.MinhasEstruturasDeDados.Grafos.GrafoHash;
 import Dominio.MinhasEstruturasDeDados.Listas.Lista;
 import Dominio.Modelos.Usuario;
-import Aplicacao.Interfaces.IRepositorioUsuario;
+import Aplicacao.Interfaces.IRepositorioUsuarios;
 
-public class RepositorioUsuariosLista implements IRepositorioUsuario {
+public class RepositorioUsuarios implements IRepositorioUsuarios {
     protected final Lista<Usuario> lista;
+    public final GrafoHash<Usuario> conexoes;
     int contagem;
 
     public Lista<Usuario> GetLista() {
         return lista;
     }
 
-    public RepositorioUsuariosLista() {
+    public RepositorioUsuarios() {
         lista = new Lista<>();
+        conexoes = new GrafoHash<>();
         contagem = 0;
     }
 
@@ -33,7 +36,7 @@ public class RepositorioUsuariosLista implements IRepositorioUsuario {
         return lista;
     }
 
-    public Usuario BuscarID(int ID) {
+    public Usuario BuscarUsuarioPorID(int ID) {
 
         for (Usuario usuario : lista) {
             if (usuario.ID == ID) {
@@ -84,4 +87,5 @@ public class RepositorioUsuariosLista implements IRepositorioUsuario {
     public Iterator<Usuario> iterator() {
         return lista.iterator();
     }
+
 }

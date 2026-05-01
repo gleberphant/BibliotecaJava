@@ -1,9 +1,10 @@
 package Aplicacao.Interfaces;
 
 import Dominio.Modelos.Livro;
+
 import Dominio.MinhasEstruturasDeDados.Listas.Lista;
 
-public interface IRepositorioLivro extends Iterable<Livro> {
+public interface IRepositorioLivros extends Iterable<Livro> {
 
     // inserir um item
     public Livro InserirLivro(Livro livro);
@@ -15,8 +16,8 @@ public interface IRepositorioLivro extends Iterable<Livro> {
     public Livro EditarLivro(Livro novoLivro);
 
     // Buscar um livro por ID
-    Livro BuscarLivroPorID(String ID);
-    
+    Livro BuscarLivroPorID(int ID);
+
     // pegar um livro aleatorio
     Livro BuscarLivroAleatorio();
 
@@ -28,14 +29,5 @@ public interface IRepositorioLivro extends Iterable<Livro> {
 
     // quantidade de itens no repositorio
     public int QuantidadeLivros();
-
-    // Inserir uma Conexao
-    public void InserirRecomendacao(Livro t1, Livro t2);
-
-    // Lista de recomendacoes
-    public Lista<Livro> ListarRecomendacoes(Livro livro);
-
-    // algoritmo dijkstra para encontrar relacionamentos
-    Lista<Livro> BuscarCaminho(Livro livro1, Livro livro2);
 
 }

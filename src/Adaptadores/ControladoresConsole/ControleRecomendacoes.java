@@ -3,6 +3,7 @@ package Adaptadores.ControladoresConsole;
 import java.util.Scanner;
 
 import Adaptadores.ExibicaoConsole.ExibicaoConsole;
+import Aplicacao.CasosDeUso.BuscaCaminhoLivrosDijkstra;
 import Dominio.Modelos.Livro;
 import Aplicacao.Servicos.ServicoLivros;
 import Aplicacao.Servicos.ServicoUsuarios;
@@ -23,9 +24,12 @@ public class ControleRecomendacoes {
 
     public void ListarRecomendacoes() {
 
-        for (var livro : servicoLivros.ListarLivros()) {
+        var listaDeLivros = servicoLivros.ListarLivros();
+        for (var livro : listaDeLivros) {
 
-            System.out.println(exibe.exibeRecomendacoes(livro, servicoLivros.ListarRecomendacoes(livro.ID + "")));
+            var listaDeRecomendacoes = servicoLivros.ListarRecomendacoes(livro.ID+"");
+
+            System.out.println(exibe.exibeRecomendacoes(livro, listaDeRecomendacoes));
         }
 
     }
@@ -38,11 +42,11 @@ public class ControleRecomendacoes {
     }
 
     public void BuscarCaminho() {
-        Livro livro = ControleLivro.BuscarLivro(servicoLivros, scanner);
+        Livro livro1 = ControleLivro.BuscarLivro(servicoLivros, scanner);
 
-        for (var item : servicoLivros.BuscarCaminho(livro)) {
-            System.out.print(" > " + item + " ");
-        }
+        var caminho = new BuscaCaminhoLivrosDijkstra().execute(livro1, servicoLivros.respositorioRecomendacoes);
+
+        exibe.exibeRecomendacoes(livro1, caminho);
 
     }
 
