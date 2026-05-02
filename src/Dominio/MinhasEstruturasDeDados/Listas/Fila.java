@@ -1,6 +1,6 @@
 package Dominio.MinhasEstruturasDeDados.Listas;
 
-public class Fila<T> extends Lista<T> {
+public class Fila<T extends Comparable<T>> extends Lista<T> {
 
     public Fila() {
         super();

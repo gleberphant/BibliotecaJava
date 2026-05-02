@@ -1,7 +1,6 @@
 package Dominio.MinhasEstruturasDeDados.Listas;
 
-
-public interface IListas<T> extends Iterable<T> {
+public interface ILista<T> extends Iterable<T> {
 
     public int Inserir(T dado);
 

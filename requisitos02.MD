@@ -1,5 +1,7 @@
 # backlog
 
+[*] implementar algoritmos de ordenação de filas
+[*]implementar algoritmos BFS e DFS
 [] quando um usuario visualizar um  livro, conectar ele aos demais usuarios que também visualizou o livro.
 [] cria grafo de conexoes entre usuarios
 [] organizar usuario em uma arvore binaria por letra do alfabeto
@@ -20,7 +22,7 @@
 
 [*] RF05 - arvore binária - Construir uma árvore binária de busca para categorizar livros por diferentes critérios, como gênero ou autor. Facilitar a busca rápida de livros por categoria específica. 
 
-[ ] RF06 - Implementar bubble sort e compará-lo com o merge sort para ordenar listas de livros por diferentes critérios.Avaliar a eficiência de diferentes algoritmos de ordenação em listas de livros. 
+[*] RF06 - Implementar bubble sort e compará-lo com o merge sort para ordenar listas de livros por diferentes critérios.Avaliar a eficiência de diferentes algoritmos de ordenação em listas de livros. 
 
 [ ] RF07 - Utilizar DFS e BFS para explorar a árvore binária de livros, permitindo descobrir novas recomendações de leitura ou caminhos entre diferentes gêneros. Melhorar o sistema de recomendação de livros com base nas conexões entre eles. 
 

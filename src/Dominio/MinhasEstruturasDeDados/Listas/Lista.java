@@ -3,7 +3,7 @@ package Dominio.MinhasEstruturasDeDados.Listas;
 import java.util.Iterator;
 
 // wrapper da lista encadeada para simplificar a interface
-public class Lista<T> implements IListas<T> {
+public class Lista<T extends Comparable<T>> implements ILista<T> {
 
     protected final ListaEncadeada<T> lista;
     protected int contagem;

@@ -7,9 +7,10 @@ import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 
+import Dominio.MinhasEstruturasDeDados.Listas.ILista;
 import Dominio.MinhasEstruturasDeDados.Listas.Lista;
 
-public class BuscaEmGrafos<T> {
+public class BuscaEmGrafos<T extends Comparable<T>> {
 
     // Dijkstra - busca caminho mais barato
     public Map<T, T> BuscaDijkstra(Map<T, Map<T, Integer>> grafo, T inicio, T fim) {
@@ -138,7 +139,7 @@ public class BuscaEmGrafos<T> {
         return caminho;
     }
 
-    public Lista<T> Converter(Map<T, T> caminho, T inicio, T fim) {
+    public ILista<T> Converter(Map<T, T> caminho, T inicio, T fim) {
 
         Lista<T> lista = new Lista<>();
 

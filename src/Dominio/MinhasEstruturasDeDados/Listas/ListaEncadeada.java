@@ -3,12 +3,12 @@ package Dominio.MinhasEstruturasDeDados.Listas;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class ListaEncadeada<T> implements Iterable<T> {
+public class ListaEncadeada<T extends Comparable<T>> implements Iterable<T> {
 
     // Nó como classe interna privada para Encapsulamento
-    static class No<T> {
+    public static class No<T> {
         T dado;
-        No<T> proximo;
+        public No<T> proximo;
 
         No(T dado) {
             this.dado = dado;
@@ -24,7 +24,6 @@ public class ListaEncadeada<T> implements Iterable<T> {
         this.ultimo = null;
         this.tamanho = 0;
     }
-
 
     protected boolean InserirInicio(T dado) {
         No<T> novo = new No<>(dado);
@@ -56,11 +55,11 @@ public class ListaEncadeada<T> implements Iterable<T> {
     }
 
     protected T GetPrimeiro() {
-        return Get(0);
+        return primeiro.dado;
     }
 
     protected T GetUltimo() {
-        return Get(tamanho - 1);
+        return ultimo.dado;
     }
 
     protected No<T> GetNo(int indice) {
@@ -73,6 +72,11 @@ public class ListaEncadeada<T> implements Iterable<T> {
         return atual;
     }
 
+    protected void Set(int indice, T novo) {
+        GetNo(indice).dado = novo;
+
+    }
+
     protected void Remover(int indice) {
         if (indice < 0 || indice >= tamanho)
             return;
@@ -81,17 +85,18 @@ public class ListaEncadeada<T> implements Iterable<T> {
             primeiro = primeiro.proximo;
             if (primeiro == null)
                 ultimo = null;
+            tamanho = 0;
+            return;
         } else {
             No<T> anterior = GetNo(indice - 1);
-            anterior.proximo = anterior.proximo.proximo;
+
             if (anterior.proximo == null)
                 ultimo = anterior;
+            else
+                anterior.proximo = anterior.proximo.proximo;
+            tamanho--;
+            return;
         }
-        tamanho--;
-    }
-
-    protected void Set(int indice, T novo) {
-        GetNo(indice).dado = novo;
 
     }
 
@@ -99,24 +104,23 @@ public class ListaEncadeada<T> implements Iterable<T> {
         return tamanho;
     }
 
-    public String toString(){
+    public String toString() {
 
         StringBuilder sb = new StringBuilder();
 
-
-        for(var item : this ){
+        for (var item : this) {
 
             sb.append(item.toString());
         }
 
         return sb.toString();
-        
+
     }
 
     @Override
     public Iterator<T> iterator() {
         return new Iterator<T>() {
-            private No<T> atual = primeiro;
+            public No<T> atual = primeiro;
 
             @Override
             public boolean hasNext() {
