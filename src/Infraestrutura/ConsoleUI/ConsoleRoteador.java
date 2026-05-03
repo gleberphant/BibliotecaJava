@@ -1,4 +1,4 @@
-package ConsoleUI;
+package Infraestrutura.ConsoleUI;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

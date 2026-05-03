@@ -2,8 +2,9 @@ package Dominio.MinhasEstruturasDeDados.Listas;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.StringJoiner;
 
-public class ListaEncadeada<T extends Comparable<T>> implements Iterable<T> {
+public class ListaEncadeada<T> implements Iterable<T> {
 
     // Nó como classe interna privada para Encapsulamento
     public static class No<T> {
@@ -40,18 +41,20 @@ public class ListaEncadeada<T extends Comparable<T>> implements Iterable<T> {
     protected boolean InserirFim(T dado) {
         No<T> novo = new No<>(dado);
         if (primeiro == null) {
-            primeiro = ultimo = novo;
+            primeiro = novo;
+            ultimo = primeiro;
         } else {
+
             ultimo.proximo = novo; // O(1)
-            ultimo = novo;
+            ultimo = ultimo.proximo;
         }
         tamanho++;
         return true;
     }
 
     protected T Get(int indice) {
-        No<T> alvo = GetNo(indice);
-        return (alvo == null) ? null : alvo.dado;
+        No<T> no = GetNo(indice);
+        return (no == null) ? null : no.dado;
     }
 
     protected T GetPrimeiro() {
@@ -65,11 +68,12 @@ public class ListaEncadeada<T extends Comparable<T>> implements Iterable<T> {
     protected No<T> GetNo(int indice) {
         if (indice < 0 || indice >= tamanho)
             return null;
-        No<T> atual = primeiro;
+
+        No<T> ponteiro = primeiro;
         for (int i = 0; i < indice; i++) {
-            atual = atual.proximo;
+            ponteiro = ponteiro.proximo;
         }
-        return atual;
+        return ponteiro;
     }
 
     protected void Set(int indice, T novo) {
@@ -85,7 +89,8 @@ public class ListaEncadeada<T extends Comparable<T>> implements Iterable<T> {
             primeiro = primeiro.proximo;
             if (primeiro == null)
                 ultimo = null;
-            tamanho = 0;
+
+            tamanho--;
             return;
         } else {
             No<T> anterior = GetNo(indice - 1);
@@ -106,11 +111,11 @@ public class ListaEncadeada<T extends Comparable<T>> implements Iterable<T> {
 
     public String toString() {
 
-        StringBuilder sb = new StringBuilder();
+        StringJoiner sb = new StringJoiner(", ", "{", "}");
 
         for (var item : this) {
 
-            sb.append(item.toString());
+            sb.add(item.toString());
         }
 
         return sb.toString();

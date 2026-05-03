@@ -16,6 +16,6 @@ public class BuscaCaminhoLivrosDijkstra {
         BuscaEmGrafos<Livro> busca = new BuscaEmGrafos<>();
         var caminho = busca.BuscaDijkstra(grafo, livro1, livro2);
 
-        return busca.Converter(caminho, livro1, livro2);
+        return busca.ConverterParaLista(caminho, livro1, livro2);
     }
 }

@@ -1,5 +1,6 @@
 # backlog
 
+[] criar testes para os algoritmos 
 [*] implementar algoritmos de ordenação de filas
 [*]implementar algoritmos BFS e DFS
 [] quando um usuario visualizar um  livro, conectar ele aos demais usuarios que também visualizou o livro.
@@ -26,7 +27,7 @@
 
 [ ] RF07 - Utilizar DFS e BFS para explorar a árvore binária de livros, permitindo descobrir novas recomendações de leitura ou caminhos entre diferentes gêneros. Melhorar o sistema de recomendação de livros com base nas conexões entre eles. 
 
-[ ] RF08 - busca dijkstra -  Aplicar o algoritmo de Dijkstra para encontrar o caminho mais curto ou mais relevante entre diferentes livros ou categorias. Otimizar as recomendações para os usuários, levando em conta não apenas a similaridade, mas também a popularidade ou a avaliação dos livros. 
+[*] RF08 - busca dijkstra -  Aplicar o algoritmo de Dijkstra para encontrar o caminho mais curto ou mais relevante entre diferentes livros ou categorias. Otimizar as recomendações para os usuários, levando em conta não apenas a similaridade, mas também a popularidade ou a avaliação dos livros. 
 
 
 # REGRAS NEGOCIO

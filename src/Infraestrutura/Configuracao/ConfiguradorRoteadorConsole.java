@@ -1,10 +1,11 @@
-package ConsoleUI;
+package Infraestrutura.Configuracao;
 
 import java.util.Scanner;
 
 import Adaptadores.ControladoresConsole.ControleEmprestimos;
 import Adaptadores.ControladoresConsole.ControleLivro;
 import Adaptadores.ControladoresConsole.ControleRecomendacoes;
+import Adaptadores.ControladoresConsole.ControleTestes;
 import Adaptadores.ControladoresConsole.ControleUsuario;
 import Adaptadores.ExibicaoConsole.ExibicaoConsole;
 
@@ -13,11 +14,12 @@ import Adaptadores.Repositorios.EmMemoria.RepositorioRecomendacoes;
 import Adaptadores.Repositorios.EmMemoria.RepositorioUsuarios;
 
 import Dominio.Modelos.Usuario;
+import Infraestrutura.ConsoleUI.ConsoleRoteador;
 import Aplicacao.Servicos.ServicoEmprestimos;
 import Aplicacao.Servicos.ServicoLivros;
 import Aplicacao.Servicos.ServicoUsuarios;
 
-public class ConsoleConfigRoteador {
+public class ConfiguradorRoteadorConsole {
 
         // configura menus e injeta dependências
         public static ConsoleRoteador configurarRoteadorConsole() {
@@ -32,10 +34,14 @@ public class ConsoleConfigRoteador {
                 var respositorioRecomendacoes = new RepositorioRecomendacoes();
 
                 // mockar dados
-                MockarDados.Mockar(respositorioLivros, respositorioUsuarios, respositorioRecomendacoes);
+                MockadorDeRespositorios.Mockar(respositorioLivros, respositorioUsuarios, respositorioRecomendacoes);
 
+                // imprimindo bases
+                System.out.println("Repositorio livros");
                 System.out.println(respositorioLivros.toString());
+                System.out.println("Repositorio Usuarios");
                 System.out.println(respositorioUsuarios.toString());
+                System.out.println("Repositorio Recomendacoes");
                 System.out.println(respositorioRecomendacoes.toString());
 
                 // configurar servicos
@@ -55,8 +61,17 @@ public class ConsoleConfigRoteador {
                 var controleRecomendacoes = new ControleRecomendacoes(servicoLivros, servicoUsuarios, entrada,
                                 exibicao);
 
+                var controleTestes = new ControleTestes();
+
                 // Configuração do Menus da UI
                 // Configuração do SubMenu Usuarios
+                ConsoleRoteador menuTestes = new ConsoleRoteador("Testes")
+                                .adicionarRota(1, "Testar Listas", controleTestes::TestarListas)
+                                .adicionarRota(2, "Testar GRAFOS", controleTestes::TestarGrafos)
+                                .adicionarRota(3, "Testar Ordenacoes", controleTestes::TestarOrdenacao)
+                                .adicionarRota(4, "Testar Buscas", controleTestes::TestarBuscas)
+                                .adicionarRota(5, "Voltar", null);
+
                 ConsoleRoteador menuUsuario = new ConsoleRoteador("Gestão de Usuários")
                                 .adicionarRota(1, "Adicionar Usuários", controleUsuarios::Adicionar)
                                 .adicionarRota(2, "Visualizar Usuários", controleUsuarios::Visualizar)
@@ -94,12 +109,13 @@ public class ConsoleConfigRoteador {
 
                 // Configuração do Menu Principal
                 ConsoleRoteador menuRaiz = new ConsoleRoteador("Sistema Biblioteca")
-                                .adicionarSubRoteador(1, "Menu Usuarios", menuUsuario)
-                                .adicionarSubRoteador(2, "Menu Livros", menuLivros)
-                                .adicionarSubRoteador(3, "Menu Empréstimos", menuEmprestimos)
-                                .adicionarRota(4, "Visualizar Histórico", controleUsuarios::VisualizarHistorico)
+                                .adicionarSubRoteador(1, "Realizar TESTES", menuTestes)
+                                .adicionarSubRoteador(2, "Menu Usuarios", menuUsuario)
+                                .adicionarSubRoteador(3, "Menu Livros", menuLivros)
+                                .adicionarSubRoteador(4, "Menu Empréstimos", menuEmprestimos)
                                 .adicionarSubRoteador(5, "Menu Recomendacoes", menuRecomendacao)
-                                .adicionarRota(9, "Fazer Login", controleUsuarios::FazerLogin)
+                                .adicionarRota(6, "Visualizar Histórico", controleUsuarios::VisualizarHistorico)
+                                .adicionarRota(7, "Fazer Login", controleUsuarios::FazerLogin)
                                 .adicionarRota(0, "Sair", null);
 
                 menuRaiz.SetLogin(() -> servicoUsuarios.GetUsuarioLogado());

@@ -1,4 +1,4 @@
-package ConsoleUI;
+package Infraestrutura.Configuracao;
 
 import Adaptadores.Repositorios.EmMemoria.RepositorioLivros;
 import Adaptadores.Repositorios.EmMemoria.RepositorioRecomendacoes;
@@ -6,7 +6,7 @@ import Adaptadores.Repositorios.EmMemoria.RepositorioUsuarios;
 import Dominio.Modelos.Livro;
 import Dominio.Modelos.Usuario;
 
-public class MockarDados {
+public class MockadorDeRespositorios {
 
         public static void Mockar(
                         RepositorioLivros repositorioLivros,

@@ -3,7 +3,7 @@ package Dominio.MinhasEstruturasDeDados.Listas;
 import java.util.Iterator;
 
 // wrapper da lista encadeada para simplificar a interface
-public class Lista<T extends Comparable<T>> implements ILista<T> {
+public class Lista<T> implements ILista<T> {
 
     protected final ListaEncadeada<T> lista;
     protected int contagem;
@@ -34,12 +34,16 @@ public class Lista<T extends Comparable<T>> implements ILista<T> {
 
     // visualiza proximo item sem remover
     public T Topo() {
-        return lista.Get(0);
+        return lista.GetPrimeiro();
     }
 
     //
     public T Busca(int i) {
         return lista.Get(i);
+    }
+    // remove item por indice
+    public void Remover(int indice) {
+        lista.Remover(indice);
     }
 
     // remove proximo item
@@ -53,11 +57,6 @@ public class Lista<T extends Comparable<T>> implements ILista<T> {
             posicao++;
         }
         return;
-    }
-
-    // remove item por indice
-    public void Remover(int indice) {
-        lista.Remover(indice);
     }
 
     public int Tamanho() {

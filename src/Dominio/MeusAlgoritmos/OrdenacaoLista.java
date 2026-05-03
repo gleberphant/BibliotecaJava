@@ -109,6 +109,8 @@ public class OrdenacaoLista<T extends Comparable<T>> {
 
         ArrayList<T> array = ConverteListaParaArray(lista);
 
+        if(array == null) return lista;
+
         int desordenados = array.size();
         boolean ordenado = false;
 
@@ -158,7 +160,7 @@ public class OrdenacaoLista<T extends Comparable<T>> {
         ArrayList<T> array = new ArrayList<>(tamanho);
 
         for (int i = 0; i < tamanho; i++)
-            array.add(lista.Retirar());
+            array.add(lista.Busca(i));
 
         return array;
     }

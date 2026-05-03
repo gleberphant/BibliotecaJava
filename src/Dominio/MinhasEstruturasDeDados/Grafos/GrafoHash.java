@@ -3,13 +3,13 @@ package Dominio.MinhasEstruturasDeDados.Grafos;
 import java.util.HashMap;
 import java.util.Map;
 
-import Dominio.MeusAlgoritmos.BuscaDijkstra;
+import Dominio.MeusAlgoritmos.BuscaEmGrafos;
+
 
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 
-
-public class GrafoHash<T> implements IGrafo<T> {
+public class GrafoHash<T extends Comparable<T>> implements IGrafo<T>{
 
     // mapa de adjacências
 
@@ -64,8 +64,7 @@ public class GrafoHash<T> implements IGrafo<T> {
 
     // busca o menor caminho usando o dijkstra.
     public Map<T, T> BuscarCaminho(T inicio, T fim) {
-
-        return new BuscaCaminhoLivrosDijkstra<T>().BuscarCaminho(mapaAdjacencias, inicio, fim);
+        return new BuscaEmGrafos<T>().BuscaDijkstra(mapaAdjacencias, inicio, fim);
     }
 
     public void RemoverItem(T chave) {
@@ -96,6 +95,20 @@ public class GrafoHash<T> implements IGrafo<T> {
 
     }
 
+    public T GetAleatorio() {
+
+        /// percorre o grafo com 20% de chance de retornar um valor
+        for (var item : this) {
+            if (Math.random() < 0.2) {
+                return item;
+            }
+
+        }
+
+        return this.iterator().next();
+
+    }
+
     @Override
     public String toString() {
         if (mapaAdjacencias.isEmpty())
@@ -106,10 +119,10 @@ public class GrafoHash<T> implements IGrafo<T> {
         sj.append(String.format("{\n"));
         for (var item : mapaAdjacencias.entrySet()) {
 
-            sj.append(String.format("'%2d': {", item.getKey()));
+            sj.append(String.format("'%2s': {", item.getKey().toString()));
 
             for (var destino : item.getValue().entrySet()) {
-                sj.append(String.format("'%d': %d, ", destino.getKey(), destino.getValue()));
+                sj.append(String.format("'%s': %s, ", destino.getKey(), destino.getValue()));
             }
 
             sj.append(String.format("},\n", item.getKey()));

@@ -139,7 +139,7 @@ public class BuscaEmGrafos<T extends Comparable<T>> {
         return caminho;
     }
 
-    public ILista<T> Converter(Map<T, T> caminho, T inicio, T fim) {
+    public ILista<T> ConverterParaLista(Map<T, T> caminho, T inicio, T fim) {
 
         Lista<T> lista = new Lista<>();
 
