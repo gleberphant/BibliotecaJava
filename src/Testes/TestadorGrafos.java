@@ -1,5 +1,11 @@
 package Testes;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import Dominio.MinhasEstruturasDeDados.Grafos.GrafoHash;
 
 public class TestadorGrafos<T extends Comparable<T>> {
@@ -17,7 +23,7 @@ public class TestadorGrafos<T extends Comparable<T>> {
 
     // Para mockar GRAFO
     public GrafoHash<T> MockarGrafo(GrafoHash<T> grafo) {
-        int numItems = 5 + (int) (Math.random() * 20);
+        int numItems = 10 + (int) (Math.random() * 20);
         return MockarGrafo(grafo, numItems);
     }
 
@@ -34,20 +40,18 @@ public class TestadorGrafos<T extends Comparable<T>> {
         System.out.print("\n > " + numItens + " itens gerados.");
 
         // inserirr conexoes aleatorias
-        int numConexoes = 10 + (int) (Math.random() * 10);
+        int numConexoes = numItens + (int) (Math.random() * 20);
         for (int i = 0; i < numConexoes; i++) {
 
             // criar conexoes aleatorias
-            T item1 = grafo.GetAleatorio();
-            T item2 = grafo.GetAleatorio();
+            T inicio = grafo.GetAleatorio();
+            T fim = grafo.GetAleatorio();
 
-            // se forem iguais re rola ate fica diferente
-            while ((item1 == null || item2 == null) || (item1.compareTo(item2) == 0)) {
-                item1 = grafo.GetAleatorio();
-                item2 = grafo.GetAleatorio();
-            }
+            grafo.InserirConexao(inicio, fim);
 
-            grafo.InserirConexao(item1, item2);
+            //chance de repetir a conexao para aumentar o peso
+            while (Math.random() < 0.3)
+                grafo.InserirConexao(inicio, fim);
             // System.out.println("Conexao Gerada: " + item1 + " ->" + item2);
         }
         System.out.print("\n > " + numConexoes + " Conexoes Geradas.");
@@ -55,4 +59,49 @@ public class TestadorGrafos<T extends Comparable<T>> {
         return grafo;
 
     }
+
+    public String ImprimeGrafoArvore(Map<T, Map<T, Integer>> mapaAdjacencias) {
+        if (mapaAdjacencias.isEmpty())
+            return "{}";
+
+        StringBuilder sb = new StringBuilder();
+        Set<T> visitados = new HashSet<>();
+
+        // Percorre todos os nós para garantir que grafos desconexos sejam mostrados
+        for (T noRaiz : mapaAdjacencias.keySet()) {
+            if (!visitados.contains(noRaiz)) {
+                renderizarNo(noRaiz, mapaAdjacencias, "", true, sb, visitados);
+            }
+        }
+        return sb.toString();
+    }
+
+    private void renderizarNo(T no, Map<T, Map<T, Integer>> grafo, String prefixo,
+            boolean ultimo, StringBuilder sb, Set<T> visitados) {
+
+        sb.append(prefixo)
+                .append(ultimo ? "└── " : "├── ")
+                .append(no)
+                .append("\n");
+
+        // Marcar como visitado para evitar recursão infinita em grafos com ciclos
+        if (visitados.contains(no)) {
+            // Se o nó já foi visitado, indica a referência para não entrar em loop
+            sb.insert(sb.length() - 1, " (recursivo)");
+            return;
+        }
+        visitados.add(no);
+
+        Map<T, Integer> vizinhos = grafo.get(no);
+        if (vizinhos != null && !vizinhos.isEmpty()) {
+            List<T> chaves = new ArrayList<>(vizinhos.keySet());
+
+            for (int i = 0; i < chaves.size(); i++) {
+                boolean ehUltimo = (i == chaves.size() - 1);
+                String novoPrefixo = prefixo + (ultimo ? "    " : "│   ");
+                renderizarNo(chaves.get(i), grafo, novoPrefixo, ehUltimo, sb, visitados);
+            }
+        }
+    }
+
 }

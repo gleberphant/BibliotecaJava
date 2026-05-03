@@ -1,15 +1,18 @@
 package Dominio.MinhasEstruturasDeDados.Grafos;
 
+
 import java.util.HashMap;
+
 import java.util.Map;
 
-import Dominio.MeusAlgoritmos.BuscaEmGrafos;
 
+import Dominio.MeusAlgoritmos.BuscaEmGrafos;
 
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 
-public class GrafoHash<T extends Comparable<T>> implements IGrafo<T>{
+
+public class GrafoHash<T extends Comparable<T>> implements IGrafo<T> {
 
     // mapa de adjacências
 
@@ -109,6 +112,7 @@ public class GrafoHash<T extends Comparable<T>> implements IGrafo<T>{
 
     }
 
+    // toString coloquei para retornar formato JASON
     @Override
     public String toString() {
         if (mapaAdjacencias.isEmpty())
@@ -132,33 +136,7 @@ public class GrafoHash<T extends Comparable<T>> implements IGrafo<T>{
         return sj.toString();
     }
 
-    public String toStringArvore() {
-        StringBuilder sb = new StringBuilder();
-
-        // Itera sobre cada item (origem) no grafo
-        for (T origem : mapaAdjacencias.keySet()) {
-            sb.append("Livro [").append(origem.toString()).append("]\n");
-
-            var conexoes = mapaAdjacencias.get(origem);
-
-            if (conexoes == null || conexoes.isEmpty()) {
-                sb.append("   └─ Sem conexões\n");
-            } else {
-                // Itera sobre cada destino (conexão)
-                for (var entry : conexoes.entrySet()) {
-                    T destino = entry.getKey();
-                    int peso = entry.getValue();
-
-                    // Formatação visual
-                    sb.append("   └─→ ");
-                    sb.append(destino.toString());
-                    sb.append(" (Peso: ").append(peso).append(")\n");
-                }
-            }
-        }
-        return sb.toString();
-    }
-
+    
     @Override
     public Iterator<T> iterator() {
         return mapaAdjacencias.keySet().iterator();

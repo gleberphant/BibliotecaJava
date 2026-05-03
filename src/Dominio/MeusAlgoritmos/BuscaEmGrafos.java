@@ -2,10 +2,13 @@ package Dominio.MeusAlgoritmos;
 
 import java.util.Map;
 import java.util.Stack;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
+import java.util.List;
 
 import Dominio.MinhasEstruturasDeDados.Listas.ILista;
 import Dominio.MinhasEstruturasDeDados.Listas.Lista;
@@ -156,6 +159,40 @@ public class BuscaEmGrafos<T extends Comparable<T>> {
         }
 
         return lista;
+    }
+
+    public String CaminhoToString(Map<T, T> mapaCaminho, T inicio, T fim) {
+        if (mapaCaminho == null || !mapaCaminho.containsKey(fim)) {
+            return "Caminho não encontrado.";
+        }
+
+        StringBuilder sb = new StringBuilder();
+        List<T> trilha = new ArrayList<>();
+        T atual = fim;
+
+        // Reconstrói o caminho de trás para frente (do fim para o início)
+        while (atual != null) {
+            trilha.add(atual);
+            atual = mapaCaminho.get(atual);
+        }
+
+        // Inverte a lista para ficar na ordem correta (início -> fim)
+        Collections.reverse(trilha);
+
+        // Formata a String simulando a hierarquia/fluxo
+        sb.append("\n [INÍCIO] ");
+        for (int i = 0; i < trilha.size(); i++) {
+            //sb.append("\n "+"  ".repeat(i)).append("|-- ").append(trilha.get(i)).append("");
+
+            sb.append(trilha.get(i));
+
+            if (i < trilha.size() - 1) {
+            sb.append(" -> ");
+            }
+        }
+        sb.append(" [FIM]\n");
+
+        return sb.toString();
     }
 
 }

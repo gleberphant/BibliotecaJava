@@ -19,12 +19,20 @@ public class TestadorBuscas<T extends Comparable<T>> {
         T inicio = grafo.GetAleatorio();
         T fim = grafo.GetAleatorio();
 
+        // se forem iguais re rola ate fica diferente
+        while ((inicio == null || fim == null) || (inicio.compareTo(fim) == 0)) {
+            inicio = grafo.GetAleatorio();
+            fim = grafo.GetAleatorio();
+        }
+
+        System.out.print("\n Grafo: \n");
+        System.out.print(grafo.toString());
+
+        System.out.print("\n Buscar Menor Caminho entre: [" + inicio + "] e [" + fim + "]");
         var caminho = buscadores.BuscaEmLargura(grafo.mapaAdjacencias, inicio, fim);
 
-        var lista = buscadores.ConverterParaLista(caminho, inicio, fim);
-
         System.out.print("\n Caminho encontrado: ");
-        System.out.print(lista.toString());
+        System.out.print(buscadores.CaminhoToString(caminho, inicio, fim));
 
     }
 
