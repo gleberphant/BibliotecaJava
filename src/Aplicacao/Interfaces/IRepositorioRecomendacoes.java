@@ -18,5 +18,8 @@ public interface IRepositorioRecomendacoes extends Iterable<Livro> {
     // Lista de recomendacoes
     public Lista<Livro> ListarRecomendacoes(Livro livro);
 
+    // remoção
+    public void RemoverLivro(Livro livro) ;
+
 
 }

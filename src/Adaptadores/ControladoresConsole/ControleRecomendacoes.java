@@ -27,9 +27,9 @@ public class ControleRecomendacoes {
         var listaDeLivros = servicoLivros.ListarLivros();
         for (var livro : listaDeLivros) {
 
-            var listaDeRecomendacoes = servicoLivros.ListarRecomendacoes(livro.ID+"");
-
-            System.out.println(exibe.exibeRecomendacoes(livro, listaDeRecomendacoes));
+            var listaDeRecomendacoes = servicoLivros.ListarRecomendacoes(livro.ID + "");
+            if (listaDeRecomendacoes.Tamanho() > 0)
+                System.out.println(exibe.exibeRecomendacoes(livro, listaDeRecomendacoes));
         }
 
     }
@@ -44,9 +44,10 @@ public class ControleRecomendacoes {
     public void BuscarCaminho() {
         Livro livro1 = ControleLivro.BuscarLivro(servicoLivros, scanner);
 
+        System.out.println("procurando conexoes");
         var caminho = new BuscaCaminhoLivrosDijkstra().execute(livro1, servicoLivros.respositorioRecomendacoes);
 
-        exibe.exibeRecomendacoes(livro1, caminho);
+        System.out.println(exibe.exibeRecomendacoes(livro1, caminho));
 
     }
 

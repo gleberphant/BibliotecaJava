@@ -34,6 +34,12 @@ public class RepositorioRecomendacoes implements IRepositorioRecomendacoes {
         return livro;
     }
 
+    public void RemoverLivro(Livro livro) {
+
+        grafoRecomendacoes.RemoverItem(livro);
+
+    }
+
     public void InserirRecomendacao(Livro livro1, Livro livro2) {
         grafoRecomendacoes.InserirConexao(livro1, livro2);
     }
@@ -42,7 +48,11 @@ public class RepositorioRecomendacoes implements IRepositorioRecomendacoes {
 
         Lista<Livro> lista = new Lista<>();
 
-        for (var item : grafoRecomendacoes.mapaAdjacencias.get(livro).keySet()) {
+        var livroMapaConexoes = grafoRecomendacoes.mapaAdjacencias.get(livro);
+        if (livroMapaConexoes == null)
+            return lista;
+
+        for (var item : livroMapaConexoes.keySet()) {
             lista.Inserir(item);
         }
         return lista;

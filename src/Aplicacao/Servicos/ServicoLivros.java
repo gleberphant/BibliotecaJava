@@ -5,7 +5,7 @@ import java.util.NoSuchElementException;
 import Aplicacao.Interfaces.*;
 import Dominio.Modelos.Livro;
 import Dominio.Modelos.Usuario;
-import Adaptadores.Repositorios.EmMemoria.RepositorioRecomendacoes;
+
 
 import Dominio.MinhasEstruturasDeDados.Listas.Lista;
 
@@ -24,6 +24,7 @@ public class ServicoLivros {
     public int AdicionarLivro(Livro livro) {
 
         repositorioLivros.InserirLivro(livro);
+        respositorioRecomendacoes.InserirLivro(livro);
 
         return livro.ID;
     }
@@ -37,7 +38,7 @@ public class ServicoLivros {
 
         for (var livro2 : usuarioLogado.historicoNavegacao) {
             // inserir recomendacao
-            InserirRecomendacao(livro1, livro2);
+            respositorioRecomendacoes.InserirRecomendacao(livro1, livro2);
 
         }
 
@@ -67,6 +68,7 @@ public class ServicoLivros {
 
             if (item.ID == livro.ID) {
                 repositorioLivros.RemoverLivro(item);
+                respositorioRecomendacoes.RemoverLivro(item);
                 return;
             }
         }
@@ -85,15 +87,6 @@ public class ServicoLivros {
 
     }
 
-    // Recomendacoes - talvez eu precise criar um serviço exclusivo para
-    // recomendacoes
-
-    public void InserirRecomendacao(Livro livroOrigem, Livro livroDestino) {
-
-        repositorioLivros.InserirRecomendacao(livroOrigem, livroDestino);
-
-        return;
-    }
 
     private int validaId(String stringID) {
         int id;
@@ -110,15 +103,7 @@ public class ServicoLivros {
 
         Livro livro = BuscarLivroPorID(validaId(livroID));
 
-        return repositorioLivros.ListarRecomendacoes(livro);
-
-    }
-
-    public Lista<Livro> BuscarCaminho(Livro livro) {
-
-        var livro2 = repositorioLivros.iterator().next();
-
-        return repositorioLivros.BuscarCaminho(livro, livro2);
+        return respositorioRecomendacoes.ListarRecomendacoes(livro);
 
     }
 

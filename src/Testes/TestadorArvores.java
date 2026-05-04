@@ -2,23 +2,37 @@ package Testes;
 
 import Dominio.MinhasEstruturasDeDados.Arvores.ArvoreBinaria;
 
-public class TestadorArvores {
+public class TestadorArvores<T extends Comparable<T>> {
+    int TotalItens, TotalConexoes;
+
     public static void main(String[] args) {
-        new TestadorArvores().Executar();
+        new TestadorArvores<>().Executar();
     }
 
     public void Executar() {
+        var arvore = MockarArvore(new ArvoreBinaria<>());
 
-        ArvoreBinaria<Integer> a = new ArvoreBinaria<>();
+        System.out.println("\n EXIBINDO arvore");
+        System.out.println(arvore.toStringArvore());
+    }
 
-        int maxItens = (int) (Math.random() * 100);
+    public ArvoreBinaria<T> MockarArvore(ArvoreBinaria<T> arvore) {
+        int numItems = 10 + (int) (Math.random() * 30);
+        return MockarArvore(arvore, numItems);
+    }
 
-        for (int i = 0; i < maxItens; i++) {
-            a.Inserir((int) (Math.random() * 100));
+    @SuppressWarnings("unchecked")
+    public ArvoreBinaria<T> MockarArvore(ArvoreBinaria<T> arvore, int numItens) {
+
+        TotalItens = numItens;
+        for (int i = 0; i < TotalItens; i++) {
+            // Gera o valor e converte para T
+            Integer valor = (int) (Math.random() * 100);
+            arvore.Inserir((T) valor);
+            // System.out.print("{" + valor + "} ");
         }
 
-        // percorre toda a lista
-
-        System.out.println(a.toString());
+        return arvore;
     }
+
 }

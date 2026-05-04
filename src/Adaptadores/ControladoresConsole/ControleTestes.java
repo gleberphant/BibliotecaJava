@@ -1,5 +1,6 @@
 package Adaptadores.ControladoresConsole;
 
+import Testes.TestadorArvores;
 import Testes.TestadorBuscas;
 import Testes.TestadorListas;
 import Testes.TestadorGrafos;
@@ -15,6 +16,12 @@ public class ControleTestes {
 
         new TestadorGrafos<>().Executar();
     }
+
+    public void TestarArvores() {
+
+        new TestadorArvores<>().Executar();
+    }
+
 
     public void TestarOrdenacao() {
 

@@ -2,7 +2,8 @@ package Adaptadores.ExibicaoConsole;
 
 import Dominio.Modelos.Livro;
 import Dominio.Modelos.Usuario;
-import Dominio.MinhasEstruturasDeDados.Listas.Lista;
+
+import Dominio.MinhasEstruturasDeDados.Listas.ILista;
 
 public class ExibicaoConsole {
     // usuario
@@ -87,7 +88,7 @@ public class ExibicaoConsole {
     }
 
     // recomedacoes
-    public String exibeRecomendacoes(Livro livro, Lista<Livro> lista) {
+    public String exibeRecomendacoes(Livro livro, ILista<Livro> lista) {
         StringBuilder sb = new StringBuilder();
         sb.append(String.format("\n Recomendacoes para o Livro : %s", livro.Titulo));
         for (Livro recomendacao : lista) {

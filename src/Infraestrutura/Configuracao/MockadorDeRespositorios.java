@@ -29,8 +29,8 @@ public class MockadorDeRespositorios {
 
                         repositorioLivros.InserirLivro(novoLivro);
                         // testa se consegue buscar o livro inserido e exibe falha
-                        if (repositorioLivros.BuscarLivroPorID(idLivro) == null)
-                                System.out.println("Falha - ID" + idLivro + " Livro:" + novoLivro);
+                        if (repositorioLivros.BuscarLivroPorID(idLivro) != null)
+                                System.out.println("ID" + idLivro + " Livro:" + novoLivro);
 
                 }
 
@@ -48,8 +48,12 @@ public class MockadorDeRespositorios {
                                 livro2 = repositorioLivros.BuscarLivroAleatorio();
                         }
 
-                        respositorioRecomendacoes.InserirRecomendacao(livro1, livro2);
-                        System.out.println("livro: " + livro1.ID + "conectado ao livro " + livro2.ID);
+                        // chance de repetir a ligação para criar pesos
+
+                        do {
+                                respositorioRecomendacoes.InserirRecomendacao(livro1, livro2);
+                                System.out.println("Livro: " + livro1.ID + " conectado ao livro " + livro2.ID);
+                        } while (Math.random() < 0.6);
                 }
 
                 System.out.println("\n::: Mockando USUARIOS :::");
@@ -61,8 +65,8 @@ public class MockadorDeRespositorios {
                         repositorioUsuarios.Inserir(novoUsuario);
 
                         // testa se consegue buscar o livro inserido e exibe falha
-                        if (repositorioUsuarios.BuscarUsuarioPorID(i) == null)
-                                System.out.println("Falha - ID" + idUsuario + " Livro:" + novoUsuario);
+                        if (repositorioUsuarios.BuscarUsuarioPorID(i) != null)
+                                System.out.println(" Usuario :" + novoUsuario);
 
                 }
 

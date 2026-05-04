@@ -180,7 +180,7 @@ public class BuscaEmGrafos<T extends Comparable<T>> {
         Collections.reverse(trilha);
 
         // Formata a String simulando a hierarquia/fluxo
-        sb.append("\n [INÍCIO] ");
+        sb.append("[INÍCIO] ");
         for (int i = 0; i < trilha.size(); i++) {
             //sb.append("\n "+"  ".repeat(i)).append("|-- ").append(trilha.get(i)).append("");
 
@@ -190,7 +190,7 @@ public class BuscaEmGrafos<T extends Comparable<T>> {
             sb.append(" -> ");
             }
         }
-        sb.append(" [FIM]\n");
+        sb.append(" [FIM]");
 
         return sb.toString();
     }

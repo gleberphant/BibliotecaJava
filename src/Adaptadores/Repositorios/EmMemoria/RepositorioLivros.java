@@ -2,39 +2,30 @@ package Adaptadores.Repositorios.EmMemoria;
 
 import java.util.Iterator;
 
-
 import Aplicacao.Interfaces.IRepositorioLivros;
 import Dominio.MinhasEstruturasDeDados.Arvores.ArvoreBinaria;
-import Dominio.MinhasEstruturasDeDados.Grafos.GrafoHash;
+
 import Dominio.MinhasEstruturasDeDados.Listas.Lista;
 import Dominio.Modelos.Livro;
 
 // repositorio dos livros
 // armazena os livros em uma arvore binária
-// armazena as recomendações em um grafo
 
 public class RepositorioLivros implements IRepositorioLivros {
 
-    private ArvoreBinaria<Livro> indicesLivros;
-    private GrafoHash<Livro> grafoRecomendacoes;
+    private ArvoreBinaria<Livro> arvoreLivros;
 
     int contagem;
 
     public RepositorioLivros() {
-        indicesLivros = new ArvoreBinaria<Livro>();
-        grafoRecomendacoes = new GrafoHash<Livro>();
+        arvoreLivros = new ArvoreBinaria<Livro>();
 
-    }
-
-    public GrafoHash<Livro> GetGrafo() {
-        return grafoRecomendacoes;
     }
 
     public Livro InserirLivro(Livro livro) {
 
         contagem++;
-        indicesLivros.Inserir(livro);
-        grafoRecomendacoes.InserirItem(livro);
+        arvoreLivros.Inserir(livro);
 
         return livro;
     }
@@ -44,7 +35,7 @@ public class RepositorioLivros implements IRepositorioLivros {
         Lista<Livro> lista = new Lista<>();
 
         // transforma arvore em lista;
-        for (var livro : indicesLivros) {
+        for (var livro : arvoreLivros) {
             lista.Inserir(livro);
         }
 
@@ -64,13 +55,13 @@ public class RepositorioLivros implements IRepositorioLivros {
     // comparableTo de Livro, compara apenas somente pelo ID
     public Livro BuscarLivroPorID(int ID) {
 
-        return indicesLivros.Buscar(new Livro(ID, null, null, null));
+        return arvoreLivros.Buscar(new Livro(ID, null, null, null));
 
     }
 
     public Livro Topo() {
 
-        return indicesLivros.iterator().next();
+        return arvoreLivros.iterator().next();
     }
 
     public Livro BuscarLivroAleatorio() {
@@ -83,18 +74,17 @@ public class RepositorioLivros implements IRepositorioLivros {
 
         }
 
-        return indicesLivros.iterator().next();
+        return arvoreLivros.iterator().next();
 
     }
 
     public void RemoverLivro(Livro livro) {
 
-        indicesLivros.Remover(livro);
-        grafoRecomendacoes.RemoverItem(livro);
+        arvoreLivros.Remover(livro);
     }
 
     public int QuantidadeLivros() {
-        return grafoRecomendacoes.Tamanho();
+        return arvoreLivros.Tamanho();
     }
 
     public int ContagemLivros() {
@@ -102,14 +92,14 @@ public class RepositorioLivros implements IRepositorioLivros {
     }
 
     public String toString() {
-        return indicesLivros.toString();
+        return arvoreLivros.toString();
     }
 
     // percorre toda arvore
     @Override
     public Iterator<Livro> iterator() {
         // a iteração segue normal pq estou inserindo no fim da lista
-        return indicesLivros.iterator();
+        return arvoreLivros.iterator();
     }
 
 }

@@ -204,11 +204,28 @@ public class ArvoreBinaria<T extends Comparable<T>> implements Iterable<T> {
     }
 
     // string em formato json
+
     public String toString() {
-        return gerarASCII(this.raiz, "", true);
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format("{"));
+        for (var item : this) {
+
+            sb.append(String.format("{%s},", item.toString()));
+
+        }
+        sb.append(String.format("}"));
+        return sb.toString();
+
     }
 
-    private String gerarASCII(NoArvore<T> no, String prefixo, boolean eUltimo) {
+    // gera string ASSCII
+    public String toStringArvore() {
+        return toStringRecursivo(this.raiz, "", true);
+    }
+
+    private String toStringRecursivo(NoArvore<T> no, String prefixo, boolean eUltimo) {
+
         if (no == null)
             return "";
 
@@ -230,17 +247,17 @@ public class ArvoreBinaria<T extends Comparable<T>> implements Iterable<T> {
         // Precisamos tratar a exibição para garantir que o desenho não quebre
         if (no.filhoEsquerdo != null || no.filhoDireito != null) {
             if (no.filhoEsquerdo != null) {
-                sb.append(gerarASCII(no.filhoEsquerdo, novoPrefixo, no.filhoDireito == null));
+                sb.append(toStringRecursivo(no.filhoEsquerdo, novoPrefixo, no.filhoDireito == null));
             }
             if (no.filhoDireito != null) {
-                sb.append(gerarASCII(no.filhoDireito, novoPrefixo, true));
+                sb.append(toStringRecursivo(no.filhoDireito, novoPrefixo, true));
             }
         }
 
         return sb.toString();
     }
 
-    // vou iterar a arvore usando BSF para percorrer todos itens
+    // vou iterar por toda arvore , semelhante a um BFS
     @Override
     public Iterator<T> iterator() {
 
